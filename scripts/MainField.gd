@@ -484,8 +484,9 @@ func _build_watering_can() -> void:
 					can_spr.texture = tex
 					var tex_size := tex.get_size()
 					if tex_size.x > 0 and tex_size.y > 0:
-						var scale_factor := 60.0 / max(tex_size.x, tex_size.y)
+						var scale_factor: float = 60.0 / float(max(tex_size.x, tex_size.y))
 						can_spr.scale = Vector2(scale_factor, scale_factor)
+
 				# 충돌 영역(CollisionShape2D)의 중심점에 맞춰 스프라이트 배치
 				var col_shape := item.get_node_or_null("CollisionShape2D") as Node2D
 				if col_shape != null:
