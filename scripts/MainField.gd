@@ -69,6 +69,16 @@ func _ready() -> void:
 	if not GameState.water_cleared:
 		_build_grandma()
 		_build_watering_can()
+	else:
+		# 물뿌리개 퀘스트 완료 후 복귀 시 맵에 남은 물뿌리개 아이템들과 할머니 NPC를 완벽히 제거
+		for i in range(1, 4):
+			var can_item := get_node_or_null("WateringCan" + str(i))
+			if is_instance_valid(can_item):
+				can_item.queue_free()
+		var grandma := get_node_or_null("GrandmaNPC")
+		if is_instance_valid(grandma):
+			grandma.queue_free()
+
 	_build_carpenter()
 	_build_wizard()
 	_build_ui()
