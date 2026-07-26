@@ -827,7 +827,7 @@ func _on_interact_seed() -> void:
 						"안녕! 나를 돌보러 와주었구나! 만나서 반가워, 앞으로 잘 부탁해~\n우리가 함께하면 예쁜 싹을 활짝 틔울 수 있을 거야!",
 						"안녕! 나도 잘 부탁해!",
 						_show_seed_favor_dialogue,
-						"반가워!",
+						"",
 						Callable()
 					)
 				WaterPhase.GO_TO_GRANDMA:
@@ -863,7 +863,7 @@ func _on_interact_seed() -> void:
 						"오! 시원한 물뿌리개를 구해 오셨군요! 정말 고마워요!\n이제 제게 물을 듬뿍 뿌려 주시겠어요?",
 						"규칙 확인하기!",
 						_show_water_rules_popup,
-						"잠깐 기다려요",
+						"",
 						Callable()
 					)
 		&"temp":
@@ -874,7 +874,7 @@ func _on_interact_seed() -> void:
 						"으으... 너무 더워서 힘들어하고 있어요...\n저기 빨간 지붕집에 사는 온도 목수님에게 가서 온도를 조절할 수 있는 물건을 구해와 주세요!",
 						"목수님께 가기!",
 						_accept_find_carpenter,
-						"잠깐 기다려요",
+						"",
 						Callable()
 					)
 				TempPhase.GO_TO_CARPENTER:
@@ -892,7 +892,7 @@ func _on_interact_seed() -> void:
 						"우와, 목수님께 그늘막을 구해오셨군요! 정말 고마워요!\n지금 하늘에서 뜨거운 햇빛이 쏟아져 내려오고 있어요.\n그늘막으로 햇빛을 막아주세요!",
 						"햇빛 막기 시작!",
 						func(): get_tree().change_scene_to_file("res://scenes/CanopyBlockGame.tscn"),
-						"잠깐 기다려요",
+						"",
 						Callable()
 					)
 		&"air":
@@ -901,7 +901,7 @@ func _on_interact_seed() -> void:
 				"공기가 너무 탁하고 더러워요...\n매연을 없애서 깨끗한 공기를 만들어 주세요!",
 				"공기 정화 시작!",
 				func(): get_tree().change_scene_to_file("res://scenes/AirGame.tscn"),
-				"잠깐 기다려요",
+				"",
 				Callable()
 			)
 		&"complete":
@@ -914,7 +914,7 @@ func _show_seed_favor_dialogue() -> void:
 		"고마워! 그런데 사실... 지금 목이 너무 말라서 싹을 틔울 힘이 없어...\n물이 필요한데 어디서 구해야 할지 모르겠어.\n오른쪽 초록색 지붕 집 앞의 할머니에게 방법을 물어봐 주실 수 있나요?",
 		"할머니에게 물어볼게!",
 		_accept_find_grandma,
-		"잠깐 기다려요",
+		"",
 		Callable()
 	)
 
@@ -937,7 +937,7 @@ func _on_interact_grandma() -> void:
 					"호호, 씨앗에게 물이 필요한 거로구나!\n그런데 어쩌지? 내가 아끼던 물뿌리개를 3조각으로 잃어버렸단다.\n마을 구석구석에 흩어진 물뿌리개 3개를 모두 찾아와 주겠니?",
 					"물뿌리개 3개 찾기!",
 					_show_can_rules_popup,
-					"잠깐 기다려요",
+					"",
 					Callable()
 				)
 			WaterPhase.FIND_CAN:
@@ -955,7 +955,7 @@ func _on_interact_grandma() -> void:
 					"아고! 잃어버린 물뿌리개 3개를 모두 찾아주었구나, 정말 고맙다!\n약속대로 이 완벽한 물뿌리개를 너에게 선물로 주마.\n이제 목말라하는 씨앗에게 시원한 물을 주렴!",
 					"고맙습니다! 씨앗에게 갈게요.",
 					_accept_got_can,
-					"잠깐 기다려요",
+					"",
 					Callable()
 				)
 			WaterPhase.READY_TO_WATER:
@@ -996,7 +996,7 @@ func _on_interact_carpenter() -> void:
 					"허허, 씨앗이 더워해서 그늘막이 필요한 거로구나!\n그늘막을 이용하면 되지만 지금 남은 그늘막이 없단다.\n그늘막 만드는 것을 도와주면 그늘막을 주마!",
 					"그늘막 만들기 돕기!",
 					func(): get_tree().change_scene_to_file("res://scenes/CanopyPuzzle.tscn"),
-					"잠깐 기다려요",
+					"",
 					Callable()
 				)
 			TempPhase.READY_TO_SHADE:
@@ -1035,7 +1035,7 @@ func _on_interact_wizard() -> void:
 			"신비로운 바람의 마법이 감지되는군요...\n마을의 탁한 공기와 매연을 걷어내고 맑은 숨결을 불어넣어 줍시다.\n저와 함께 정화 마법을 펼쳐 보시겠습니까?",
 			"공기 정화 시작!",
 			func(): get_tree().change_scene_to_file("res://scenes/AirGame.tscn"),
-			"잠깐 기다려요",
+			"",
 			Callable()
 		)
 	elif GameState.current_quest == &"water":
