@@ -466,8 +466,37 @@ func _build_watering_can() -> void:
 					if can_bubble_label != null:
 						can_bubble_label.hide()
 			)
+			# 기존 파란색 플레이스홀더 박스 및 영어 텍스트 숨김
+			var color_rect := item.get_node_or_null("ColorRect")
+			if color_rect != null:
+				color_rect.hide()
+			var icon_lbl := item.get_node_or_null("IconLabel")
+			if icon_lbl != null:
+				icon_lbl.hide()
+
+			# 사용자가 디자인한 커스텀 물뿌리개 이미지 적용
+			var can_spr := item.get_node_or_null("CustomCanSprite") as Sprite2D
+			if can_spr == null:
+				can_spr = Sprite2D.new()
+				can_spr.name = "CustomCanSprite"
+				var tex := load("res://assets/water_can.png") as Texture2D
+				if tex != null:
+					can_spr.texture = tex
+					var tex_size := tex.get_size()
+					if tex_size.x > 0 and tex_size.y > 0:
+						var scale_factor := 60.0 / max(tex_size.x, tex_size.y)
+						can_spr.scale = Vector2(scale_factor, scale_factor)
+				# 충돌 영역(CollisionShape2D)의 중심점에 맞춰 스프라이트 배치
+				var col_shape := item.get_node_or_null("CollisionShape2D") as Node2D
+				if col_shape != null:
+					can_spr.position = col_shape.position
+				else:
+					can_spr.position = Vector2(-70, -5)
+				item.add_child(can_spr)
+
 			# 게임 실행 시 퀘스트 수락 전에는 숨김 (에디터에서는 보임 상태)
 			item.hide()
+
 
 
 # ─────────────────────────────────────────────
