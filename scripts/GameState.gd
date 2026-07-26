@@ -15,7 +15,19 @@ var just_cleared_temp := false
 
 
 func _ready() -> void:
+	_init_fallback_fonts()
 	_register_input_actions()
+
+
+func _init_fallback_fonts() -> void:
+	if ResourceLoader.exists("res://assets/fonts/korean.ttf"):
+		var korean_font := load("res://assets/fonts/korean.ttf") as FontFile
+		if korean_font != null:
+			if ResourceLoader.exists("res://assets/fonts/emoji.ttf"):
+				var emoji_font := load("res://assets/fonts/emoji.ttf") as FontFile
+				if emoji_font != null:
+					korean_font.fallbacks = [emoji_font]
+			ThemeDB.fallback_font = korean_font
 
 
 func _register_input_actions() -> void:
