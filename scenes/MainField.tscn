@@ -1,0 +1,330 @@
+[gd_scene format=3 uid="uid://nqvgyyaxw6g8"]
+
+[ext_resource type="Script" uid="uid://dcvtk0b262328" path="res://scripts/MainField.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://72kc1nml4dt7" path="res://assets/backgrounds/background.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://nkafwj0s08mo" path="res://assets/characters/character_2_aligned.png" id="3_char"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
+size = Vector2(31, 57)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
+size = Vector2(1266, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
+size = Vector2(25, 704)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_seed"]
+radius = 41.01219
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_grandma"]
+radius = 35.014282
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_can"]
+radius = 15.297058
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_carpenter"]
+radius = 32.01562
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wizard"]
+radius = 36.05551
+
+[node name="MainField" type="Node2D" unique_id=1926997531]
+script = ExtResource("1")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1207368044]
+z_index = -10
+position = Vector2(638, 357.12497)
+scale = Vector2(0.75358856, 0.7457492)
+texture = ExtResource("2_bg")
+
+[node name="HouseObstacle" type="StaticBody2D" parent="." unique_id=1818644338]
+position = Vector2(640, 520)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HouseObstacle" unique_id=674194192]
+position = Vector2(-1.4470062, -1.5495605)
+scale = Vector2(0.99401814, 1.0074786)
+polygon = PackedVector2Array(126, 134, 152, 102, 150, 16, 133, 13, 131, -17, 79, -19, 76, -50, 49, -50, -6, -97, -91, -26, -118, -17, -150, 10, -151, 137)
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=572592109]
+position = Vector2(640, 400)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=2041176932]
+position = Vector2(-1, 0)
+scale = Vector2(0.33, 0.32333332)
+texture = ExtResource("3_char")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=942221402]
+position = Vector2(-0.5, 3.5)
+shape = SubResource("RectangleShape2D_player")
+debug_color = Color(0.1, 0.7, 0.98, 0.42)
+
+[node name="NameTag" type="Label" parent="Player" unique_id=-1447405366]
+offset_left = -50.0
+offset_top = -60.0
+offset_right = 50.0
+offset_bottom = -30.0
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+
+[node name="Wall_Top" type="StaticBody2D" parent="." unique_id=1153162249]
+position = Vector2(640, 150)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Top" unique_id=2121596973]
+position = Vector2(-3, -135)
+shape = SubResource("RectangleShape2D_wall_h")
+debug_color = Color(0.1, 0.6, 0.9, 0.4)
+
+[node name="Wall_Bottom" type="StaticBody2D" parent="." unique_id=79374628]
+position = Vector2(640, 600)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Bottom" unique_id=1441987705]
+position = Vector2(-2, 116)
+shape = SubResource("RectangleShape2D_wall_h")
+debug_color = Color(0.1, 0.6, 0.9, 0.4)
+
+[node name="Wall_Left" type="StaticBody2D" parent="." unique_id=1281804469]
+position = Vector2(150, 375)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Left" unique_id=1398399602]
+position = Vector2(-130, -15)
+shape = SubResource("RectangleShape2D_wall_v")
+debug_color = Color(0.1, 0.6, 0.9, 0.4)
+
+[node name="Wall_Right" type="StaticBody2D" parent="." unique_id=818665903]
+position = Vector2(1130, 375)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall_Right" unique_id=144511507]
+polygon = PackedVector2Array(23, -368, 25, -265, 77, -205, 80, -133, 51, -57, 50, -33, 73, 7, 76, 92, 43, 121, 17, 169, 14, 249, 16, 330, 140, 334, 138, -370)
+
+[node name="SeedNPC" type="Area2D" parent="." unique_id=1182819652]
+position = Vector2(640, 310)
+
+[node name="Polygon2D" type="Polygon2D" parent="SeedNPC" unique_id=1197131640]
+position = Vector2(2, -4.9999905)
+scale = Vector2(0.59375, 0.5647059)
+polygon = PackedVector2Array(0, -40, 32, -10, 22, 32, 0, 45, -22, 32, -32, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SeedNPC" unique_id=1292949704]
+position = Vector2(1, 1)
+shape = SubResource("CircleShape2D_seed")
+debug_color = Color(0.2, 0.9, 0.5, 0.3)
+
+[node name="SeedQuestIcon" type="Label" parent="SeedNPC" unique_id=-1346393685]
+offset_left = -20.0
+offset_top = -85.0
+offset_right = 20.0
+offset_bottom = -45.0
+theme_override_font_sizes/font_size = 38
+horizontal_alignment = 1
+
+[node name="GrandmaNPC" type="Area2D" parent="." unique_id=1592837461]
+position = Vector2(1021, 424)
+
+[node name="Sprite2D" type="Sprite2D" parent="GrandmaNPC" unique_id=1847293847]
+
+[node name="Polygon2D" type="Polygon2D" parent="GrandmaNPC" unique_id=1948572635]
+scale = Vector2(0.7, 0.75714284)
+color = Color(0.8235294, 0.4745098, 0.9333333, 1)
+polygon = PackedVector2Array(0, -35, 25, -10, 20, 35, -20, 35, -25, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrandmaNPC" unique_id=1283746592]
+shape = SubResource("CircleShape2D_grandma")
+debug_color = Color(0.9, 0.4, 0.8, 0.3)
+
+[node name="NameTag" type="Label" parent="GrandmaNPC" unique_id=-1346393684]
+offset_left = -50.0
+offset_top = 35.0
+offset_right = 50.0
+offset_bottom = 63.0
+theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
+theme_override_font_sizes/font_size = 18
+text = "마을 할머니"
+horizontal_alignment = 1
+
+[node name="GrandmaQuestIcon" type="Label" parent="GrandmaNPC" unique_id=-1346393683]
+offset_left = -20.0
+offset_top = -80.0
+offset_right = 20.0
+offset_bottom = -40.0
+theme_override_font_sizes/font_size = 38
+horizontal_alignment = 1
+
+[node name="WateringCan1" type="Area2D" parent="." unique_id=1029384756]
+position = Vector2(215, 520)
+
+[node name="ColorRect" type="ColorRect" parent="WateringCan1" unique_id=1928374650]
+offset_left = -83.0
+offset_top = -6.0
+offset_right = -59.0
+offset_bottom = 17.0
+color = Color(0.2901961, 0.5647059, 0.8862745, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WateringCan1" unique_id=1564738291]
+position = Vector2(-69, 7)
+shape = SubResource("CircleShape2D_can")
+debug_color = Color(0.2, 0.7, 0.9, 0.3)
+
+[node name="IconLabel" type="Label" parent="WateringCan1" unique_id=-1346393682]
+offset_left = -51.0
+offset_top = 94.0
+offset_right = 33.0
+offset_bottom = 122.0
+theme_override_colors/font_color = Color(0.521569, 0.756863, 0.913725, 1)
+theme_override_font_sizes/font_size = 18
+text = "BUCKET 1"
+horizontal_alignment = 1
+
+[node name="NameTag" type="Label" parent="WateringCan1" unique_id=-1346393681]
+offset_left = -68.0
+offset_top = 98.0
+offset_right = 42.0
+offset_bottom = 126.0
+theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
+theme_override_font_sizes/font_size = 17
+text = "물뿌리개 (1/3)"
+horizontal_alignment = 1
+
+[node name="WateringCan2" type="Area2D" parent="." unique_id=-1265582539]
+position = Vector2(480, 220)
+
+[node name="ColorRect" type="ColorRect" parent="WateringCan2" unique_id=-366592645]
+offset_left = -305.0
+offset_top = -113.0
+offset_right = -277.0
+offset_bottom = -88.0
+color = Color(0.2901961, 0.5647059, 0.8862745, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WateringCan2" unique_id=-730229004]
+position = Vector2(-290, -99)
+shape = SubResource("CircleShape2D_can")
+debug_color = Color(0.2, 0.7, 0.9, 0.3)
+
+[node name="IconLabel" type="Label" parent="WateringCan2" unique_id=-346393680]
+visible = false
+offset_left = -42.0
+offset_top = -11.0
+offset_right = 42.0
+offset_bottom = 17.0
+theme_override_colors/font_color = Color(0.521569, 0.756863, 0.913725, 1)
+theme_override_font_sizes/font_size = 18
+text = "BUCKET 2"
+horizontal_alignment = 1
+
+[node name="NameTag" type="Label" parent="WateringCan2" unique_id=-346393679]
+visible = false
+offset_left = -330.0
+offset_top = -80.0
+offset_right = -220.0
+offset_bottom = -52.0
+theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
+theme_override_font_sizes/font_size = 17
+text = "물뿌리개 (2/3)"
+horizontal_alignment = 1
+
+[node name="WateringCan3" type="Area2D" parent="." unique_id=-265582538]
+position = Vector2(950, 520)
+
+[node name="ColorRect" type="ColorRect" parent="WateringCan3" unique_id=633407356]
+offset_left = -82.0
+offset_top = -416.0
+offset_right = -60.0
+offset_bottom = -397.0
+color = Color(0.2901961, 0.5647059, 0.8862745, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WateringCan3" unique_id=269770997]
+position = Vector2(-71, -407)
+shape = SubResource("CircleShape2D_can")
+debug_color = Color(0.2, 0.7, 0.9, 0.3)
+
+[node name="IconLabel" type="Label" parent="WateringCan3" unique_id=653606322]
+visible = false
+offset_left = -30.0
+offset_top = -20.0
+offset_right = 30.0
+offset_bottom = 8.0
+theme_override_colors/font_color = Color(0.521569, 0.756863, 0.913725, 1)
+theme_override_font_sizes/font_size = 18
+text = "BUCKET 3"
+horizontal_alignment = 1
+
+[node name="NameTag" type="Label" parent="WateringCan3" unique_id=653606323]
+visible = false
+offset_left = -45.0
+offset_top = 20.0
+offset_right = 45.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
+theme_override_font_sizes/font_size = 17
+text = "물뿌리개 (3/3)"
+horizontal_alignment = 1
+
+[node name="CarpenterNPC" type="Area2D" parent="." unique_id=2048573619]
+position = Vector2(210, 419)
+
+[node name="Sprite2D" type="Sprite2D" parent="CarpenterNPC" unique_id=-2146393676]
+
+[node name="Polygon2D" type="Polygon2D" parent="CarpenterNPC" unique_id=-2046393675]
+position = Vector2(-1, 2.9999924)
+scale = Vector2(0.7199999, 0.72142833)
+color = Color(0.854902, 0.52549, 0.243137, 1)
+polygon = PackedVector2Array(0, -35, 25, -10, 20, 35, -20, 35, -25, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarpenterNPC" unique_id=-1946393674]
+position = Vector2(1, 7)
+shape = SubResource("CircleShape2D_carpenter")
+debug_color = Color(0.9, 0.6, 0.2, 0.3)
+
+[node name="NameTag" type="Label" parent="CarpenterNPC" unique_id=-1346393680]
+visible = false
+offset_left = -222.0
+offset_top = -11.0
+offset_right = -122.0
+offset_bottom = 17.0
+theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
+theme_override_font_sizes/font_size = 18
+text = "온도 목수"
+horizontal_alignment = 1
+
+[node name="CarpenterQuestIcon" type="Label" parent="CarpenterNPC" unique_id=-1346393679]
+offset_left = -20.0
+offset_top = -72.0
+offset_right = 19.0
+offset_bottom = -19.0
+theme_override_font_sizes/font_size = 38
+horizontal_alignment = 1
+
+[node name="WizardNPC" type="Area2D" parent="." unique_id=-1846393673]
+position = Vector2(640, 200)
+
+[node name="Sprite2D" type="Sprite2D" parent="WizardNPC" unique_id=-1746393672]
+
+[node name="Polygon2D" type="Polygon2D" parent="WizardNPC" unique_id=-1646393671]
+position = Vector2(-4, -44.088894)
+scale = Vector2(0.5666667, 0.63111115)
+color = Color(0.352941, 0.411765, 0.882353, 1)
+polygon = PackedVector2Array(0, -40, 30, -10, 22, 35, -22, 35, -30, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WizardNPC" unique_id=-1546393670]
+position = Vector2(-2, -44)
+shape = SubResource("CircleShape2D_wizard")
+debug_color = Color(0.3, 0.5, 0.9, 0.3)
+
+[node name="NameTag" type="Label" parent="WizardNPC" unique_id=-1346393678]
+offset_left = -68.0
+offset_top = -11.0
+offset_right = 72.0
+offset_bottom = 17.0
+theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
+theme_override_font_sizes/font_size = 18
+text = "공기정화 마법사"
+horizontal_alignment = 1
+
+[node name="WizardQuestIcon" type="Label" parent="WizardNPC" unique_id=-1346393677]
+offset_left = -18.0
+offset_top = -119.0
+offset_right = 22.0
+offset_bottom = -66.0
+theme_override_font_sizes/font_size = 38
+horizontal_alignment = 1

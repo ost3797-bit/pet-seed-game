@@ -1,0 +1,15 @@
+# Godot 4+ specific ignores
+.godot/
+*.tmp
+*~
+
+# Exported game directories (버셀 배포용 빌드 폴더 제외 설정)
+# 주의: 만약 빌드 결과물(public 폴더 등)을 깃허브에 직접 올려서 버셀로 배포하려면
+# 아래 주석(#)을 유지하고, 빌드 폴더를 무시하고 싶을 때만 주석을 해제하세요.
+# /public/
+# /build/
+# /export/
+
+# OS generated files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,156 @@
+[gd_scene format=3 uid="uid://c65uakvtylxj2"]
+
+[ext_resource type="Script" uid="uid://cslx0h87nh7t1" path="res://scripts/WaterGame.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://davl1lobswpba" path="res://assets/frame_wood.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://4ekcb1ehdnld" path="res://assets/button_wood.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://c4pljqhsvot5c" path="res://assets/gauge_wood.png" id="4"]
+
+[node name="WaterGame" type="Control" unique_id=1577195995]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1065215713]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.866667, 0.952941, 1, 1)
+
+[node name="RoundLabel" type="Label" parent="." unique_id=1614822003]
+layout_mode = 0
+offset_left = 460.0
+offset_top = 8.0
+offset_right = 820.0
+offset_bottom = 44.0
+theme_override_colors/font_color = Color(0.290196, 0.564706, 0.886275, 1)
+theme_override_font_sizes/font_size = 24
+horizontal_alignment = 1
+
+[node name="TitleLabel" type="Label" parent="." unique_id=124833608]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 38.0
+offset_right = 1030.0
+offset_bottom = 94.0
+theme_override_font_sizes/font_size = 36
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="." unique_id=1500836401]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 96.0
+offset_right = 1030.0
+offset_bottom = 134.0
+theme_override_font_sizes/font_size = 23
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="FrameWood" type="TextureRect" parent="." unique_id=1187768704]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 135.0
+offset_right = 780.0
+offset_bottom = 525.0
+texture = ExtResource("2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InnerBG" type="ColorRect" parent="FrameWood" unique_id=1912231800]
+z_index = 1
+layout_mode = 0
+offset_left = 70.0
+offset_top = 30.0
+offset_right = 213.0
+offset_bottom = 360.0
+color = Color(0, 0, 0, 0)
+
+[node name="TargetRect" type="ColorRect" parent="FrameWood/InnerBG" unique_id=142966606]
+z_index = 2
+layout_mode = 0
+offset_left = -1.0
+offset_top = 60.0
+offset_right = 143.0
+offset_bottom = 120.0
+mouse_filter = 2
+color = Color(0.84, 0.69, 0.22, 0.9)
+
+[node name="Gauge" type="ProgressBar" parent="FrameWood/InnerBG" unique_id=705326576]
+layout_mode = 0
+offset_right = 142.0
+offset_bottom = 338.0
+mouse_filter = 2
+fill_mode = 3
+show_percentage = false
+
+[node name="HeldFrame" type="TextureRect" parent="." unique_id=1293425452]
+layout_mode = 0
+offset_left = 782.0
+offset_top = 134.0
+offset_right = 1082.0
+offset_bottom = 230.0
+texture = ExtResource("4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HeldBar" type="ProgressBar" parent="HeldFrame" unique_id=2111744443]
+layout_mode = 0
+offset_left = 35.0
+offset_top = 55.0
+offset_right = 266.0
+offset_bottom = 80.0
+mouse_filter = 2
+show_percentage = false
+
+[node name="TimeLabel" type="Label" parent="." unique_id=111969358]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 400.0
+offset_top = 537.0
+offset_right = 880.0
+offset_bottom = 582.0
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="FeedbackLabel" type="Label" parent="." unique_id=140311610]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 250.0
+offset_top = 587.0
+offset_right = 1030.0
+offset_bottom = 622.0
+theme_override_font_sizes/font_size = 23
+horizontal_alignment = 1
+
+[node name="WaterButton" type="TextureButton" parent="." unique_id=1131424609]
+layout_mode = 0
+offset_left = 475.0
+offset_top = 628.0
+offset_right = 805.0
+offset_bottom = 693.0
+texture_normal = ExtResource("3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="ButtonLabel" type="Label" parent="WaterButton" unique_id=555123456]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoundTimer" type="Timer" parent="." unique_id=767490530]
+one_shot = true
