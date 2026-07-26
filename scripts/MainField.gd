@@ -659,13 +659,16 @@ func _build_ui() -> void:
 	wizard_bubble_label.hide()
 	layer.add_child(wizard_bubble_label)
 
-	_add_touch_button(layer, Vector2(45, 585), &"move_left", "L")
-	_add_touch_button(layer, Vector2(170, 585), &"move_right", "R")
-	_add_touch_button(layer, Vector2(108, 522), &"move_up", "U")
-	_add_touch_button(layer, Vector2(108, 648), &"move_down", "D")
-	_add_touch_button(layer, Vector2(1050, 585), &"interact", "말하기", Vector2(180, 95))
+	# 모바일/터치용 화면 조이스틱 및 말하기 버튼 (나중에 필요 시 if true: 로 바꾸면 다시 생성됩니다)
+	if false:
+		_add_touch_button(layer, Vector2(45, 585), &"move_left", "L")
+		_add_touch_button(layer, Vector2(170, 585), &"move_right", "R")
+		_add_touch_button(layer, Vector2(108, 522), &"move_up", "U")
+		_add_touch_button(layer, Vector2(108, 648), &"move_down", "D")
+		_add_touch_button(layer, Vector2(1050, 585), &"interact", "말하기", Vector2(180, 95))
 
 	_build_dialogue_panel(layer)
+
 	_update_quest_text()
 
 
