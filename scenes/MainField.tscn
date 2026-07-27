@@ -296,7 +296,7 @@ theme_override_font_sizes/font_size = 38
 horizontal_alignment = 1
 
 [node name="WizardNPC" type="Area2D" parent="." unique_id=-1846393673]
-position = Vector2(640, 200)
+position = Vector2(490, 180)
 
 [node name="Sprite2D" type="Sprite2D" parent="WizardNPC" unique_id=-1746393672]
 

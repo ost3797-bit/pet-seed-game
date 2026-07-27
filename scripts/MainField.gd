@@ -106,14 +106,15 @@ func _ready() -> void:
 				player_sprite.frame = 12
 		_on_interact_carpenter()
 
-	# 공기정화 마법봉 만들기 미니게임 완료 후 복귀 시 마법사님 앞 위치로 이동 및 대화 자연스럽게 연결
-	if GameState.current_quest == &"air" and air_phase == AirPhase.READY_TO_CLEAN:
+	# 공기정화 마법봉 만들기 미니게임 완료 후 복귀 시 또는 스킵 시 마법사님 옆 위치로 이동 및 대화 자연스럽게 연결
+	if GameState.current_quest == &"air" and (air_phase == AirPhase.READY_TO_CLEAN or air_phase == AirPhase.GO_TO_WIZARD):
 		if player != null and wizard_npc != null:
-			player.position = wizard_npc.position + Vector2(0, 50) # 마법사 바로 앞 위치
-			current_dir = 3 # 위쪽(마법사 방향) 바라보기
+			player.position = wizard_npc.position + Vector2(70, 0) # 마법사 NPC 오른쪽 옆 위치
+			current_dir = 1 # 왼쪽(마법사 방향) 바라보기
 			if player_sprite != null:
-				player_sprite.frame = 12
-		_on_interact_wizard()
+				player_sprite.frame = 4
+		if air_phase == AirPhase.READY_TO_CLEAN:
+			_on_interact_wizard()
 
 
 	# 햇빛 막기 게임 완료 후 복귀 시 씨앗 감사 대화 표시
@@ -596,7 +597,7 @@ func _build_wizard() -> void:
 	if wizard_npc == null:
 		wizard_npc = Area2D.new()
 		wizard_npc.name = "WizardNPC"
-		wizard_npc.position = Vector2(640, 200)
+		wizard_npc.position = Vector2(490, 180)
 		wizard_npc.collision_layer = 0
 		wizard_npc.collision_mask = 1
 		add_child(wizard_npc)

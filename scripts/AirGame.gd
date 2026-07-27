@@ -81,40 +81,60 @@ func _start_round() -> void:
 	_update_gauge_text()
 
 
+func _input(event: InputEvent) -> void:
+	if finished:
+		return
+	var click_pos := Vector2.ZERO
+	if event is InputEventScreenTouch and event.pressed:
+		click_pos = event.position
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		click_pos = event.position
+	else:
+		return
+		
+	for child in smoke_container.get_children():
+		if child is Control and is_instance_valid(child):
+			if child.get_global_rect().grow(20.0).has_point(click_pos):
+				_clean_smoke(child)
+				break
+
+
 func _spawn_smoke() -> void:
 	if finished or smoke_container.get_child_count() >= MAX_SMOKE:
 		return
-	var smoke := Area2D.new()
-	smoke.position = _random_smoke_position()
-	smoke.input_pickable = true
-	smoke.z_index = 3
-	var cloud := Polygon2D.new()
-	cloud.polygon = PackedVector2Array([Vector2(-42, 5), Vector2(-35, -20), Vector2(-12, -38), Vector2(12, -32), Vector2(35, -16), Vector2(44, 10), Vector2(28, 34), Vector2(0, 42), Vector2(-25, 32)])
-	cloud.color = Color("3F454D")
-	smoke.add_child(cloud)
-	var collision := CollisionShape2D.new()
-	var shape := CircleShape2D.new()
-	shape.radius = 44.0
-	collision.shape = shape
-	smoke.add_child(collision)
-	var label := Label.new()
-	label.text = "매연!"
-	label.position = Vector2(-31, -13)
-	label.size = Vector2(62, 30)
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.add_theme_font_size_override("font_size", 17)
-	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	smoke.add_child(label)
-	smoke.input_event.connect(func(_viewport: Node, event: InputEvent, _shape: int):
-		if event is InputEventScreenTouch and event.pressed:
-			_clean_smoke(smoke)
-		elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			_clean_smoke(smoke)
+	var btn := Button.new()
+	var pos := _random_smoke_position()
+	btn.position = pos - Vector2(55, 45)
+	btn.size = Vector2(110, 90)
+	btn.text = "☁️ 매연 구름 ☁️\n(터치하여 정화)"
+	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	btn.add_theme_font_size_override("font_size", 15)
+	btn.add_theme_color_override("font_color", Color("ffffff"))
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color("3F454D")
+	sb.corner_radius_top_left = 45
+	sb.corner_radius_top_right = 45
+	sb.corner_radius_bottom_left = 45
+	sb.corner_radius_bottom_right = 45
+	sb.border_width_left = 3
+	sb.border_width_right = 3
+	sb.border_width_top = 3
+	sb.border_width_bottom = 3
+	sb.border_color = Color("707782")
+	btn.add_theme_stylebox_override("normal", sb)
+	var sb_hover := sb.duplicate() as StyleBoxFlat
+	sb_hover.bg_color = Color("5F6875")
+	sb_hover.border_color = Color("ffffff")
+	btn.add_theme_stylebox_override("hover", sb_hover)
+	btn.add_theme_stylebox_override("pressed", sb_hover)
+	
+	btn.pressed.connect(func():
+		_clean_smoke(btn)
 	)
-	smoke_container.add_child(smoke)
+	smoke_container.add_child(btn)
 
 
-func _clean_smoke(smoke: Area2D) -> void:
+func _clean_smoke(smoke: Node) -> void:
 	if finished or not is_instance_valid(smoke):
 		return
 	smoke.queue_free()
@@ -122,6 +142,7 @@ func _clean_smoke(smoke: Area2D) -> void:
 	feedback.text = "좋아요! 공기가 더 깨끗해졌어요! 🌿"
 	if breath_gauge.value >= 100.0:
 		_complete_round()
+
 
 
 func _complete_round() -> void:

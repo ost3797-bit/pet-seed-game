@@ -58,7 +58,7 @@ func new_game(new_name: String, new_seed_type: String, new_style_id: int) -> voi
 	temp_cleared = true   # 3번째 게임 빠른 진행을 위해 자동 클리어 처리
 	air_cleared = false
 	temp_phase_id = 0
-	air_phase_id = 0
+	air_phase_id = 1      # 마법사 NPC 옆에서 바로 미니게임을 진행할 수 있도록 1단계 설정
 	just_cleared_temp = false
 	update_current_quest()
 	save_game()
@@ -69,7 +69,7 @@ func jump_to_air_quest() -> void:
 	temp_cleared = true
 	air_cleared = false
 	temp_phase_id = 0
-	air_phase_id = 0
+	air_phase_id = 1      # 마법사 NPC 옆에서 바로 미니게임을 진행할 수 있도록 1단계 설정
 	just_cleared_temp = false
 	update_current_quest()
 	save_game()
