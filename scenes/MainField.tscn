@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://dcvtk0b262328" path="res://scripts/MainField.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://72kc1nml4dt7" path="res://assets/backgrounds/background.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://nkafwj0s08mo" path="res://assets/characters/character_2_aligned.png" id="3_char"]
+[ext_resource type="Texture2D" path="res://assets/NPC/Grandma_2d.png" id="4_grandma"]
+[ext_resource type="Texture2D" path="res://assets/NPC/Carpenter_2d.png" id="5_carpenter"]
+[ext_resource type="Texture2D" path="res://assets/NPC/Wizard_2d.png" id="6_wizard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(31, 57)
@@ -123,11 +126,8 @@ horizontal_alignment = 1
 position = Vector2(1021, 424)
 
 [node name="Sprite2D" type="Sprite2D" parent="GrandmaNPC" unique_id=1847293847]
-
-[node name="Polygon2D" type="Polygon2D" parent="GrandmaNPC" unique_id=1948572635]
-scale = Vector2(0.7, 0.75714284)
-color = Color(0.8235294, 0.4745098, 0.9333333, 1)
-polygon = PackedVector2Array(0, -35, 25, -10, 20, 35, -20, 35, -25, -10)
+scale = Vector2(0.0787, 0.0787)
+texture = ExtResource("4_grandma")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrandmaNPC" unique_id=1283746592]
 shape = SubResource("CircleShape2D_grandma")
@@ -264,12 +264,8 @@ horizontal_alignment = 1
 position = Vector2(210, 419)
 
 [node name="Sprite2D" type="Sprite2D" parent="CarpenterNPC" unique_id=-2146393676]
-
-[node name="Polygon2D" type="Polygon2D" parent="CarpenterNPC" unique_id=-2046393675]
-position = Vector2(-1, 2.9999924)
-scale = Vector2(0.7199999, 0.72142833)
-color = Color(0.854902, 0.52549, 0.243137, 1)
-polygon = PackedVector2Array(0, -35, 25, -10, 20, 35, -20, 35, -25, -10)
+scale = Vector2(0.0833, 0.0833)
+texture = ExtResource("5_carpenter")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CarpenterNPC" unique_id=-1946393674]
 position = Vector2(1, 7)
@@ -299,12 +295,8 @@ horizontal_alignment = 1
 position = Vector2(640, 194)
 
 [node name="Sprite2D" type="Sprite2D" parent="WizardNPC" unique_id=-1746393672]
-
-[node name="Polygon2D" type="Polygon2D" parent="WizardNPC" unique_id=-1646393671]
-position = Vector2(-4, -44.088894)
-scale = Vector2(0.5666667, 0.63111115)
-color = Color(0.352941, 0.411765, 0.882353, 1)
-polygon = PackedVector2Array(0, -40, 30, -10, 22, 35, -22, 35, -30, -10)
+scale = Vector2(0.0833, 0.0833)
+texture = ExtResource("6_wizard")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WizardNPC" unique_id=-1546393670]
 position = Vector2(0, -44)
