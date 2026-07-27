@@ -183,8 +183,12 @@ func stop_bgm() -> void:
 		bgm_player.stop()
 
 
+var _web_audio_unblocked := false
+
+
 func _input(event: InputEvent) -> void:
-	# 웹 브라우저 자동 재생 차단(Autoplay Policy) 대응: 사용자의 첫 마우스 클릭이나 키 입력 시 음악이 멈춰있다면 재생 시작
-	if (event is InputEventMouseButton and event.pressed) or (event is InputEventKey and event.pressed):
-		if bgm_player and bgm_player.stream != null and not bgm_player.playing:
+	# 웹 브라우저 자동 재생 차단(Autoplay Policy) 대응: 첫 마우스 클릭, 터치, 키 입력 시 확실하게 오디오 컨텍스트를 깨움
+	if not _web_audio_unblocked and ((event is InputEventMouseButton and event.pressed) or (event is InputEventKey and event.pressed) or (event is InputEventScreenTouch and event.pressed)):
+		_web_audio_unblocked = true
+		if bgm_player and bgm_player.stream != null:
 			bgm_player.play()
