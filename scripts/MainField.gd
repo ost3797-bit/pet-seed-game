@@ -45,6 +45,7 @@ var near_can_index := -1
 var grandma_npc: Area2D = null
 var carpenter_npc: Area2D = null
 var wizard_npc: Area2D = null
+var seed_npc: Area2D = null
 
 var quest_label: Label
 var hint_label: Label
@@ -126,6 +127,16 @@ func _ready() -> void:
 			if player_sprite != null:
 				player_sprite.frame = 12
 		_show_temp_clear_thankyou()
+
+	# 공기정화 게임(최종 퀘스트) 완료 후 복귀 시 씨앗 싹트는 엔딩 이벤트 표시
+	if GameState.just_cleared_air:
+		GameState.just_cleared_air = false
+		if player != null:
+			player.position = Vector2(640, 410) # 씨앗 바로 앞 위치
+			current_dir = 3 # 위쪽(씨앗 방향) 바라보기
+			if player_sprite != null:
+				player_sprite.frame = 12
+		_show_air_clear_sprout_sequence()
 
 
 
@@ -338,7 +349,7 @@ func _build_player() -> void:
 # ─────────────────────────────────────────────
 
 func _build_seed() -> void:
-	var seed_npc := get_node_or_null("SeedNPC") as Area2D
+	seed_npc = get_node_or_null("SeedNPC") as Area2D
 	if seed_npc == null:
 		seed_npc = Area2D.new()
 		seed_npc.name = "SeedNPC"
@@ -1174,6 +1185,86 @@ func _show_temp_clear_thankyou() -> void:
 		"우와, 정말 고마워요! 덕분에 적절한 온도에서 시원하고 편하게 있을 수 있게 되었어요!\n그늘막으로 지켜주셔서 정말 감사해요!",
 		"다행이야!",
 		Callable(),
+		"",
+		Callable()
+	)
+
+
+func _show_air_clear_sprout_sequence() -> void:
+	_show_dialogue(
+		"씨앗",
+		"와아! 매연 구름이 모두 사라지고 맑고 상쾌한 공기가 가득해졌어요!\n정말 고마워요, 당신의 따뜻한 보살핌 덕분에 힘이 불끈불끈 솟아나요!",
+		"다행이야! 정말 수고 많았어!",
+		func(): _show_sprout_step_two(),
+		"",
+		Callable()
+	)
+
+
+func _show_sprout_step_two() -> void:
+	_show_dialogue(
+		"씨앗",
+		"어... 어어어?! 내 몸이... 왠지 간지럽고 따뜻한 에너지가 솟구치고 있어...!\n이... 이건 설마...?!",
+		"앗! 무슨 일이지?!",
+		func(): _show_sprouting_animation(),
+		"",
+		Callable()
+	)
+
+
+func _show_sprouting_animation() -> void:
+	var effect_node := Node2D.new()
+	effect_node.position = Vector2(640, 270) # 씨앗 위쪽 꼭대기 위치
+	effect_node.z_index = 20
+	add_child(effect_node)
+	
+	var sparkle_lbl := Label.new()
+	sparkle_lbl.text = "✨ ✨ ✨\n✨ 🌟 ✨"
+	sparkle_lbl.position = Vector2(-70, -70)
+	sparkle_lbl.size = Vector2(140, 70)
+	sparkle_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sparkle_lbl.add_theme_font_size_override("font_size", 28)
+	sparkle_lbl.add_theme_color_override("font_color", Color("fee761"))
+	effect_node.add_child(sparkle_lbl)
+	
+	var sprout_lbl := Label.new()
+	sprout_lbl.text = "🌱"
+	sprout_lbl.position = Vector2(-40, -10)
+	sprout_lbl.size = Vector2(80, 80)
+	sprout_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sprout_lbl.add_theme_font_size_override("font_size", 64)
+	sprout_lbl.scale = Vector2(0.1, 0.1) # 작게 시작해서 커지기
+	effect_node.add_child(sprout_lbl)
+	
+	if seed_npc != null:
+		var leaf1 := Polygon2D.new()
+		leaf1.polygon = PackedVector2Array([Vector2(0, -40), Vector2(-25, -75), Vector2(-5, -65)])
+		leaf1.color = Color("38b764")
+		seed_npc.add_child(leaf1)
+		var leaf2 := Polygon2D.new()
+		leaf2.polygon = PackedVector2Array([Vector2(0, -40), Vector2(25, -75), Vector2(5, -65)])
+		leaf2.color = Color("75d66f")
+		seed_npc.add_child(leaf2)
+	
+	var tween := create_tween().set_parallel(true)
+	tween.tween_property(sprout_lbl, "scale", Vector2(1.3, 1.3), 0.5).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(sprout_lbl, "position", Vector2(-40, -70), 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	
+	for i in range(5):
+		await get_tree().create_timer(0.08).timeout
+		position = Vector2(randf_range(-6, 6), randf_range(-6, 6))
+	position = Vector2.ZERO
+	
+	await get_tree().create_timer(0.6).timeout
+	_show_sprout_step_three()
+
+
+func _show_sprout_step_three() -> void:
+	_show_dialogue(
+		"새싹이 된 씨앗",
+		"와아아~! 앗싸! 머리 위로 파릇파릇하고 예쁜 새싹이 돋아났어요!! 🌱✨\n당신이 깨끗한 물, 따뜻한 그늘, 그리고 맑은 공기를 선물해 준 덕분이에요!\n정말 정말 고마워요!! 우리 함께 축하하러 가요!",
+		"🌟 엔딩 보러 가기! 🎉",
+		func(): get_tree().change_scene_to_file("res://scenes/Ending.tscn"),
 		"",
 		Callable()
 	)

@@ -12,6 +12,7 @@ var air_cleared := false
 var temp_phase_id := 0  # 0: 시작(씨앗대화), 1: 목수대화(퍼즐진입), 2: 그늘막 획득완료(햇빛막기진입)
 var air_phase_id := 0   # 0: 시작(씨앗대화), 1: 마법사대화(분류미니게임), 2: 마법봉완성(공기정화진입)
 var just_cleared_temp := false
+var just_cleared_air := false
 
 
 
@@ -60,6 +61,7 @@ func new_game(new_name: String, new_seed_type: String, new_style_id: int) -> voi
 	temp_phase_id = 0
 	air_phase_id = 1      # 마법사 NPC 옆에서 바로 미니게임을 진행할 수 있도록 1단계 설정
 	just_cleared_temp = false
+	just_cleared_air = false
 	update_current_quest()
 	save_game()
 
@@ -71,6 +73,7 @@ func jump_to_air_quest() -> void:
 	temp_phase_id = 0
 	air_phase_id = 1      # 마법사 NPC 옆에서 바로 미니게임을 진행할 수 있도록 1단계 설정
 	just_cleared_temp = false
+	just_cleared_air = false
 	update_current_quest()
 	save_game()
 
@@ -84,6 +87,7 @@ func complete_quest(quest_name: StringName) -> void:
 		&"air":
 			air_cleared = true
 			air_phase_id = 0
+			just_cleared_air = true
 	update_current_quest()
 	save_game()
 
