@@ -3,9 +3,9 @@
 [ext_resource type="Script" uid="uid://dcvtk0b262328" path="res://scripts/MainField.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://72kc1nml4dt7" path="res://assets/backgrounds/background.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://nkafwj0s08mo" path="res://assets/characters/character_2_aligned.png" id="3_char"]
-[ext_resource type="Texture2D" path="res://assets/NPC/Grandma_2d.png" id="4_grandma"]
-[ext_resource type="Texture2D" path="res://assets/NPC/Carpenter_2d.png" id="5_carpenter"]
-[ext_resource type="Texture2D" path="res://assets/NPC/Wizard_2d.png" id="6_wizard"]
+[ext_resource type="Texture2D" uid="uid://dgg2il56x3rht" path="res://assets/NPC/Grandma_2d.png" id="4_grandma"]
+[ext_resource type="Texture2D" uid="uid://puslg4g8spum" path="res://assets/NPC/Carpenter_2d.png" id="5_carpenter"]
+[ext_resource type="Texture2D" uid="uid://cu6g7o266dpey" path="res://assets/NPC/Wizard_2d.png" id="6_wizard"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(31, 57)
@@ -17,7 +17,7 @@ size = Vector2(1266, 25)
 size = Vector2(25, 704)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_seed"]
-radius = 41.01219
+radius = 31.257
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_grandma"]
 radius = 35.014282
@@ -49,17 +49,17 @@ scale = Vector2(0.99401814, 1.0074786)
 polygon = PackedVector2Array(126, 134, 152, 102, 150, 16, 133, 13, 131, -17, 79, -19, 76, -50, 49, -50, -6, -97, -91, -26, -118, -17, -150, 10, -151, 137)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=572592109]
-position = Vector2(640, 400)
+position = Vector2(645, 397)
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=2041176932]
-position = Vector2(-1, 0)
-scale = Vector2(0.33, 0.32333332)
+position = Vector2(-77.000015, -10)
+scale = Vector2(0.26500016, 0.2516666)
 texture = ExtResource("3_char")
 hframes = 4
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=942221402]
-position = Vector2(-0.5, 3.5)
+position = Vector2(-80, -6)
 shape = SubResource("RectangleShape2D_player")
 debug_color = Color(0.1, 0.7, 0.98, 0.42)
 
@@ -110,7 +110,7 @@ scale = Vector2(0.59375, 0.5647059)
 polygon = PackedVector2Array(0, -40, 32, -10, 22, 32, 0, 45, -22, 32, -32, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SeedNPC" unique_id=1292949704]
-position = Vector2(1, 1)
+position = Vector2(4, -1)
 shape = SubResource("CircleShape2D_seed")
 debug_color = Color(0.2, 0.9, 0.5, 0.3)
 
@@ -126,7 +126,8 @@ horizontal_alignment = 1
 position = Vector2(1021, 424)
 
 [node name="Sprite2D" type="Sprite2D" parent="GrandmaNPC" unique_id=1847293847]
-scale = Vector2(0.0787, 0.0787)
+position = Vector2(-6.000016, -2.0000029)
+scale = Vector2(0.06278752, 0.06805373)
 texture = ExtResource("4_grandma")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GrandmaNPC" unique_id=1283746592]
@@ -134,6 +135,7 @@ shape = SubResource("CircleShape2D_grandma")
 debug_color = Color(0.9, 0.4, 0.8, 0.3)
 
 [node name="NameTag" type="Label" parent="GrandmaNPC" unique_id=-1346393684]
+visible = false
 offset_left = -50.0
 offset_top = 35.0
 offset_right = 50.0
@@ -264,7 +266,8 @@ horizontal_alignment = 1
 position = Vector2(210, 419)
 
 [node name="Sprite2D" type="Sprite2D" parent="CarpenterNPC" unique_id=-2146393676]
-scale = Vector2(0.0833, 0.0833)
+position = Vector2(-1.0000019, 5)
+scale = Vector2(0.06300417, 0.064798154)
 texture = ExtResource("5_carpenter")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CarpenterNPC" unique_id=-1946393674]
@@ -274,10 +277,10 @@ debug_color = Color(0.9, 0.6, 0.2, 0.3)
 
 [node name="NameTag" type="Label" parent="CarpenterNPC" unique_id=-1346393680]
 visible = false
-offset_left = -222.0
-offset_top = -11.0
-offset_right = -122.0
-offset_bottom = 17.0
+offset_left = -53.0
+offset_top = 34.0
+offset_right = 47.0
+offset_bottom = 62.0
 theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
 theme_override_font_sizes/font_size = 18
 text = "온도 목수"
@@ -295,7 +298,8 @@ horizontal_alignment = 1
 position = Vector2(640, 194)
 
 [node name="Sprite2D" type="Sprite2D" parent="WizardNPC" unique_id=-1746393672]
-scale = Vector2(0.0833, 0.0833)
+position = Vector2(-9.000004, -42)
+scale = Vector2(0.05831665, 0.0629463)
 texture = ExtResource("6_wizard")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WizardNPC" unique_id=-1546393670]
@@ -304,10 +308,11 @@ shape = SubResource("CircleShape2D_wizard")
 debug_color = Color(0.3, 0.5, 0.9, 0.3)
 
 [node name="NameTag" type="Label" parent="WizardNPC" unique_id=-1346393678]
-offset_left = -72.0
-offset_top = 62.0
-offset_right = 68.0
-offset_bottom = 90.0
+visible = false
+offset_left = -70.0
+offset_top = -7.0
+offset_right = 70.0
+offset_bottom = 21.0
 theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
 theme_override_font_sizes/font_size = 18
 text = "공기정화 마법사"
