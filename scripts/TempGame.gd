@@ -38,9 +38,13 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if finished or not moving:
 		return
-	var touched := event is InputEventScreenTouch and event.pressed
-	var clicked := event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed
-	var interact_pressed := event.is_action_pressed(&"interact")
+	var touched: bool = false
+	if event is InputEventScreenTouch:
+		touched = event.pressed
+	var clicked: bool = false
+	if event is InputEventMouseButton:
+		clicked = (event.button_index == MOUSE_BUTTON_LEFT and event.pressed)
+	var interact_pressed: bool = event.is_action_pressed(&"interact")
 	if touched or clicked or interact_pressed:
 		_stop_and_check()
 
