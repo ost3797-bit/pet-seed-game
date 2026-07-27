@@ -688,6 +688,19 @@ func _build_ui() -> void:
 	hint_label.add_theme_color_override("font_color", Color(0.9, 0.9, 0.9))
 	layer.add_child(hint_label)
 
+	# 빠른 3차 시나리오 테스트용 스킵 버튼 (좌측 상단 배치)
+	var skip_btn := Button.new()
+	skip_btn.text = "⏩ 3차 공기 퀘스트 바로 스킵!"
+	skip_btn.position = Vector2(15, 12)
+	skip_btn.size = Vector2(250, 40)
+	skip_btn.add_theme_font_size_override("font_size", 16)
+	skip_btn.add_theme_color_override("font_color", Color("FEE761"))
+	skip_btn.pressed.connect(func():
+		GameState.jump_to_air_quest()
+		get_tree().change_scene_to_file("res://scenes/MainField.tscn")
+	)
+	layer.add_child(skip_btn)
+
 	bubble_label = _label("씨앗 가까이에 왔어요!\n[Space] 또는 말하기 버튼을 눌러요.", Vector2(390, 195), Vector2(500, 72), 22)
 	bubble_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	bubble_label.hide()

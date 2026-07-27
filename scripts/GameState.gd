@@ -54,8 +54,19 @@ func new_game(new_name: String, new_seed_type: String, new_style_id: int) -> voi
 		player_name = "새싹이"
 	seed_type = new_seed_type
 	character_style_id = new_style_id
-	water_cleared = false
-	temp_cleared = false
+	water_cleared = true  # 3번째 게임 빠른 진행을 위해 자동 클리어 처리
+	temp_cleared = true   # 3번째 게임 빠른 진행을 위해 자동 클리어 처리
+	air_cleared = false
+	temp_phase_id = 0
+	air_phase_id = 0
+	just_cleared_temp = false
+	update_current_quest()
+	save_game()
+
+
+func jump_to_air_quest() -> void:
+	water_cleared = true
+	temp_cleared = true
 	air_cleared = false
 	temp_phase_id = 0
 	air_phase_id = 0
