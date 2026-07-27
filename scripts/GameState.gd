@@ -55,11 +55,11 @@ func new_game(new_name: String, new_seed_type: String, new_style_id: int) -> voi
 		player_name = "새싹이"
 	seed_type = new_seed_type
 	character_style_id = new_style_id
-	water_cleared = true  # 3번째 게임 빠른 진행을 위해 자동 클리어 처리
-	temp_cleared = true   # 3번째 게임 빠른 진행을 위해 자동 클리어 처리
+	water_cleared = false
+	temp_cleared = false
 	air_cleared = false
 	temp_phase_id = 0
-	air_phase_id = 1      # 마법사 NPC 옆에서 바로 미니게임을 진행할 수 있도록 1단계 설정
+	air_phase_id = 0
 	just_cleared_temp = false
 	just_cleared_air = false
 	update_current_quest()
