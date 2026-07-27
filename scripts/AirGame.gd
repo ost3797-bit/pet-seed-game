@@ -472,8 +472,7 @@ func _on_boss_clicked() -> void:
 	_update_boss_style()
 
 	if boss_hp <= 0:
-		var viewport_size := get_viewport_rect().size
-		boss_btn.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 - 100)
+		boss_btn.position = base_pos
 		feedback.text = "🎉 보스 처치 완료! 하늘이 맑아졌어요! ✨"
 		if is_instance_valid(boss_btn):
 			boss_btn.disabled = true
