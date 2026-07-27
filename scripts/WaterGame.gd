@@ -44,8 +44,24 @@ var result_mode := ""
 
 
 func _ready() -> void:
+	_setup_background_image()
 	_setup_styles_and_signals()
 	_start_round()
+
+
+func _setup_background_image() -> void:
+	var bg_path := "res://assets/game_bg.png"
+	if ResourceLoader.exists(bg_path):
+		var tex_rect := TextureRect.new()
+		tex_rect.texture = load(bg_path)
+		tex_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tex_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+		tex_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		tex_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if bg_rect != null and is_instance_valid(bg_rect):
+			bg_rect.hide()
+		add_child(tex_rect)
+		move_child(tex_rect, 0)
 
 
 func _setup_styles_and_signals() -> void:

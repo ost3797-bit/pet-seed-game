@@ -187,17 +187,17 @@ text = "물뿌리개 (1/3)"
 horizontal_alignment = 1
 
 [node name="WateringCan2" type="Area2D" parent="." unique_id=-1265582539]
-position = Vector2(480, 220)
+position = Vector2(227, 143)
 
 [node name="ColorRect" type="ColorRect" parent="WateringCan2" unique_id=-366592645]
-offset_left = -305.0
-offset_top = -113.0
-offset_right = -277.0
-offset_bottom = -88.0
+offset_left = -41.0
+offset_top = -26.0
+offset_right = -13.0
+offset_bottom = -1.0
 color = Color(0.2901961, 0.5647059, 0.8862745, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WateringCan2" unique_id=-730229004]
-position = Vector2(-290, -99)
+position = Vector2(-30, -12)
 shape = SubResource("CircleShape2D_can")
 debug_color = Color(0.2, 0.7, 0.9, 0.3)
 
@@ -296,7 +296,7 @@ theme_override_font_sizes/font_size = 38
 horizontal_alignment = 1
 
 [node name="WizardNPC" type="Area2D" parent="." unique_id=-1846393673]
-position = Vector2(490, 180)
+position = Vector2(640, 194)
 
 [node name="Sprite2D" type="Sprite2D" parent="WizardNPC" unique_id=-1746393672]
 
@@ -307,15 +307,15 @@ color = Color(0.352941, 0.411765, 0.882353, 1)
 polygon = PackedVector2Array(0, -40, 30, -10, 22, 35, -22, 35, -30, -10)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WizardNPC" unique_id=-1546393670]
-position = Vector2(-2, -44)
+position = Vector2(0, -44)
 shape = SubResource("CircleShape2D_wizard")
 debug_color = Color(0.3, 0.5, 0.9, 0.3)
 
 [node name="NameTag" type="Label" parent="WizardNPC" unique_id=-1346393678]
-offset_left = -68.0
-offset_top = -11.0
-offset_right = 72.0
-offset_bottom = 17.0
+offset_left = -72.0
+offset_top = 62.0
+offset_right = 68.0
+offset_bottom = 90.0
 theme_override_colors/font_color = Color(1, 0.890196, 0.419608, 1)
 theme_override_font_sizes/font_size = 18
 text = "공기정화 마법사"
