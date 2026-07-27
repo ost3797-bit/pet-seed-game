@@ -177,11 +177,11 @@ func _show_round_popup() -> void:
 	overlay.mouse_filter = Control.MOUSE_FILTER_STOP
 	popup_layer.add_child(overlay)
 
-	# 팝업 패널
-	var panel := Panel.new()
-	panel.position = Vector2(240, 160)
-	panel.size = Vector2(800, 400)
-	panel.z_index = 51
+	# 상단 규칙 패널 (버튼이 없으므로 남은 영역을 모두 설명문으로 사용하여 절대 겹치지 않음!)
+	var rule_panel := Panel.new()
+	rule_panel.position = Vector2(200, 100)
+	rule_panel.size = Vector2(880, 360)
+	rule_panel.z_index = 51
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = Color("1a1a2e")
 	sb.border_width_left = 6
@@ -193,44 +193,59 @@ func _show_round_popup() -> void:
 	sb.corner_radius_top_right = 0
 	sb.corner_radius_bottom_left = 0
 	sb.corner_radius_bottom_right = 0
-	panel.add_theme_stylebox_override("panel", sb)
-	popup_layer.add_child(panel)
+	rule_panel.add_theme_stylebox_override("panel", sb)
+	popup_layer.add_child(rule_panel)
 
 	# 라운드 번호 상단 뱃지
 	var badge_bg := ColorRect.new()
 	badge_bg.color = info["color"]
 	badge_bg.position = Vector2(0, 0)
-	badge_bg.size = Vector2(800, 55)
+	badge_bg.size = Vector2(880, 55)
 	badge_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(badge_bg)
+	rule_panel.add_child(badge_bg)
 
-	var badge_label := _label("ROUND  " + str(current_round + 1) + "  /  " + str(TOTAL_ROUNDS), Vector2(0, 10), Vector2(800, 35), 26, Color("181425"))
-	panel.add_child(badge_label)
+	var badge_label := _label("ROUND  " + str(current_round + 1) + "  /  " + str(TOTAL_ROUNDS), Vector2(0, 10), Vector2(880, 35), 26, Color("181425"))
+	rule_panel.add_child(badge_label)
 
 	# 제목
-	var title_lbl := _label(info["title"], Vector2(20, 65), Vector2(760, 50), 30, info["color"])
-	panel.add_child(title_lbl)
+	var title_lbl := _label(info["title"], Vector2(20, 65), Vector2(840, 45), 28, info["color"])
+	rule_panel.add_child(title_lbl)
 
 	# 구분선
 	var divider := ColorRect.new()
 	divider.color = info["color"]
-	divider.position = Vector2(40, 120)
-	divider.size = Vector2(720, 3)
+	divider.position = Vector2(40, 115)
+	divider.size = Vector2(800, 3)
 	divider.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	panel.add_child(divider)
+	rule_panel.add_child(divider)
 
-	# 규칙 설명
-	var rule_lbl := _label(info["rule"], Vector2(30, 135), Vector2(740, 190), 22, Color("e0e0e0"))
+	# 규칙 설명 (버튼이 하단 창으로 분리되었으므로 높이를 230px까지 넉넉하게 사용!)
+	var rule_lbl := _label(info["rule"], Vector2(30, 130), Vector2(820, 220), 22, Color("e0e0e0"))
 	rule_lbl.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	panel.add_child(rule_lbl)
+	rule_panel.add_child(rule_lbl)
+
+	# 하단 시작 버튼 패널 (규칙 패널 아래에 별도의 창으로 완벽히 분리!)
+	var btn_panel := Panel.new()
+	btn_panel.position = Vector2(340, 485)
+	btn_panel.size = Vector2(600, 90)
+	btn_panel.z_index = 51
+	var btn_panel_sb := StyleBoxFlat.new()
+	btn_panel_sb.bg_color = Color("1a1a2e")
+	btn_panel_sb.border_width_left = 6
+	btn_panel_sb.border_width_right = 6
+	btn_panel_sb.border_width_top = 6
+	btn_panel_sb.border_width_bottom = 6
+	btn_panel_sb.border_color = info["color"]
+	btn_panel.add_theme_stylebox_override("panel", btn_panel_sb)
+	popup_layer.add_child(btn_panel)
 
 	# 시작 버튼
 	var start_btn := Button.new()
 	var btn_text := "👾 소탕 시작!" if current_round == 0 else ("🌤️ 라운드 2 시작!" if current_round == 1 else "👹 보스전 시작!")
 	start_btn.text = btn_text
-	start_btn.position = Vector2(250, 325)
-	start_btn.size = Vector2(300, 60)
-	start_btn.add_theme_font_size_override("font_size", 24)
+	start_btn.position = Vector2(50, 15)
+	start_btn.size = Vector2(500, 60)
+	start_btn.add_theme_font_size_override("font_size", 26)
 	start_btn.add_theme_color_override("font_color", Color("ffffff"))
 	var btn_sb := StyleBoxFlat.new()
 	btn_sb.bg_color = Color("2a2f4e")
@@ -239,10 +254,6 @@ func _show_round_popup() -> void:
 	btn_sb.border_width_top = 4
 	btn_sb.border_width_bottom = 4
 	btn_sb.border_color = info["color"]
-	btn_sb.corner_radius_top_left = 0
-	btn_sb.corner_radius_top_right = 0
-	btn_sb.corner_radius_bottom_left = 0
-	btn_sb.corner_radius_bottom_right = 0
 	start_btn.add_theme_stylebox_override("normal", btn_sb)
 	var btn_hover := btn_sb.duplicate() as StyleBoxFlat
 	btn_hover.bg_color = info["color"]
@@ -254,7 +265,7 @@ func _show_round_popup() -> void:
 		waiting_for_popup = false
 		_start_round()
 	)
-	panel.add_child(start_btn)
+	btn_panel.add_child(start_btn)
 
 
 # ─── 라운드 시작 ──────────────────────────────────────
@@ -446,12 +457,9 @@ func _on_boss_clicked() -> void:
 	if finished or waiting_for_popup or boss_btn == null:
 		return
 	boss_hp -= 1
-	# 보스 화면 흔들기 효과
-	boss_btn.position += Vector2(randf_range(-8, 8), randf_range(-8, 8))
-	await get_tree().create_timer(0.05).timeout
-	if is_instance_valid(boss_btn):
-		var viewport_size := get_viewport_rect().size
-		boss_btn.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 - 100)
+	var viewport_size := get_viewport_rect().size
+	var base_pos := Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 - 100)
+	boss_btn.position = base_pos + Vector2(randf_range(-14, 14), randf_range(-14, 14))
 
 	# 게이지 업데이트
 	breath_gauge.value = minf(100.0, float(BOSS_MAX_HP - boss_hp) / float(BOSS_MAX_HP) * 100.0)
@@ -464,6 +472,8 @@ func _on_boss_clicked() -> void:
 	_update_boss_style()
 
 	if boss_hp <= 0:
+		var viewport_size := get_viewport_rect().size
+		boss_btn.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 - 100)
 		feedback.text = "🎉 보스 처치 완료! 하늘이 맑아졌어요! ✨"
 		if is_instance_valid(boss_btn):
 			boss_btn.disabled = true
@@ -494,11 +504,14 @@ func _finish_game() -> void:
 	_show_result("🎉 전체 클리어! 🌱\n씨앗이 깨끗하고 상쾌한 공기를 마셨어요!\n당신은 훌륭한 공기 지킴이예요!", "텃밭으로 돌아가기")
 
 
-# ─── _process (게이지 감소) ──────────────────────────
+# ─── _process (게이지 감소 및 보스 위치 복구) ──────────────────────────
 func _process(_delta: float) -> void:
 	if finished or waiting_for_popup:
 		return
-	if current_round == 2:  # 라운드3는 보스만
+	if current_round == 2:  # 라운드3는 보스 흔들림 부드럽게 원위치 복구
+		if boss_btn != null and is_instance_valid(boss_btn):
+			var base_pos := Vector2(get_viewport_rect().size.x / 2.0 - 120, get_viewport_rect().size.y / 2.0 - 100)
+			boss_btn.position = boss_btn.position.lerp(base_pos, 15.0 * _delta)
 		return
 	var smoke_count := smoke_container.get_child_count()
 	if smoke_count > 0:
@@ -509,7 +522,7 @@ func _process(_delta: float) -> void:
 
 # ─── _input (터치/마우스 폴백) ───────────────────────
 func _input(event: InputEvent) -> void:
-	if finished or waiting_for_popup or current_round == 2:
+	if finished or waiting_for_popup:
 		return
 	var click_pos := Vector2.ZERO
 	if event is InputEventScreenTouch and event.pressed:
@@ -521,7 +534,10 @@ func _input(event: InputEvent) -> void:
 	for child in smoke_container.get_children():
 		if child is Button and is_instance_valid(child):
 			if child.get_global_rect().grow(20.0).has_point(click_pos):
-				_on_smoke_clicked(child)
+				if current_round == 2:
+					_on_boss_clicked()
+				else:
+					_on_smoke_clicked(child)
 				break
 
 
@@ -600,6 +616,7 @@ func _label(value: String, pos: Vector2, control_size: Vector2, font_size: int, 
 	node.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	node.add_theme_font_size_override("font_size", font_size)
 	node.add_theme_color_override("font_color", font_color)
+	node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return node
 
 
