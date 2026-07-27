@@ -18,6 +18,13 @@ enum TempPhase {
 	READY_TO_SHADE      # 2: 그늘막 획득 후 씨앗에게 대화 -> 햇빛 막기 미니게임
 }
 
+# 공기 맞추기 퀘스트 진행 단계
+enum AirPhase {
+	INIT_TALK_SEED,     # 0: 씨앗에게 대화 -> 마법사에게 가라
+	GO_TO_WIZARD,       # 1: 마법사에게 가기 -> 분류 미니게임
+	READY_TO_CLEAN      # 2: 마법봉 획득 후 씨앗에게 대화 -> 공기 정화 미니게임
+}
+
 var player: CharacterBody2D
 var player_body: Polygon2D
 var player_sprite: Sprite2D = null
@@ -31,6 +38,7 @@ var near_carpenter := false
 var near_wizard := false
 var water_phase := WaterPhase.INIT_TALK_SEED
 var temp_phase := TempPhase.INIT_TALK_SEED
+var air_phase := AirPhase.INIT_TALK_SEED
 var watering_can_items: Array[Area2D] = []
 var found_can_count := 0
 var near_can_index := -1
@@ -83,6 +91,7 @@ func _ready() -> void:
 	_build_wizard()
 	_build_ui()
 	temp_phase = GameState.temp_phase_id as TempPhase
+	air_phase = GameState.air_phase_id as AirPhase
 	_update_quest_icons()
 	_update_quest_text()
 	if GameState.is_all_clear():
@@ -96,6 +105,15 @@ func _ready() -> void:
 			if player_sprite != null:
 				player_sprite.frame = 12
 		_on_interact_carpenter()
+
+	# 공기정화 마법봉 만들기 미니게임 완료 후 복귀 시 마법사님 앞 위치로 이동 및 대화 자연스럽게 연결
+	if GameState.current_quest == &"air" and air_phase == AirPhase.READY_TO_CLEAN:
+		if player != null and wizard_npc != null:
+			player.position = wizard_npc.position + Vector2(0, 50) # 마법사 바로 앞 위치
+			current_dir = 3 # 위쪽(마법사 방향) 바라보기
+			if player_sprite != null:
+				player_sprite.frame = 12
+		_on_interact_wizard()
 
 
 	# 햇빛 막기 게임 완료 후 복귀 시 씨앗 감사 대화 표시
@@ -896,14 +914,34 @@ func _on_interact_seed() -> void:
 						Callable()
 					)
 		&"air":
-			_show_dialogue(
-				"씨앗",
-				"공기가 너무 탁하고 더러워요...\n매연을 없애서 깨끗한 공기를 만들어 주세요!",
-				"공기 정화 시작!",
-				func(): get_tree().change_scene_to_file("res://scenes/AirGame.tscn"),
-				"",
-				Callable()
-			)
+			match air_phase:
+				AirPhase.INIT_TALK_SEED:
+					_show_dialogue(
+						"씨앗",
+						"콜록콜록... 공기가 너무 탁하고 매연 냄새가 나서 숨쉬기 힘들어요... 😭\n저기 위쪽 언덕에 사는 공기정화 마법사님에게 가서 맑은 공기를 만들 수 있는 방법을 물어봐 주세요!",
+						"마법사님께 가기!",
+						_accept_find_wizard,
+						"",
+						Callable()
+					)
+				AirPhase.GO_TO_WIZARD:
+					_show_dialogue(
+						"씨앗",
+						"위쪽 언덕에 계신 공기정화 마법사님에게 가서 맑은 공기를 만드는 방법을 물어봐 주세요!",
+						"",
+						Callable(),
+						"알겠어요!",
+						Callable()
+					)
+				AirPhase.READY_TO_CLEAN:
+					_show_dialogue(
+						"씨앗",
+						"우와! 마법사님과 함께 반짝이는 마법봉을 만들어 오셨군요! 정말 고마워요!\n지금 하늘에서 탁한 매연 구름들이 몰려오고 있어요.\n마법봉으로 탁한 공기를 모두 정화해 주세요!",
+						"공기 정화 시작!",
+						func(): get_tree().change_scene_to_file("res://scenes/AirGame.tscn"),
+						"",
+						Callable()
+					)
 		&"complete":
 			get_tree().change_scene_to_file("res://scenes/Ending.tscn")
 
@@ -1030,14 +1068,34 @@ func _on_interact_carpenter() -> void:
 
 func _on_interact_wizard() -> void:
 	if GameState.current_quest == &"air":
-		_show_dialogue(
-			"공기정화 마법사",
-			"신비로운 바람의 마법이 감지되는군요...\n마을의 탁한 공기와 매연을 걷어내고 맑은 숨결을 불어넣어 줍시다.\n저와 함께 정화 마법을 펼쳐 보시겠습니까?",
-			"공기 정화 시작!",
-			func(): get_tree().change_scene_to_file("res://scenes/AirGame.tscn"),
-			"",
-			Callable()
-		)
+		match air_phase:
+			AirPhase.INIT_TALK_SEED:
+				_show_dialogue(
+					"공기정화 마법사",
+					"허허! 먼저 텃밭에서 숨막혀하는 씨앗과 이야기를 나누어 보게나!",
+					"",
+					Callable(),
+					"네!",
+					Callable()
+				)
+			AirPhase.GO_TO_WIZARD:
+				_show_dialogue(
+					"공기정화 마법사",
+					"허허, 오염된 공기 때문에 씨앗이 고통받고 있군요. 이를 해결하려면 강력한 '공기정화 마법봉'이 필요합니다.\n마법봉에 맑은 기운을 담으려면 세상의 공기를 오염시키는 원인과 깨끗하게 하는 요소를 올바르게 구별할 줄 알아야 하지요.\n나와 함께 마법봉 만드는 것을 도와주시겠습니까?",
+					"✨ 마법봉 만들기 돕기!",
+					func(): get_tree().change_scene_to_file("res://scenes/AirWandCraft.tscn"),
+					"",
+					Callable()
+				)
+			AirPhase.READY_TO_CLEAN:
+				_show_dialogue(
+					"공기정화 마법사",
+					"훌륭합니다! 그대의 환경에 대한 지혜 덕분에 맑고 빛나는 '공기정화 마법봉'이 완성되었습니다!\n자, 이 마법봉을 가지고 어서 씨앗에게 가서 탁한 매연을 걷어내 주십시오!",
+					"✨ 마법봉 챙겨서 가기!",
+					Callable(),
+					"",
+					Callable()
+				)
 	elif GameState.current_quest == &"water":
 		_show_dialogue(
 			"공기정화 마법사",
@@ -1141,6 +1199,15 @@ func _accept_find_carpenter() -> void:
 	hint_label.text = "빨간 지붕집 앞의 온도 목수님에게 가서 말을 걸어보세요!"
 
 
+func _accept_find_wizard() -> void:
+	air_phase = AirPhase.GO_TO_WIZARD
+	GameState.air_phase_id = 1
+	GameState.save_game()
+	_update_quest_icons()
+	_update_quest_text()
+	hint_label.text = "위쪽 언덕의 공기정화 마법사님에게 가서 말을 걸어보세요!"
+
+
 func _update_quest_icons() -> void:
 	if seed_quest_icon != null:
 		seed_quest_icon.text = ""
@@ -1170,7 +1237,13 @@ func _update_quest_icons() -> void:
 			TempPhase.READY_TO_SHADE:
 				if seed_quest_icon != null: seed_quest_icon.text = "❗"
 	elif GameState.current_quest == &"air" and not GameState.air_cleared:
-		if wizard_quest_icon != null: wizard_quest_icon.text = "❓"
+		match air_phase:
+			AirPhase.INIT_TALK_SEED:
+				if seed_quest_icon != null: seed_quest_icon.text = "❓"
+			AirPhase.GO_TO_WIZARD:
+				if wizard_quest_icon != null: wizard_quest_icon.text = "❓"
+			AirPhase.READY_TO_CLEAN:
+				if seed_quest_icon != null: seed_quest_icon.text = "❗"
 
 
 # ─────────────────────────────────────────────
@@ -1202,7 +1275,11 @@ func _update_quest_text() -> void:
 				TempPhase.INIT_TALK_SEED: text = "해야 할 일: 텃밭의 씨앗과 대화하기"
 				TempPhase.GO_TO_CARPENTER: text = "해야 할 일: 빨간 지붕집 목수에게 그늘막 구하기"
 				TempPhase.READY_TO_SHADE: text = "해야 할 일: 씨앗에게 돌아가 그늘막으로 햇빛 막기"
-		&"air":     text = "해야 할 일: 깨끗한 공기 만들기"
+		&"air":
+			match air_phase:
+				AirPhase.INIT_TALK_SEED: text = "해야 할 일: 텃밭의 씨앗과 대화하기"
+				AirPhase.GO_TO_WIZARD: text = "해야 할 일: 언덕 위 마법사와 공기정화 마법봉 만들기"
+				AirPhase.READY_TO_CLEAN: text = "해야 할 일: 씨앗에게 돌아가 마법봉으로 매연 정화하기"
 		&"complete": text = "모든 준비가 끝났어요!"
 	quest_label.text = text
 	
@@ -1216,6 +1293,14 @@ func _update_quest_text() -> void:
 				hint_label.text = "빨간 지붕집 앞의 온도 목수님에게 가서 말을 걸어보세요!"
 			TempPhase.READY_TO_SHADE:
 				hint_label.text = "그늘막을 획득했어요! 가운데 씨앗에게 돌아가 말을 걸어요."
+	elif GameState.current_quest == &"air":
+		match air_phase:
+			AirPhase.INIT_TALK_SEED:
+				hint_label.text = "가운데 씨앗에게 말을 걸어보세요!"
+			AirPhase.GO_TO_WIZARD:
+				hint_label.text = "위쪽 언덕의 공기정화 마법사님에게 가서 말을 걸어보세요!"
+			AirPhase.READY_TO_CLEAN:
+				hint_label.text = "마법봉을 획득했어요! 가운데 씨앗에게 돌아가 말을 걸어요."
 	else:
 		hint_label.text = "WASD / 방향키 또는 화면 버튼으로 움직여요."
 

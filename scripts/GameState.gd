@@ -10,6 +10,7 @@ var water_cleared := false
 var temp_cleared := false
 var air_cleared := false
 var temp_phase_id := 0  # 0: 시작(씨앗대화), 1: 목수대화(퍼즐진입), 2: 그늘막 획득완료(햇빛막기진입)
+var air_phase_id := 0   # 0: 시작(씨앗대화), 1: 마법사대화(분류미니게임), 2: 마법봉완성(공기정화진입)
 var just_cleared_temp := false
 
 
@@ -57,6 +58,7 @@ func new_game(new_name: String, new_seed_type: String, new_style_id: int) -> voi
 	temp_cleared = false
 	air_cleared = false
 	temp_phase_id = 0
+	air_phase_id = 0
 	just_cleared_temp = false
 	update_current_quest()
 	save_game()
@@ -68,7 +70,9 @@ func complete_quest(quest_name: StringName) -> void:
 		&"temp":
 			temp_cleared = true
 			temp_phase_id = 0
-		&"air": air_cleared = true
+		&"air":
+			air_cleared = true
+			air_phase_id = 0
 	update_current_quest()
 	save_game()
 
@@ -100,7 +104,8 @@ func save_game() -> bool:
 		"water_cleared": water_cleared,
 		"temp_cleared": temp_cleared,
 		"air_cleared": air_cleared,
-		"temp_phase_id": temp_phase_id
+		"temp_phase_id": temp_phase_id,
+		"air_phase_id": air_phase_id
 	}
 	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file == null:
@@ -127,5 +132,6 @@ func load_game() -> bool:
 	temp_cleared = bool(data.get("temp_cleared", false))
 	air_cleared = bool(data.get("air_cleared", false))
 	temp_phase_id = int(data.get("temp_phase_id", 0))
+	air_phase_id = int(data.get("air_phase_id", 0))
 	update_current_quest()
 	return true
