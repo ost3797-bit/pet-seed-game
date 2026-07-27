@@ -13,12 +13,15 @@ var temp_phase_id := 0  # 0: 시작(씨앗대화), 1: 목수대화(퍼즐진입)
 var air_phase_id := 0   # 0: 시작(씨앗대화), 1: 마법사대화(분류미니게임), 2: 마법봉완성(공기정화진입)
 var just_cleared_temp := false
 var just_cleared_air := false
+var bgm_player: AudioStreamPlayer
 
 
 
 func _ready() -> void:
 	_init_fallback_fonts()
 	_register_input_actions()
+	_init_bgm()
+
 
 
 func _init_fallback_fonts() -> void:
@@ -150,3 +153,38 @@ func load_game() -> bool:
 	air_phase_id = int(data.get("air_phase_id", 0))
 	update_current_quest()
 	return true
+
+
+# ─── BGM (배경음악) 관리 ─────────────────────────────────────────────
+func _init_bgm() -> void:
+	bgm_player = AudioStreamPlayer.new()
+	bgm_player.name = "BGMPlayer"
+	bgm_player.volume_db = -6.0  # 듣기 편안한 기본 음량
+	add_child(bgm_player)
+	play_bgm("res://assets/audio/Over_the_Stone_Bridge.mp3")
+
+
+func play_bgm(stream_path: String) -> void:
+	if not ResourceLoader.exists(stream_path):
+		return
+	var stream := load(stream_path) as AudioStream
+	if stream == null:
+		return
+	if "loop" in stream:
+		stream.loop = true
+	if bgm_player.stream == stream and bgm_player.playing:
+		return
+	bgm_player.stream = stream
+	bgm_player.play()
+
+
+func stop_bgm() -> void:
+	if bgm_player and bgm_player.playing:
+		bgm_player.stop()
+
+
+func _input(event: InputEvent) -> void:
+	# 웹 브라우저 자동 재생 차단(Autoplay Policy) 대응: 사용자의 첫 마우스 클릭이나 키 입력 시 음악이 멈춰있다면 재생 시작
+	if (event is InputEventMouseButton and event.pressed) or (event is InputEventKey and event.pressed):
+		if bgm_player and bgm_player.stream != null and not bgm_player.playing:
+			bgm_player.play()
