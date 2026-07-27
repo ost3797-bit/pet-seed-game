@@ -431,6 +431,24 @@ func _build_grandma() -> void:
 		collision.shape = shape
 		grandma_npc.add_child(collision)
 
+	# 이미지 적용 및 기존 임시 도형(Polygon2D) 제거
+	var tex_path := "res://assets/NPC/Grandma_2d.png"
+	if ResourceLoader.exists(tex_path):
+		var tex := load(tex_path) as Texture2D
+		if tex:
+			var spr := grandma_npc.get_node_or_null("Sprite2D") as Sprite2D
+			if spr == null:
+				spr = Sprite2D.new()
+				spr.name = "Sprite2D"
+				grandma_npc.add_child(spr)
+			spr.texture = tex
+			if tex.get_height() > 0:
+				var s := 85.0 / float(tex.get_height())
+				spr.scale = Vector2(s, s)
+			var old_body := grandma_npc.get_node_or_null("Polygon2D")
+			if old_body:
+				old_body.queue_free()
+
 	# 이름표
 	var name_tag := grandma_npc.get_node_or_null("NameTag") as Label
 	if name_tag == null:
@@ -562,6 +580,24 @@ func _build_carpenter() -> void:
 		collision.shape = shape
 		carpenter_npc.add_child(collision)
 
+	# 이미지 적용 및 기존 임시 도형(Polygon2D) 제거
+	var tex_path := "res://assets/NPC/Carpenter_2d.png"
+	if ResourceLoader.exists(tex_path):
+		var tex := load(tex_path) as Texture2D
+		if tex:
+			var spr := carpenter_npc.get_node_or_null("Sprite2D") as Sprite2D
+			if spr == null:
+				spr = Sprite2D.new()
+				spr.name = "Sprite2D"
+				carpenter_npc.add_child(spr)
+			spr.texture = tex
+			if tex.get_height() > 0:
+				var s := 90.0 / float(tex.get_height())
+				spr.scale = Vector2(s, s)
+			var old_body := carpenter_npc.get_node_or_null("Polygon2D")
+			if old_body:
+				old_body.queue_free()
+
 	# 이름표
 	var name_tag := carpenter_npc.get_node_or_null("NameTag") as Label
 	if name_tag == null:
@@ -629,6 +665,24 @@ func _build_wizard() -> void:
 		shape.radius = 100.0
 		collision.shape = shape
 		wizard_npc.add_child(collision)
+
+	# 이미지 적용 및 기존 임시 도형(Polygon2D) 제거
+	var tex_path := "res://assets/NPC/Wizard_2d.png"
+	if ResourceLoader.exists(tex_path):
+		var tex := load(tex_path) as Texture2D
+		if tex:
+			var spr := wizard_npc.get_node_or_null("Sprite2D") as Sprite2D
+			if spr == null:
+				spr = Sprite2D.new()
+				spr.name = "Sprite2D"
+				wizard_npc.add_child(spr)
+			spr.texture = tex
+			if tex.get_height() > 0:
+				var s := 90.0 / float(tex.get_height())
+				spr.scale = Vector2(s, s)
+			var old_body := wizard_npc.get_node_or_null("Polygon2D")
+			if old_body:
+				old_body.queue_free()
 
 	# 이름표
 	var name_tag := wizard_npc.get_node_or_null("NameTag") as Label
