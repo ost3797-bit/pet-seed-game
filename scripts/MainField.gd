@@ -95,8 +95,9 @@ func _ready() -> void:
 	air_phase = GameState.air_phase_id as AirPhase
 	_update_quest_icons()
 	_update_quest_text()
-	if GameState.is_all_clear():
+	if GameState.is_all_clear() and not GameState.just_cleared_air:
 		get_tree().change_scene_to_file("res://scenes/Ending.tscn")
+		return
 
 	# 그늘막 만들기 퀘스트 완료 후 복귀 시 목수님 앞 위치로 이동 및 대화 자연스럽게 연결
 	if GameState.current_quest == &"temp" and temp_phase == TempPhase.READY_TO_SHADE:
