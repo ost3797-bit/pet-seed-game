@@ -22,8 +22,8 @@ func _ready() -> void:
 
 
 func _init_fallback_fonts() -> void:
-	if ResourceLoader.exists("res://assets/fonts/korean.ttf"):
-		var korean_font := load("res://assets/fonts/korean.ttf") as FontFile
+	if ResourceLoader.exists("res://assets/fonts/Cafe24Ssurround-v2.0.ttf"):
+		var korean_font := load("res://assets/fonts/Cafe24Ssurround-v2.0.ttf") as FontFile
 		if korean_font != null:
 			if ResourceLoader.exists("res://assets/fonts/emoji.ttf"):
 				var emoji_font := load("res://assets/fonts/emoji.ttf") as FontFile

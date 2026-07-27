@@ -28,7 +28,7 @@ window/stretch/mode="canvas_items"
 
 [gui]
 
-theme/custom_font="res://assets/fonts/korean.ttf"
+theme/custom_font="res://assets/fonts/Cafe24Ssurround-v2.0.ttf"
 
 [rendering]
 
