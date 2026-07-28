@@ -243,3 +243,32 @@ func _on_result_button_pressed() -> void:
 		get_tree().change_scene_to_file("res://scenes/MainField.tscn")
 	else:
 		get_tree().reload_current_scene()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER)):
+		# 라운드 클리어 메시지가 떠있을 때
+		if round_finished and not game_finished:
+			# 다음 라운드 도전!
+			var next_btn = null
+			# Get the panel which is the last child
+			var panel = get_children()[-1]
+			if panel is ColorRect:
+				for c in panel.get_children():
+					if c is Button:
+						next_btn = c
+			if next_btn != null and next_btn.visible:
+				next_btn.pressed.emit()
+				get_viewport().set_input_as_handled()
+		
+		# 게임 실패 또는 완전 클리어 시
+		elif game_finished:
+			var btn = null
+			var panel = get_children()[-1]
+			if panel is ColorRect:
+				for c in panel.get_children():
+					if c is Button:
+						btn = c
+			if btn != null and btn.visible:
+				btn.pressed.emit()
+				get_viewport().set_input_as_handled()

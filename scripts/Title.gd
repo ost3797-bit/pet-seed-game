@@ -77,3 +77,10 @@ func _texture_button(tex_path: String) -> TextureButton:
 	btn.custom_minimum_size = Vector2(280, 140)
 	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	return btn
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER)):
+		if get_tree().current_scene.name == "Title":
+			get_tree().change_scene_to_file("res://scenes/CharacterSelect.tscn")
+			get_viewport().set_input_as_handled()

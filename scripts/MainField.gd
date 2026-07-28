@@ -197,6 +197,14 @@ func _physics_process(delta: float) -> void:
 # ─────────────────────────────────────────────
 
 func _input(event: InputEvent) -> void:
+	# 대화창이 켜져있을 때 스페이스바/엔터키 처리 (확실한 작동을 위해 _input에서 가로채기)
+	if dialogue_panel != null and dialogue_panel.visible:
+		if (event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER))):
+			if dialogue_accept_btn.visible:
+				_on_dialogue_accept()
+			get_viewport().set_input_as_handled()
+			return
+
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
 			KEY_1:

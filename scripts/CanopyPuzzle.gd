@@ -195,3 +195,21 @@ func _label(value: String, pos: Vector2, control_size: Vector2, font_size: int) 
 	node.add_theme_font_size_override("font_size", font_size)
 	node.add_theme_color_override("font_color", Color.WHITE)
 	return node
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER)):
+		# 시작 버튼이 보이거나(규칙 설명 중), 돌아가기 버튼이 보일 때
+		var rule_panel = get_node_or_null("ColorRect2") # Wait, rule_panel was not saved as a class member
+		# Let's just check if return_btn is visible
+		if is_cleared and return_btn.visible:
+			_on_return_pressed()
+			get_viewport().set_input_as_handled()
+		elif board_state.size() == 0:
+			# If board is empty, we haven't started yet.
+			_init_board()
+			get_viewport().set_input_as_handled()
+			# Also we need to hide the rule panel. Let's just do it by finding it.
+			for child in get_children():
+				if child is ColorRect and child.size == Vector2(1280, 720) and child.color.a == 0.85:
+					child.hide()
