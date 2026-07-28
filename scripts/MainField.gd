@@ -826,7 +826,7 @@ func _build_dialogue_panel(layer: CanvasLayer) -> void:
 	dialogue_text = Label.new()
 	dialogue_text.position = Vector2(22, 58)
 	dialogue_text.size = Vector2(1036, 150)
-	dialogue_text.add_theme_font_size_override("font_size", 21)
+	dialogue_text.add_theme_font_size_override("font_size", 28)
 	dialogue_text.add_theme_color_override("font_color", Color.WHITE)
 	dialogue_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	dialogue_panel.add_child(dialogue_text)
