@@ -19,7 +19,6 @@ var bgm_player: AudioStreamPlayer
 
 func _ready() -> void:
 	_init_fallback_fonts()
-	_register_input_actions()
 	_init_bgm()
 
 
