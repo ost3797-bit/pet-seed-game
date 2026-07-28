@@ -1420,7 +1420,7 @@ func _add_touch_button(layer: CanvasLayer, button_position: Vector2, action: Str
 func _update_quest_text() -> void:
 	var text := ""
 	match GameState.current_quest:
-		&"water":   text = "해야 할 일: 씨앗에게 알맞은 물 주기"
+		&"water":   text = "해야 할 일: 씨앗과 대화나누기"
 		&"temp":
 			match temp_phase:
 				TempPhase.INIT_TALK_SEED: text = "해야 할 일: 텃밭의 씨앗과 대화하기"

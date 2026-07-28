@@ -64,10 +64,11 @@ shape = SubResource("RectangleShape2D_player")
 debug_color = Color(0.1, 0.7, 0.98, 0.42)
 
 [node name="NameTag" type="Label" parent="Player" unique_id=-1447405366]
-offset_left = -50.0
-offset_top = -60.0
-offset_right = 50.0
-offset_bottom = -30.0
+visible = false
+offset_left = -126.0
+offset_top = -68.0
+offset_right = -26.0
+offset_bottom = -38.0
 theme_override_font_sizes/font_size = 18
 horizontal_alignment = 1
 
