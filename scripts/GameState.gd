@@ -196,7 +196,15 @@ func _input(event: InputEvent) -> void:
 # 스페이스바 단축키를 버튼에 추가하는 헬퍼 함수
 func add_space_shortcut(btn: BaseButton) -> void:
 	var sc := Shortcut.new()
-	var ev := InputEventAction.new()
-	ev.action = "ui_accept"
-	sc.events.append(ev)
+	var ev_space := InputEventKey.new()
+	ev_space.physical_keycode = KEY_SPACE
+	ev_space.pressed = true
+	sc.events.append(ev_space)
+	
+	var ev_enter := InputEventKey.new()
+	ev_enter.physical_keycode = KEY_ENTER
+	ev_enter.pressed = true
+	sc.events.append(ev_enter)
+	
 	btn.shortcut = sc
+

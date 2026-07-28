@@ -875,6 +875,9 @@ func _show_dialogue(speaker: String, text: String,
 	if wizard_bubble_label != null:
 		wizard_bubble_label.hide()
 	dialogue_panel.show()
+	
+	if dialogue_accept_btn.visible:
+		dialogue_accept_btn.grab_focus()
 
 
 func _hide_dialogue() -> void:
