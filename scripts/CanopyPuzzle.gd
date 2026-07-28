@@ -18,7 +18,6 @@ var return_btn: Button
 
 func _ready() -> void:
 	_build_ui()
-	_init_board()
 
 
 func _build_ui() -> void:
@@ -56,14 +55,7 @@ func _build_ui() -> void:
 	feedback_label.add_theme_color_override("font_color", Color("D94141"))
 	add_child(feedback_label)
 	
-	# 도움말/치트 버튼 (자동 완성)
-	var cheat_btn := Button.new()
-	cheat_btn.text = "💡 목수님의 도움 (즉시 완성)"
-	cheat_btn.position = Vector2(50, 650)
-	cheat_btn.size = Vector2(250, 45)
-	cheat_btn.add_theme_font_size_override("font_size", 18)
-	cheat_btn.pressed.connect(_on_cheat_pressed)
-	add_child(cheat_btn)
+	# 치트 버튼 삭제됨
 	
 	# 씨앗에게 돌아가기 버튼 (클리어 시 표시)
 	return_btn = Button.new()
@@ -74,6 +66,28 @@ func _build_ui() -> void:
 	return_btn.hide()
 	return_btn.pressed.connect(_on_return_pressed)
 	add_child(return_btn)
+	
+	# 규칙 설명 패널
+	var rule_panel := ColorRect.new()
+	rule_panel.color = Color(0, 0, 0, 0.85)
+	rule_panel.size = Vector2(1280, 720)
+	add_child(rule_panel)
+	
+	var rule_title := _label("💡 목수님의 그늘막 퍼즐 규칙 💡", Vector2(0, 200), Vector2(1280, 60), 40)
+	rule_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	rule_panel.add_child(rule_title)
+	
+	var rule_text := _label("두 개의 퍼즐 조각을 차례대로 클릭하면 서로 위치가 바뀝니다.\n조각들을 이리저리 교환하여 1번부터 9번까지 순서대로 맞춰주세요!", Vector2(0, 320), Vector2(1280, 100), 28)
+	rule_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	rule_panel.add_child(rule_text)
+	
+	var start_btn := Button.new()
+	start_btn.text = "퍼즐 시작하기!"
+	start_btn.position = Vector2(515, 480)
+	start_btn.size = Vector2(250, 60)
+	start_btn.add_theme_font_size_override("font_size", 28)
+	start_btn.pressed.connect(func(): rule_panel.hide(); _init_board())
+	rule_panel.add_child(start_btn)
 
 
 func _init_board() -> void:
@@ -154,13 +168,7 @@ func _check_win() -> bool:
 	return true
 
 
-func _on_cheat_pressed() -> void:
-	if is_cleared:
-		return
-	for i in range(board_state.size()):
-		board_state[i] = i
-	_update_board_visuals()
-	_on_puzzle_cleared()
+
 
 
 func _on_puzzle_cleared() -> void:
