@@ -179,17 +179,7 @@ func _physics_process(delta: float) -> void:
 	if dialogue_panel != null and dialogue_panel.visible:
 		return
 
-	if Input.is_action_just_pressed(&"interact"):
-		if near_seed:
-			_on_interact_seed()
-		elif near_grandma:
-			_on_interact_grandma()
-		elif near_carpenter:
-			_on_interact_carpenter()
-		elif near_wizard:
-			_on_interact_wizard()
-		elif near_can and water_phase == WaterPhase.FIND_CAN:
-			_on_pickup_can()
+	pass
 
 
 # ─────────────────────────────────────────────
@@ -206,6 +196,27 @@ func _input(event: InputEvent) -> void:
 				_on_dialogue_cancel()
 			get_viewport().set_input_as_handled()
 			return
+
+func _unhandled_input(event: InputEvent) -> void:
+	if dialogue_panel != null and dialogue_panel.visible:
+		return
+	
+	if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
+		if near_seed:
+			_on_interact_seed()
+			get_viewport().set_input_as_handled()
+		elif near_grandma:
+			_on_interact_grandma()
+			get_viewport().set_input_as_handled()
+		elif near_carpenter:
+			_on_interact_carpenter()
+			get_viewport().set_input_as_handled()
+		elif near_wizard:
+			_on_interact_wizard()
+			get_viewport().set_input_as_handled()
+		elif near_can and water_phase == WaterPhase.FIND_CAN:
+			_on_pickup_can()
+			get_viewport().set_input_as_handled()
 
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
