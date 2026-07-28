@@ -202,6 +202,8 @@ func _input(event: InputEvent) -> void:
 		if (event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER))):
 			if dialogue_accept_btn.visible:
 				_on_dialogue_accept()
+			elif dialogue_cancel_btn != null and dialogue_cancel_btn.visible:
+				_on_dialogue_cancel()
 			get_viewport().set_input_as_handled()
 			return
 
