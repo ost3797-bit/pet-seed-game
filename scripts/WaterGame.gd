@@ -200,6 +200,7 @@ func _show_round_clear_panel() -> void:
 		panel.queue_free()
 		_start_round()
 	)
+	GameState.add_space_shortcut(next_btn)
 	panel.add_child(next_btn)
 
 
@@ -233,6 +234,7 @@ func _show_result(message: String, button_text: String) -> void:
 	button.size = Vector2(500, 70)
 	button.add_theme_font_size_override("font_size", 27)
 	button.pressed.connect(_on_result_button_pressed)
+	GameState.add_space_shortcut(button)
 	panel.add_child(button)
 
 

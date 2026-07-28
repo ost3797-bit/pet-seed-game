@@ -19,6 +19,7 @@ func _ready() -> void:
 	# 1. 새 게임 버튼 (크기: 280x140으로 아담하게 동일)
 	var new_button := _texture_button("res://assets/title/btn_new_game.png")
 	new_button.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/CharacterSelect.tscn"))
+	GameState.add_space_shortcut(new_button)
 	box.add_child(new_button)
 	
 	# 2. 불러오기 버튼 (크기: 280x140으로 아담하게 동일)

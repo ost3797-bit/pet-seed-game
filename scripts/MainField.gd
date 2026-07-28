@@ -836,6 +836,7 @@ func _build_dialogue_panel(layer: CanvasLayer) -> void:
 	dialogue_accept_btn.size = Vector2(190, 46)
 	dialogue_accept_btn.add_theme_font_size_override("font_size", 20)
 	dialogue_accept_btn.pressed.connect(_on_dialogue_accept)
+	GameState.add_space_shortcut(dialogue_accept_btn)
 	dialogue_panel.add_child(dialogue_accept_btn)
 
 	dialogue_cancel_btn = Button.new()

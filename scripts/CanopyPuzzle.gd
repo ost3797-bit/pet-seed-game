@@ -87,6 +87,7 @@ func _build_ui() -> void:
 	start_btn.size = Vector2(250, 60)
 	start_btn.add_theme_font_size_override("font_size", 28)
 	start_btn.pressed.connect(func(): rule_panel.hide(); _init_board())
+	GameState.add_space_shortcut(start_btn)
 	rule_panel.add_child(start_btn)
 
 

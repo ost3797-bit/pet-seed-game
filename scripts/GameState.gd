@@ -192,3 +192,11 @@ func _input(event: InputEvent) -> void:
 		_web_audio_unblocked = true
 		if bgm_player and bgm_player.stream != null:
 			bgm_player.play()
+
+# 스페이스바 단축키를 버튼에 추가하는 헬퍼 함수
+func add_space_shortcut(btn: BaseButton) -> void:
+	var sc := Shortcut.new()
+	var ev := InputEventAction.new()
+	ev.action = "ui_accept"
+	sc.events.append(ev)
+	btn.shortcut = sc
