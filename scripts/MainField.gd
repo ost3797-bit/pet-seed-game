@@ -890,8 +890,8 @@ func _build_ui() -> void:
 	joystick.offset_bottom += 60
 	layer.add_child(joystick)
 	
-	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130, X축 우측으로 50픽셀 이동)
-	_add_touch_button(layer, Vector2(1120, 530), &"interact", "말하기\n(Space)", Vector2(130, 130))
+	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130, X축 우측 50px, Y축 하단 30px 이동)
+	_add_touch_button(layer, Vector2(1120, 560), &"interact", "말하기\n(Space)", Vector2(130, 130))
 
 	_build_dialogue_panel(layer)
 
