@@ -194,7 +194,8 @@ func _input(event: InputEvent) -> void:
 				_on_dialogue_accept()
 			elif dialogue_cancel_btn != null and dialogue_cancel_btn.visible:
 				_on_dialogue_cancel()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null:
+				get_viewport().set_input_as_handled()
 			return
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -204,19 +205,19 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
 		if near_seed:
 			_on_interact_seed()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
 		elif near_grandma:
 			_on_interact_grandma()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
 		elif near_carpenter:
 			_on_interact_carpenter()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
 		elif near_wizard:
 			_on_interact_wizard()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
 		elif near_can and water_phase == WaterPhase.FIND_CAN:
 			_on_pickup_can()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
 
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
