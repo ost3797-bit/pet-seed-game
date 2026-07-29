@@ -757,7 +757,7 @@ func _build_wizard() -> void:
 	if wizard_quest_icon == null:
 		wizard_quest_icon = Label.new()
 		wizard_quest_icon.name = "WizardQuestIcon"
-		wizard_quest_icon.position = Vector2(-20, -70)
+		wizard_quest_icon.position = Vector2(-20, -100)
 		wizard_quest_icon.size = Vector2(40, 40)
 		wizard_quest_icon.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		wizard_quest_icon.add_theme_font_size_override("font_size", 26)
