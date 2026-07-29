@@ -1581,9 +1581,10 @@ func _add_touch_button(layer: CanvasLayer, button_position: Vector2, action: Str
 	layer.add_child(touch)
 	var lbl := Label.new()
 	lbl.text = caption
-	lbl.position = Vector2(0, 25) - button_size / 2.0
+	lbl.position = -button_size / 2.0
 	lbl.size = button_size
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	lbl.add_theme_font_size_override("font_size", 21)
 	lbl.add_theme_color_override("font_color", Color(0.2, 0.2, 0.2)) # 어두운 텍스트
 	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
