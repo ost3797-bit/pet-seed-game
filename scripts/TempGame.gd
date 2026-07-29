@@ -36,7 +36,12 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if finished or not moving:
+	if finished:
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
+			get_tree().change_scene_to_file("res://scenes/MainField.tscn")
+			if get_viewport() != null: get_viewport().set_input_as_handled()
+		return
+	if not moving:
 		return
 	var touched: bool = false
 	if event is InputEventScreenTouch:
@@ -131,6 +136,7 @@ func _show_result(message: String, button_text: String) -> void:
 	button.add_theme_font_size_override("font_size", 27)
 	button.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/MainField.tscn"))
 	panel.add_child(button)
+	button.grab_focus()
 
 
 func _background(color: Color) -> void:

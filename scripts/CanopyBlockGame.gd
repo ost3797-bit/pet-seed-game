@@ -58,6 +58,10 @@ func _process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if is_game_over:
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
+			if return_btn != null and return_btn.visible:
+				_on_return_pressed()
+				if get_viewport() != null: get_viewport().set_input_as_handled()
 		return
 	
 	# 마우스 및 터치 드래그로 그늘막 좌우 이동

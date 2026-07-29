@@ -521,7 +521,12 @@ func _process(_delta: float) -> void:
 
 # ─── _input (터치/마우스 폴백) ───────────────────────
 func _input(event: InputEvent) -> void:
-	if finished or waiting_for_popup:
+	if finished:
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
+			get_tree().change_scene_to_file("res://scenes/MainField.tscn")
+			if get_viewport() != null: get_viewport().set_input_as_handled()
+		return
+	if waiting_for_popup:
 		return
 	var click_pos := Vector2.ZERO
 	if event is InputEventScreenTouch and event.pressed:
@@ -604,6 +609,7 @@ func _show_result(message: String, button_text: String) -> void:
 	button.add_theme_stylebox_override("pressed", btn_hover)
 	button.pressed.connect(func(): get_tree().change_scene_to_file("res://scenes/MainField.tscn"))
 	panel.add_child(button)
+	button.grab_focus()
 
 
 func _label(value: String, pos: Vector2, control_size: Vector2, font_size: int, font_color: Color = Color.WHITE) -> Label:
