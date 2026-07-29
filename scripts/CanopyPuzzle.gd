@@ -17,6 +17,7 @@ var return_btn: Button
 
 
 func _ready() -> void:
+	GameState.play_bgm("res://assets/audio/Hidden_Moss_Trail.mp3")
 	_build_ui()
 
 

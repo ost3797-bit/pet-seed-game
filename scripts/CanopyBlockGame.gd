@@ -25,6 +25,7 @@ var sunbeam_speed := 300.0
 
 
 func _ready() -> void:
+	GameState.play_bgm("res://assets/audio/Hidden_Moss_Trail.mp3")
 	_build_ui()
 	_build_canopy()
 	_build_seed()

@@ -79,6 +79,7 @@ var full_dialogue_text := ""
 var chars_per_sec := 45.0
 
 func _ready() -> void:
+	GameState.play_bgm("res://assets/audio/Over_the_Stone_Bridge.mp3")
 	_build_field()
 	_build_player()
 	_build_seed()

@@ -44,6 +44,7 @@ var result_mode := ""
 
 
 func _ready() -> void:
+	GameState.play_bgm("res://assets/audio/Hidden_Moss_Trail.mp3")
 	_setup_background_image()
 	_setup_styles_and_signals()
 	_start_round()

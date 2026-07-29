@@ -60,6 +60,7 @@ func _get_round_info(round_idx: int) -> Dictionary:
 
 # ─── 초기화 ──────────────────────────────────────────
 func _ready() -> void:
+	GameState.play_bgm("res://assets/audio/Hidden_Moss_Trail.mp3")
 	_build_screen()
 	_show_round_popup()
 

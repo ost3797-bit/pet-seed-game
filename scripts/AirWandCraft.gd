@@ -37,6 +37,7 @@ var btn_return: Button
 var win_panel: Panel
 
 func _ready() -> void:
+	GameState.play_bgm("res://assets/audio/Hidden_Moss_Trail.mp3")
 	_init_deck()
 	_build_retro_ui()
 	_show_next_card()
