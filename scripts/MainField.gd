@@ -888,8 +888,8 @@ func _build_ui() -> void:
 	joystick.scale = Vector2(0.8, 0.8) # 20% 축소
 	layer.add_child(joystick)
 	
-	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130)
-	_add_touch_button(layer, Vector2(1070, 540), &"interact", "말하기\n(Space)", Vector2(130, 130))
+	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130, 조이스틱과 Y축 중앙 정렬을 위해 540 -> 470으로 상향)
+	_add_touch_button(layer, Vector2(1070, 470), &"interact", "말하기\n(Space)", Vector2(130, 130))
 
 	_build_dialogue_panel(layer)
 
