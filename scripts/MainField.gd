@@ -886,12 +886,12 @@ func _build_ui() -> void:
 	joystick.action_down = "move_down"
 	joystick.modulate = Color(1.0, 1.0, 1.0, 0.6) # 약간 반투명
 	joystick.scale = Vector2(0.8, 0.8) # 20% 축소
-	joystick.offset_top += 30
-	joystick.offset_bottom += 30
+	joystick.offset_top += 60
+	joystick.offset_bottom += 60
 	layer.add_child(joystick)
 	
-	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130, 전체적으로 30픽셀 하향 조정을 위해 Y=500)
-	_add_touch_button(layer, Vector2(1070, 500), &"interact", "말하기\n(Space)", Vector2(130, 130))
+	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130, 전체적으로 60픽셀 하향 조정을 위해 Y=530)
+	_add_touch_button(layer, Vector2(1070, 530), &"interact", "말하기\n(Space)", Vector2(130, 130))
 
 	_build_dialogue_panel(layer)
 
