@@ -91,7 +91,7 @@ func _build_retro_ui() -> void:
 	top_border.editor_only = false
 	add_child(top_border)
 
-	var title_lbl := _label("✨ [8-BIT] 공기정화 마법봉 충전 - 환경 요소 분류 게임", Vector2(40, 35), Vector2(1200, 40), 28, Color("2ce8f5"))
+	var title_lbl := _label("✨ 공기정화 마법봉 충전 - 환경 요소 분류 게임", Vector2(40, 35), Vector2(1200, 40), 28, Color("2ce8f5"))
 	title_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	add_child(title_lbl)
 
@@ -169,7 +169,7 @@ func _build_retro_ui() -> void:
 	# 클리어 시 표시될 윈도우 패널
 	win_panel = Panel.new()
 	win_panel.position = Vector2(290, 180)
-	win_panel.size = Vector2(700, 360)
+	win_panel.size = Vector2(700, 380)
 	var win_sb := StyleBoxFlat.new()
 	win_sb.bg_color = Color("181425")
 	win_sb.border_width_left = 8
@@ -190,7 +190,7 @@ func _build_retro_ui() -> void:
 	win_desc.autowrap_mode = TextServer.AUTOWRAP_WORD
 	win_panel.add_child(win_desc)
 
-	btn_return = _create_retro_button("🌱 텃밭으로 돌아가서 매연 정화하기!", Vector2(150, 260), Vector2(400, 60), Color("2ce8f5"), Color("000000"))
+	btn_return = _create_retro_button("🌱 텃밭으로 돌아가서 매연 정화하기!", Vector2(150, 290), Vector2(400, 60), Color("2ce8f5"), Color("000000"))
 	btn_return.pressed.connect(_on_return_pressed)
 	win_panel.add_child(btn_return)
 
