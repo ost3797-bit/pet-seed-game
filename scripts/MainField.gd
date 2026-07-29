@@ -1034,9 +1034,9 @@ func _on_interact_seed() -> void:
 				TempPhase.INIT_TALK_SEED:
 					_show_dialogue(
 						"씨앗",
-						"으으... 너무 더워서 힘들어하고 있어요...\n저기 빨간 지붕집에 사는 온도 목수님에게 가서 온도를 조절할 수 있는 물건을 구해와 주세요!",
-						"목수님께 가기!",
-						_accept_find_carpenter,
+						"앗, 시원해! 💧\n덕분에 적절한 물을 충분히 마셔서 목마름이 싹 사라졌어요! 챙겨주셔서 정말 고마워요!",
+						"다행이야!",
+						_show_seed_hot_dialogue,
 						"",
 						Callable()
 					)
@@ -1097,6 +1097,17 @@ func _show_seed_favor_dialogue() -> void:
 		"고마워! 그런데 사실... 지금 목이 너무 말라서 싹을 틔울 힘이 없어...\n물이 필요한데 어디서 구해야 할지 모르겠어.\n오른쪽 초록색 지붕 집 앞의 할머니에게 방법을 물어봐 주실 수 있나요?",
 		"할머니에게 물어볼게!",
 		_accept_find_grandma,
+		"",
+		Callable()
+	)
+
+
+func _show_seed_hot_dialogue() -> void:
+	_show_dialogue(
+		"씨앗",
+		"그런데... 으으... 이번엔 햇빛이 너무 강해서 뜨거워요... 🥵\n저기 빨간 지붕집에 사는 온도 목수님에게 가서 온도를 조절할 수 있는 그늘막을 구해와 주실 수 있나요?",
+		"목수님께 가기!",
+		_accept_find_carpenter,
 		"",
 		Callable()
 	)
