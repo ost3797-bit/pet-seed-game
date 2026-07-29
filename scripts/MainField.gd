@@ -877,13 +877,18 @@ func _build_ui() -> void:
 	wizard_bubble_label.hide()
 	layer.add_child(wizard_bubble_label)
 
-	# 모바일/터치용 화면 조이스틱 및 말하기 버튼 (나중에 필요 시 if true: 로 바꾸면 다시 생성됩니다)
-	if true:
-		_add_touch_button(layer, Vector2(45, 585), &"move_left", "L")
-		_add_touch_button(layer, Vector2(170, 585), &"move_right", "R")
-		_add_touch_button(layer, Vector2(108, 522), &"move_up", "U")
-		_add_touch_button(layer, Vector2(108, 648), &"move_down", "D")
-		_add_touch_button(layer, Vector2(1050, 585), &"interact", "말하기", Vector2(180, 95))
+	# 모바일/터치용 가상 조이스틱 (이동)
+	var joystick_scene = preload("res://addons/virtual_joystick/virtual_joystick_scene.tscn")
+	var joystick = joystick_scene.instantiate()
+	joystick.action_left = "move_left"
+	joystick.action_right = "move_right"
+	joystick.action_up = "move_up"
+	joystick.action_down = "move_down"
+	joystick.modulate = Color(1.0, 1.0, 1.0, 0.6) # 약간 반투명
+	layer.add_child(joystick)
+	
+	# 상호작용(말하기) 버튼
+	_add_touch_button(layer, Vector2(1050, 520), &"interact", "말하기\n(Space)", Vector2(160, 160))
 
 	_build_dialogue_panel(layer)
 
