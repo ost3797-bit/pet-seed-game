@@ -810,6 +810,42 @@ func _build_ui() -> void:
 	hint_label.add_theme_color_override("font_color", Color(0.9, 0.9, 0.9))
 	layer.add_child(hint_label)
 
+	# 화면 좌측 상단 새싹 틔우기 미션 트래커
+	var mission_panel := ColorRect.new()
+	mission_panel.color = Color(0.06, 0.12, 0.18, 0.85)
+	mission_panel.position = Vector2(12, 12)
+	mission_panel.size = Vector2(300, 130)
+	mission_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(mission_panel)
+
+	var mission_border := ColorRect.new()
+	mission_border.color = Color("76D7C4")
+	mission_border.position = Vector2(0, 0)
+	mission_border.size = Vector2(4, 130)
+	mission_panel.add_child(mission_border)
+
+	var mission_title := _label("🌱 새싹 틔우기 필수 조건", Vector2(15, 12), Vector2(280, 22), 17)
+	mission_title.add_theme_color_override("font_color", Color("FFE36B"))
+	mission_panel.add_child(mission_title)
+
+	var m1_text = "[ O ] 적당한 양의 물 주기" if GameState.water_cleared else "[   ] 적당한 양의 물 주기"
+	var m1_color = Color("38b764") if GameState.water_cleared else Color(0.7, 0.7, 0.7)
+	var m1_label := _label(m1_text, Vector2(15, 42), Vector2(280, 22), 16)
+	m1_label.add_theme_color_override("font_color", m1_color)
+	mission_panel.add_child(m1_label)
+
+	var m2_text = "[ O ] 알맞은 온도 유지하기" if GameState.temp_cleared else "[   ] 알맞은 온도 유지하기"
+	var m2_color = Color("38b764") if GameState.temp_cleared else Color(0.7, 0.7, 0.7)
+	var m2_label := _label(m2_text, Vector2(15, 68), Vector2(280, 22), 16)
+	m2_label.add_theme_color_override("font_color", m2_color)
+	mission_panel.add_child(m2_label)
+
+	var m3_text = "[ O ] 깨끗하고 맑은 공기" if GameState.air_cleared else "[   ] 깨끗하고 맑은 공기"
+	var m3_color = Color("38b764") if GameState.air_cleared else Color(0.7, 0.7, 0.7)
+	var m3_label := _label(m3_text, Vector2(15, 94), Vector2(280, 22), 16)
+	m3_label.add_theme_color_override("font_color", m3_color)
+	mission_panel.add_child(m3_label)
+
 
 	bubble_label = _label("씨앗 가까이에 왔어요!\n[Space] 또는 말하기 버튼을 눌러요.", Vector2(390, 195), Vector2(500, 72), 22)
 	bubble_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
