@@ -7,8 +7,8 @@ func _ready() -> void:
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 	var box := VBoxContainer.new()
-	box.position = Vector2(300, 100)
-	box.size = Vector2(680, 530)
+	box.position = Vector2(300, 20)
+	box.size = Vector2(680, 680)
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
 	box.add_theme_constant_override("separation", 20)
 	add_child(box)
