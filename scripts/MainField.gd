@@ -878,7 +878,7 @@ func _build_ui() -> void:
 	layer.add_child(wizard_bubble_label)
 
 	# 모바일/터치용 화면 조이스틱 및 말하기 버튼 (나중에 필요 시 if true: 로 바꾸면 다시 생성됩니다)
-	if false:
+	if true:
 		_add_touch_button(layer, Vector2(45, 585), &"move_left", "L")
 		_add_touch_button(layer, Vector2(170, 585), &"move_right", "R")
 		_add_touch_button(layer, Vector2(108, 522), &"move_up", "U")
@@ -1550,6 +1550,7 @@ func _add_touch_button(layer: CanvasLayer, button_position: Vector2, action: Str
 	touch.position = button_position
 	touch.action = action
 	touch.texture_normal = _solid_texture(Color("4A90E2"), int(button_size.x), int(button_size.y))
+	touch.modulate = Color(1.0, 1.0, 1.0, 0.4) # 40% 반투명
 	layer.add_child(touch)
 	var lbl := Label.new()
 	lbl.text = caption

@@ -46,7 +46,7 @@ position = Vector2(640, 520)
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HouseObstacle" unique_id=674194192]
 position = Vector2(-1.4470062, -1.5495605)
 scale = Vector2(0.99401814, 1.0074786)
-polygon = PackedVector2Array(126, 134, 152, 102, 150, 16, 133, 13, 131, -17, 79, -19, 76, -50, 49, -50, -6, -97, -91, -26, -118, -17, -150, 10, -151, 137)
+polygon = PackedVector2Array(141.29224, 120.64728, 152, 102, 150, 16, 133, 13, 131, -17, 79, -19, 76, -50, 49, -50, -6, -97, -91, -26, -118, -17, -150, 10, -155.48306, 117.669556)
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=572592109]
 position = Vector2(645, 397)
@@ -320,9 +320,9 @@ text = "공기정화 마법사"
 horizontal_alignment = 1
 
 [node name="WizardQuestIcon" type="Label" parent="WizardNPC" unique_id=-1346393677]
-offset_left = -18.0
-offset_top = -119.0
-offset_right = 22.0
-offset_bottom = -66.0
+offset_left = -19.0
+offset_top = -130.0
+offset_right = 21.0
+offset_bottom = -77.0
 theme_override_font_sizes/font_size = 38
 horizontal_alignment = 1

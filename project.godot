@@ -66,3 +66,7 @@ move_up={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[input_devices]
+
+pointing/emulate_mouse_from_touch=true
