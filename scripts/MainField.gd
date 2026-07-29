@@ -1547,14 +1547,27 @@ func _update_quest_icons() -> void:
 
 func _add_touch_button(layer: CanvasLayer, button_position: Vector2, action: StringName, caption: String, button_size := Vector2(110, 110)) -> void:
 	var touch := TouchScreenButton.new()
-	touch.position = button_position
+	var shape := RectangleShape2D.new()
+	shape.size = button_size
+	touch.shape = shape
 	touch.action = action
-	touch.texture_normal = _solid_texture(Color("4A90E2"), int(button_size.x), int(button_size.y))
-	touch.modulate = Color(1.0, 1.0, 1.0, 0.4) # 40% 반투명
+	
+	# TouchScreenButton's shape is centered at its origin, but we want it positioned like a top-left Control.
+	# So we offset the TouchScreenButton by half the size.
+	touch.position = button_position + button_size / 2.0
+	
+	var bg := ColorRect.new()
+	bg.size = button_size
+	bg.position = -button_size / 2.0
+	bg.color = Color("4A90E2")
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bg.modulate = Color(1.0, 1.0, 1.0, 0.4)
+	touch.add_child(bg)
+	
 	layer.add_child(touch)
 	var lbl := Label.new()
 	lbl.text = caption
-	lbl.position = Vector2(0, 20)
+	lbl.position = Vector2(0, 20) - button_size / 2.0
 	lbl.size = button_size
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.add_theme_font_size_override("font_size", 23)
