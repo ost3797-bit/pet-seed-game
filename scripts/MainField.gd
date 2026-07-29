@@ -885,10 +885,12 @@ func _build_ui() -> void:
 	joystick.action_up = "move_up"
 	joystick.action_down = "move_down"
 	joystick.modulate = Color(1.0, 1.0, 1.0, 0.6) # 약간 반투명
+	joystick.scale = Vector2(0.8, 0.8) # 20% 축소
+	joystick.position = Vector2(40, 450) # 크기 축소에 맞춰 하단으로 위치 보정
 	layer.add_child(joystick)
 	
-	# 상호작용(말하기) 버튼
-	_add_touch_button(layer, Vector2(1050, 520), &"interact", "말하기\n(Space)", Vector2(160, 160))
+	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130)
+	_add_touch_button(layer, Vector2(1070, 540), &"interact", "말하기\n(Space)", Vector2(130, 130))
 
 	_build_dialogue_panel(layer)
 
@@ -1578,10 +1580,10 @@ func _add_touch_button(layer: CanvasLayer, button_position: Vector2, action: Str
 	layer.add_child(touch)
 	var lbl := Label.new()
 	lbl.text = caption
-	lbl.position = Vector2(0, 35) - button_size / 2.0
+	lbl.position = Vector2(0, 25) - button_size / 2.0
 	lbl.size = button_size
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	lbl.add_theme_font_size_override("font_size", 26)
+	lbl.add_theme_font_size_override("font_size", 21)
 	lbl.add_theme_color_override("font_color", Color(0.2, 0.2, 0.2)) # 어두운 텍스트
 	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	touch.add_child(lbl)
