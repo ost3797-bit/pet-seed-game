@@ -226,6 +226,13 @@ func _create_retro_button(text: String, pos: Vector2, btn_size: Vector2, bg_colo
 	
 	return btn
 
+func _unhandled_input(event: InputEvent) -> void:
+	if is_cleared:
+		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
+			_on_return_pressed()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
+		return
+
 func _input(event: InputEvent) -> void:
 	if is_cleared:
 		return
@@ -271,6 +278,8 @@ func _classify_card(chosen_type: int) -> void:
 
 func _on_game_cleared() -> void:
 	is_cleared = true
+	win_panel.show()
+	btn_return.grab_focus()
 	card_panel.hide()
 	btn_left.hide()
 	btn_right.hide()
