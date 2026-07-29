@@ -271,4 +271,4 @@ func _unhandled_input(event: InputEvent) -> void:
 						btn = c
 			if btn != null and btn.visible:
 				btn.pressed.emit()
-				get_viewport().set_input_as_handled()
+				if get_viewport() != null: get_viewport().set_input_as_handled()

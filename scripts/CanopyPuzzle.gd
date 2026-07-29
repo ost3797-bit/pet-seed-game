@@ -204,11 +204,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		# Let's just check if return_btn is visible
 		if is_cleared and return_btn.visible:
 			_on_return_pressed()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
 		elif board_state.size() == 0:
 			# If board is empty, we haven't started yet.
 			_init_board()
-			get_viewport().set_input_as_handled()
+			if get_viewport() != null: get_viewport().set_input_as_handled()
 			# Also we need to hide the rule panel. Let's just do it by finding it.
 			for child in get_children():
 				if child is ColorRect and child.size == Vector2(1280, 720) and child.color.a == 0.85:
