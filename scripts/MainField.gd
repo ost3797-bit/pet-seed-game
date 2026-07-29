@@ -886,7 +886,6 @@ func _build_ui() -> void:
 	joystick.action_down = "move_down"
 	joystick.modulate = Color(1.0, 1.0, 1.0, 0.6) # 약간 반투명
 	joystick.scale = Vector2(0.8, 0.8) # 20% 축소
-	joystick.position = Vector2(40, 450) # 크기 축소에 맞춰 하단으로 위치 보정
 	layer.add_child(joystick)
 	
 	# 상호작용(말하기) 버튼 (20% 축소: 160 -> 130)
