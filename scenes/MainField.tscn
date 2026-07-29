@@ -76,7 +76,7 @@ horizontal_alignment = 1
 position = Vector2(640, 150)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Top" unique_id=2121596973]
-position = Vector2(-3, -135)
+position = Vector2(-3, -150)
 shape = SubResource("RectangleShape2D_wall_h")
 debug_color = Color(0.1, 0.6, 0.9, 0.4)
 
@@ -92,7 +92,7 @@ debug_color = Color(0.1, 0.6, 0.9, 0.4)
 position = Vector2(150, 375)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Wall_Left" unique_id=1398399602]
-position = Vector2(-130, -15)
+position = Vector2(-142, -16)
 shape = SubResource("RectangleShape2D_wall_v")
 debug_color = Color(0.1, 0.6, 0.9, 0.4)
 
@@ -155,7 +155,7 @@ theme_override_font_sizes/font_size = 38
 horizontal_alignment = 1
 
 [node name="WateringCan1" type="Area2D" parent="." unique_id=1029384756]
-position = Vector2(215, 520)
+position = Vector2(134, 176)
 
 [node name="ColorRect" type="ColorRect" parent="WateringCan1" unique_id=1928374650]
 offset_left = -83.0
