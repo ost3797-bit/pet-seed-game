@@ -1180,9 +1180,9 @@ func _on_interact_wizard() -> void:
 			AirPhase.GO_TO_WIZARD:
 				_show_dialogue(
 					"공기정화 마법사",
-					"허허, 오염된 공기 때문에 씨앗이 고통받고 있군요. 이를 해결하려면 강력한 '공기정화 마법봉'이 필요합니다.\n마법봉에 맑은 기운을 담으려면 세상의 공기를 오염시키는 원인과 깨끗하게 하는 요소를 올바르게 구별할 줄 알아야 하지요.\n나와 함께 마법봉 만드는 것을 도와주시겠습니까?",
-					"✨ 마법봉 만들기 돕기!",
-					func(): get_tree().change_scene_to_file("res://scenes/AirWandCraft.tscn"),
+					"허허, 오염된 공기 때문에 씨앗이 고통받고 있군요.\n이를 해결하려면 강력한 '공기정화 마법봉'이 필요합니다.",
+					"다음",
+					func(): _show_wizard_dialogue_part_2(),
 					"",
 					Callable()
 				)
@@ -1237,6 +1237,17 @@ func _show_can_rules_popup() -> void:
 		"🔍 미션: 마을 곳곳에 숨겨진 물뿌리개 3개를 모두 찾아주세요!\n🚶 방법: 마을에 숨어있는 물뿌리개를 찾고 근처에서 [Space] 또는 [말하기] 버튼을 누르면 줍습니다.\n✅ 목표: 3개를 모두 줍고 할머니에게 가서 말을 걸어봅시다.",
 		"🎮 게임 시작!",
 		_accept_find_can,
+		"",
+		Callable()
+	)
+
+
+func _show_wizard_dialogue_part_2() -> void:
+	_show_dialogue(
+		"공기정화 마법사",
+		"마법봉에 맑은 기운을 담으려면 세상의 공기를 오염시키는 원인과 깨끗하게 하는 요소를 올바르게 구별할 줄 알아야 하지요.\n나와 함께 마법봉 만드는 것을 도와주시겠습니까?",
+		"✨ 마법봉 만들기 돕기!",
+		func(): get_tree().change_scene_to_file("res://scenes/AirWandCraft.tscn"),
 		"",
 		Callable()
 	)
