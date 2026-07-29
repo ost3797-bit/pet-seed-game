@@ -1293,6 +1293,17 @@ func _show_wizard_dialogue_part_2() -> void:
 		"공기정화 마법사",
 		"마법봉에 맑은 기운을 담으려면 세상의 공기를 오염시키는 원인과 깨끗하게 하는 요소를 올바르게 구별할 줄 알아야 하지요.\n나와 함께 마법봉 만드는 것을 도와주시겠습니까?",
 		"✨ 마법봉 만들기 돕기!",
+		func(): _show_air_wand_rules_popup(),
+		"",
+		Callable()
+	)
+
+
+func _show_air_wand_rules_popup() -> void:
+	_show_dialogue(
+		"📋 마법봉 만들기 - 규칙 안내",
+		"✨ 미션: 마법봉에 들어갈 맑은 기운을 찾아라!\n👆 방법: 카드를 마우스로 잡고 오염 원인(❌)은 왼쪽으로, 정화 요소(🌿)는 오른쪽으로 드래그하거나 방향키(A/D)로 분류하세요.\n✅ 목표: 모든 기운을 올바르게 구별하여 맑은 마법봉을 완성하세요!",
+		"🎮 마법봉 제작 시작!",
 		func(): get_tree().change_scene_to_file("res://scenes/AirWandCraft.tscn"),
 		"",
 		Callable()
