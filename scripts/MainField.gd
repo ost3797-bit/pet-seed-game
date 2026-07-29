@@ -71,6 +71,13 @@ var _pending_accept := Callable()
 var _pending_cancel := Callable()
 
 
+# 타이핑 효과 관련 변수
+var is_typing := false
+var type_timer := 0.0
+var type_char_index := 0
+var full_dialogue_text := ""
+var chars_per_sec := 45.0
+
 func _ready() -> void:
 	_build_field()
 	_build_player()
@@ -175,6 +182,17 @@ func _physics_process(delta: float) -> void:
 		
 		player_sprite.frame = current_dir * 4 + anim_frame
 
+	if is_typing:
+		type_timer += delta * chars_per_sec
+		if type_timer >= 1.0:
+			var steps := int(type_timer)
+			type_char_index += steps
+			type_timer -= float(steps)
+			if type_char_index >= full_dialogue_text.length():
+				_finish_typing()
+			else:
+				dialogue_text.visible_characters = type_char_index
+
 	# 대화창이 열려 있으면 상호작용 차단
 	if dialogue_panel != null and dialogue_panel.visible:
 		return
@@ -189,7 +207,19 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	# 대화창이 켜져있을 때 스페이스바/엔터키 처리 (확실한 작동을 위해 _input에서 가로채기)
 	if dialogue_panel != null and dialogue_panel.visible:
+		var skip_pressed := false
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			skip_pressed = true
 		if (event.is_action_pressed("ui_accept") or event.is_action_pressed("interact") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER))):
+			skip_pressed = true
+
+		if skip_pressed:
+			if is_typing:
+				_finish_typing()
+				if get_viewport() != null:
+					get_viewport().set_input_as_handled()
+				return
+			
 			if dialogue_accept_btn.visible:
 				_on_dialogue_accept()
 			elif dialogue_cancel_btn != null and dialogue_cancel_btn.visible:
@@ -879,11 +909,19 @@ func _show_dialogue(speaker: String, text: String,
 	_pending_accept = accept_cb
 	_pending_cancel = cancel_cb
 	dialogue_npc_name.text = speaker
+	
+	full_dialogue_text = text
 	dialogue_text.text = text
+	dialogue_text.visible_characters = 0
+	is_typing = true
+	type_char_index = 0
+	type_timer = 0.0
+	
 	dialogue_accept_btn.text = accept_text
-	dialogue_accept_btn.visible = not accept_text.is_empty()
+	dialogue_accept_btn.hide() # 타이핑 중에는 버튼 숨김
 	dialogue_cancel_btn.text = cancel_text
-	dialogue_cancel_btn.visible = not cancel_text.is_empty()
+	dialogue_cancel_btn.hide() # 타이핑 중에는 버튼 숨김
+	
 	if cancel_text.is_empty():
 		dialogue_accept_btn.position = Vector2(780, 216) # 버튼 1개일 때 오른쪽 테두리 안쪽 안전한 여백에 배치
 	else:
@@ -897,6 +935,14 @@ func _show_dialogue(speaker: String, text: String,
 	if wizard_bubble_label != null:
 		wizard_bubble_label.hide()
 	dialogue_panel.show()
+
+
+func _finish_typing() -> void:
+	is_typing = false
+	dialogue_text.visible_characters = -1
+	
+	dialogue_accept_btn.visible = not dialogue_accept_btn.text.is_empty()
+	dialogue_cancel_btn.visible = not dialogue_cancel_btn.text.is_empty()
 	
 	if dialogue_accept_btn.visible:
 		dialogue_accept_btn.grab_focus()
