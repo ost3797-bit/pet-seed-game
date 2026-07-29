@@ -2,12 +2,12 @@ extends Control
 
 # ─── 라운드별 난이도 설정 ───────────────────────────────────────────────
 # [0=1라운드, 1=2라운드, 2=3라운드]
-const RISE_SPEEDS  := [14.0, 22.0, 34.0]
-const FALL_SPEEDS  := [7.0,  14.0, 22.0]
+const RISE_SPEEDS  := [14.0, 22.0, 26.0]
+const FALL_SPEEDS  := [7.0,  14.0, 16.0]
 const HOLD_TIMES   := [4.0,  3.5,  3.0]
-const TIME_LIMITS  := [30.0, 25.0, 20.0]
+const TIME_LIMITS  := [30.0, 25.0, 25.0]
 const TARGET_MINS  := [68.0, 65.0, 62.0]
-const TARGET_MAXS  := [80.0, 77.0, 74.0]
+const TARGET_MAXS  := [80.0, 77.0, 76.0]
 const TOTAL_ROUNDS := 3
 
 const BG_COLORS := [
