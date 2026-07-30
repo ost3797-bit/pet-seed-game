@@ -15,7 +15,6 @@ var has_started := false
 
 # 주요 노드
 var canopy: Area2D
-var canopy_rect: ColorRect
 var seed_sprite: Sprite2D
 var spawner_timer: Timer
 var score_label: Label
@@ -158,23 +157,24 @@ func _build_canopy() -> void:
 	canopy.collision_mask = 2
 	add_child(canopy)
 	
-	# 그늘막 그래픽 (목재 천막 스타일)
-	canopy_rect = ColorRect.new()
-	canopy_rect.color = Color("8B4513")
-	canopy_rect.position = Vector2(-90, -15)
-	canopy_rect.size = Vector2(180, 30)
-	canopy.add_child(canopy_rect)
-	
-	var roof_top := Polygon2D.new()
-	roof_top.color = Color("DA863E")
-	roof_top.polygon = PackedVector2Array([Vector2(-95, -15), Vector2(0, -35), Vector2(95, -15)])
-	canopy.add_child(roof_top)
+	# 그늘막 그래픽 (새 이미지 적용)
+	var awning_tex = preload("res://assets/game2_2_awning.png")
+	var spr := Sprite2D.new()
+	spr.texture = awning_tex
+	if awning_tex != null:
+		var t_size = awning_tex.get_size()
+		if t_size.x > 0 and t_size.y > 0:
+			var scale_factor = 220.0 / t_size.x
+			spr.scale = Vector2(scale_factor, scale_factor)
+	spr.position = Vector2(0, -15)
+	canopy.add_child(spr)
 	
 	# 충돌 영역
 	var col := CollisionShape2D.new()
 	var shape := RectangleShape2D.new()
-	shape.size = Vector2(180, 35)
+	shape.size = Vector2(220, 40)
 	col.shape = shape
+	col.position = Vector2(0, -10)
 	canopy.add_child(col)
 	
 	canopy.area_entered.connect(_on_canopy_hit)
