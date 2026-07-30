@@ -82,9 +82,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _build_ui() -> void:
-	# 배경 (따뜻하고 맑은 하늘빛)
-	var bg := ColorRect.new()
-	bg.color = Color("E0F7FA")
+	# 배경 이미지 적용
+	var bg := TextureRect.new()
+	bg.texture = preload("res://assets/game2_2_bg.png")
+	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bg.size = Vector2(1280, 720)
 	add_child(bg)
 	
