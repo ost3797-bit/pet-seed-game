@@ -92,12 +92,14 @@ func _build_ui() -> void:
 	bg.texture = preload("res://assets/game2_2_bg.png")
 	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bg.size = Vector2(1280, 720)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 	
 	# 상단 장식 바
 	var top_bar := ColorRect.new()
 	top_bar.color = Color("DA863E")
 	top_bar.size = Vector2(1280, 70)
+	top_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(top_bar)
 	
 	var title_lbl := _label("☀️ 햇빛 막기 대작전!", Vector2(0, 15), Vector2(1280, 40), 32)
@@ -129,6 +131,7 @@ func _build_ui() -> void:
 	var rule_panel := ColorRect.new()
 	rule_panel.color = Color(0, 0, 0, 0.85)
 	rule_panel.size = Vector2(1280, 720)
+	rule_panel.z_index = 50
 	add_child(rule_panel)
 	
 	var rule_title := _label("💡 햇빛 막기 대작전 규칙 💡", Vector2(0, 200), Vector2(1280, 60), 40)
