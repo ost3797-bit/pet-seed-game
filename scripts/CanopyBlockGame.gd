@@ -10,7 +10,6 @@ const SUN_TEX = preload("res://assets/game2_2_sun.png")
 
 var blocked_count := 0
 var is_game_over := false
-var is_dragging := false
 var has_started := false
 
 # 주요 노드
@@ -71,18 +70,13 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	# 마우스 및 터치 드래그로 그늘막 좌우 이동
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			is_dragging = event.pressed
-			if is_dragging:
-				canopy.position.x = clamp(event.position.x, MIN_X, MAX_X)
-	elif event is InputEventMouseMotion and is_dragging:
+	if event is InputEventScreenTouch and event.pressed:
 		canopy.position.x = clamp(event.position.x, MIN_X, MAX_X)
-	elif event is InputEventScreenTouch:
-		is_dragging = event.pressed
-		if is_dragging:
-			canopy.position.x = clamp(event.position.x, MIN_X, MAX_X)
-	elif event is InputEventScreenDrag and is_dragging:
+	elif event is InputEventScreenDrag:
+		canopy.position.x = clamp(event.position.x, MIN_X, MAX_X)
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		canopy.position.x = clamp(event.position.x, MIN_X, MAX_X)
+	elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		canopy.position.x = clamp(event.position.x, MIN_X, MAX_X)
 
 
