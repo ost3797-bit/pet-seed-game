@@ -163,7 +163,7 @@ func _physics_process(delta: float) -> void:
 	if carpenter_quest_icon != null and carpenter_quest_icon.text != "":
 		carpenter_quest_icon.position.y = -70.0 + float_offset
 	if wizard_quest_icon != null and wizard_quest_icon.text != "":
-		wizard_quest_icon.position.y = -70.0 + float_offset
+		wizard_quest_icon.position.y = -130.0 + float_offset
 
 	# 4방향 스프라이트 시트 애니메이션 처리
 	if player_sprite != null:
