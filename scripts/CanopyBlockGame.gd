@@ -109,7 +109,7 @@ func _build_ui() -> void:
 	score_label.add_theme_color_override("font_color", Color("D94141"))
 	add_child(score_label)
 	
-	feedback_label = _label("좌우 방향키(A/D) 또는 마우스 드래그로 그늘막을 움직여 씨앗을 보호하세요!", Vector2(0, 95), Vector2(1280, 30), 22)
+	feedback_label = _label("좌우 방향키(A/D) 또는 마우스 드래그로 그늘막을 움직여 씨앗을 보호하세요!", Vector2(0, 135), Vector2(1280, 30), 22)
 	feedback_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	feedback_label.add_theme_color_override("font_color", Color("333333"))
 	add_child(feedback_label)
