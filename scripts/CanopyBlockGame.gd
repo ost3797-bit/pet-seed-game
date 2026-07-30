@@ -11,6 +11,7 @@ const SUN_TEX = preload("res://assets/game2_2_sun.png")
 var blocked_count := 0
 var is_game_over := false
 var is_dragging := false
+var has_started := false
 
 # 주요 노드
 var canopy: Area2D
@@ -31,11 +32,11 @@ func _ready() -> void:
 	_build_ui()
 	_build_canopy()
 	_build_seed()
-	_start_game()
+	# _start_game()은 규칙 화면의 시작 버튼을 누르면 호출됩니다.
 
 
 func _process(delta: float) -> void:
-	if is_game_over:
+	if not has_started or is_game_over:
 		return
 		
 	# 키보드 이동 처리 (A/D 또는 좌우 방향키)
@@ -60,6 +61,9 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if not has_started:
+		return
+		
 	if is_game_over:
 		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
 			if return_btn != null and return_btn.visible:
@@ -126,6 +130,29 @@ func _build_ui() -> void:
 	return_btn.hide()
 	return_btn.pressed.connect(_on_return_pressed)
 	add_child(return_btn)
+	
+	# 규칙 설명 패널
+	var rule_panel := ColorRect.new()
+	rule_panel.color = Color(0, 0, 0, 0.85)
+	rule_panel.size = Vector2(1280, 720)
+	add_child(rule_panel)
+	
+	var rule_title := _label("💡 햇빛 막기 대작전 규칙 💡", Vector2(0, 200), Vector2(1280, 60), 40)
+	rule_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	rule_panel.add_child(rule_title)
+	
+	var rule_text := _label("좌우 방향키(A/D) 또는 마우스/터치 드래그로 그늘막을 움직이세요!\n하늘에서 떨어지는 뜨거운 햇빛 15개를 막아내어 새싹이를 보호해야 합니다.", Vector2(0, 320), Vector2(1280, 100), 28)
+	rule_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	rule_panel.add_child(rule_text)
+	
+	var start_btn := Button.new()
+	start_btn.text = "게임 시작!"
+	start_btn.position = Vector2(515, 480)
+	start_btn.size = Vector2(250, 60)
+	start_btn.add_theme_font_size_override("font_size", 28)
+	start_btn.pressed.connect(func(): rule_panel.hide(); _start_game())
+	GameState.add_space_shortcut(start_btn)
+	rule_panel.add_child(start_btn)
 
 
 func _build_canopy() -> void:
@@ -187,6 +214,7 @@ func _build_seed() -> void:
 
 
 func _start_game() -> void:
+	has_started = true
 	blocked_count = 0
 	is_game_over = false
 	
