@@ -136,7 +136,7 @@ func _build_screen() -> void:
 	breath_gauge.position = Vector2(6, 6)
 	breath_gauge.size = Vector2(668, 63)
 	breath_gauge.max_value = 100.0
-	breath_gauge.value = 40.0
+	breath_gauge.value = 0.0
 	breath_gauge.texture_progress = _solid_texture(Color("38b764"), 32, 32)
 	breath_gauge.nine_patch_stretch = true
 	breath_gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -275,7 +275,7 @@ func _start_round() -> void:
 	_clear_smoke()
 	boss_btn = null
 	boss_hp_label = null
-	breath_gauge.value = 40.0
+	breath_gauge.value = 0.0
 	round_label.text = "👾 정화 라운드  " + str(current_round + 1) + " / " + str(TOTAL_ROUNDS)
 	_update_gauge_text()
 
