@@ -373,7 +373,7 @@ func _spawn_smoke() -> void:
 
 
 func _on_smoke_clicked(smoke: Button) -> void:
-	if finished or waiting_for_popup or not is_instance_valid(smoke):
+	if finished or waiting_for_popup or not is_instance_valid(smoke) or smoke.is_queued_for_deletion():
 		return
 	var is_good: bool = smoke.get_meta("is_good", false)
 	if is_good:
@@ -455,7 +455,9 @@ func _update_boss_style() -> void:
 
 
 func _on_boss_clicked() -> void:
-	if finished or waiting_for_popup or boss_btn == null:
+	if finished or waiting_for_popup or boss_btn == null or boss_btn.is_queued_for_deletion():
+		return
+	if boss_hp <= 0:
 		return
 	boss_hp -= 1
 	var viewport_size := get_viewport_rect().size
@@ -520,30 +522,13 @@ func _process(_delta: float) -> void:
 	_update_gauge_text()
 
 
-# ─── _input (터치/마우스 폴백) ───────────────────────
+# ─── _input (키보드 단축키 등) ───────────────────────
 func _input(event: InputEvent) -> void:
 	if finished:
 		if event.is_action_pressed("interact") or event.is_action_pressed("ui_accept") or (event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_SPACE or event.keycode == KEY_ENTER or event.physical_keycode == KEY_SPACE or event.physical_keycode == KEY_ENTER)):
 			get_tree().change_scene_to_file("res://scenes/MainField.tscn")
 			if get_viewport() != null: get_viewport().set_input_as_handled()
 		return
-	if waiting_for_popup:
-		return
-	var click_pos := Vector2.ZERO
-	if event is InputEventScreenTouch and event.pressed:
-		click_pos = event.position
-	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		click_pos = event.position
-	else:
-		return
-	for child in smoke_container.get_children():
-		if child is Button and is_instance_valid(child):
-			if child.get_global_rect().grow(20.0).has_point(click_pos):
-				if current_round == 2:
-					_on_boss_clicked()
-				else:
-					_on_smoke_clicked(child)
-				break
 
 
 # ─── 유틸 ────────────────────────────────────────────
