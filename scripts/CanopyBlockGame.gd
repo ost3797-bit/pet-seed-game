@@ -6,6 +6,8 @@ const CANOPY_Y := 520.0
 const MIN_X := 90.0
 const MAX_X := 1190.0
 
+const SUN_TEX = preload("res://assets/game2_2_sun.png")
+
 var blocked_count := 0
 var is_game_over := false
 var is_dragging := false
@@ -205,11 +207,15 @@ func _spawn_sunbeam() -> void:
 	beam.collision_mask = 0
 	add_child(beam)
 	
-	# 햇빛 그래픽 (노란빛/빨간빛 태양 불꽃)
-	var poly := Polygon2D.new()
-	poly.color = Color("FF8C00") if randf() > 0.5 else Color("FFD700")
-	poly.polygon = PackedVector2Array([Vector2(0, -20), Vector2(15, 0), Vector2(0, 20), Vector2(-15, 0)])
-	beam.add_child(poly)
+	# 햇빛 그래픽 (새 이미지 적용)
+	var spr := Sprite2D.new()
+	spr.texture = SUN_TEX
+	if SUN_TEX != null:
+		var t_size = SUN_TEX.get_size()
+		if t_size.x > 0 and t_size.y > 0:
+			# 이미지 크기를 대략 60x60 정도로 맞춰줍니다 (충돌 영역보다 살짝 크게)
+			spr.scale = Vector2(60.0 / t_size.x, 60.0 / t_size.y)
+	beam.add_child(spr)
 	
 	var col := CollisionShape2D.new()
 	var shape := CircleShape2D.new()
