@@ -5,6 +5,9 @@ const GRID_SIZE := 3
 const TILE_SIZE := Vector2(150, 150)
 const GRID_START := Vector2(415, 135)
 
+const AWNING_TEX = preload("res://assets/awning.png")
+var piece_textures: Array[AtlasTexture] = []
+
 var tiles: Array[Button] = []
 var board_state: Array[int] = []  # 0부터 8까지의 현재 타일 인덱스
 var selected_index := -1
@@ -18,7 +21,23 @@ var return_btn: Button
 
 func _ready() -> void:
 	GameState.play_bgm("res://assets/audio/Hidden_Moss_Trail.mp3")
+	_prepare_textures()
 	_build_ui()
+
+
+func _prepare_textures() -> void:
+	if AWNING_TEX == null: return
+	var tex_size = AWNING_TEX.get_size()
+	var piece_w = tex_size.x / float(GRID_SIZE)
+	var piece_h = tex_size.y / float(GRID_SIZE)
+	
+	for i in range(GRID_SIZE * GRID_SIZE):
+		var atlas = AtlasTexture.new()
+		atlas.atlas = AWNING_TEX
+		var row = i / GRID_SIZE
+		var col = i % GRID_SIZE
+		atlas.region = Rect2(col * piece_w, row * piece_h, piece_w, piece_h)
+		piece_textures.append(atlas)
 
 
 func _build_ui() -> void:
@@ -56,6 +75,20 @@ func _build_ui() -> void:
 	feedback_label.add_theme_color_override("font_color", Color("D94141"))
 	add_child(feedback_label)
 	
+	# 원본 참조 이미지 (왼쪽 공간)
+	var ref_label = _label("원본 그림", Vector2(50, 160), Vector2(300, 30), 24)
+	ref_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ref_label.add_theme_color_override("font_color", Color("555555"))
+	add_child(ref_label)
+	
+	var ref_rect := TextureRect.new()
+	ref_rect.texture = AWNING_TEX
+	ref_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	ref_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED # 비율 유지
+	ref_rect.size = Vector2(300, 300)
+	ref_rect.position = Vector2(50, 200)
+	add_child(ref_rect)
+	
 	# 치트 버튼 삭제됨
 	
 	# 씨앗에게 돌아가기 버튼 (클리어 시 표시)
@@ -78,7 +111,7 @@ func _build_ui() -> void:
 	rule_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rule_panel.add_child(rule_title)
 	
-	var rule_text := _label("두 개의 퍼즐 조각을 차례대로 클릭하면 서로 위치가 바뀝니다.\n조각들을 이리저리 교환하여 1번부터 9번까지 순서대로 맞춰주세요!", Vector2(0, 320), Vector2(1280, 100), 28)
+	var rule_text := _label("두 개의 퍼즐 조각을 차례대로 클릭하면 서로 위치가 바뀝니다.\n왼쪽의 '원본 그림'을 참고하여 9개의 조각을 올바른 위치로 맞춰주세요!", Vector2(0, 320), Vector2(1280, 100), 28)
 	rule_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rule_panel.add_child(rule_text)
 	
@@ -106,8 +139,17 @@ func _init_board() -> void:
 	for i in range(board_state.size()):
 		var btn := Button.new()
 		btn.size = TILE_SIZE - Vector2(6, 6)
-		btn.add_theme_font_size_override("font_size", 32)
 		btn.pressed.connect(func(): _on_tile_clicked(i))
+		
+		# 조각 이미지 담을 텍스처
+		var tr := TextureRect.new()
+		tr.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		tr.stretch_mode = TextureRect.STRETCH_SCALE
+		tr.size = btn.size
+		tr.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		tr.name = "PieceTexture"
+		btn.add_child(tr)
+		
 		add_child(btn)
 		tiles.append(btn)
 	
@@ -152,11 +194,14 @@ func _update_board_visuals() -> void:
 		var col := i % GRID_SIZE
 		btn.position = GRID_START + Vector2(col * TILE_SIZE.x + 3, row * TILE_SIZE.y + 3)
 		
-		# 조각 번호 및 예쁜 색상 표시
-		btn.text = "그늘막\n[" + str(val + 1) + "번]"
+		# 조각 이미지 업데이트
+		if btn.has_node("PieceTexture"):
+			var tr = btn.get_node("PieceTexture") as TextureRect
+			tr.texture = piece_textures[val]
 		
+		# 선택 하이라이트 효과
 		if i == selected_index:
-			btn.modulate = Color(1.0, 0.5, 0.5)  # 선택된 타일 하이라이트
+			btn.modulate = Color(1.0, 0.5, 0.5)  # 선택된 타일 붉은빛
 		elif val == i:
 			btn.modulate = Color(0.7, 1.0, 0.7)  # 제자리에 맞는 타일 초록빛
 		else:
