@@ -114,12 +114,7 @@ func _build_ui() -> void:
 	feedback_label.add_theme_color_override("font_color", Color("333333"))
 	add_child(feedback_label)
 	
-	# 바닥 땅
-	var ground := ColorRect.new()
-	ground.color = Color("8DDB84")
-	ground.position = Vector2(0, 630)
-	ground.size = Vector2(1280, 90)
-	add_child(ground)
+	# 바닥 땅 (새 배경 이미지가 있으므로 제거됨)
 	
 	# 클리어 귀환 버튼
 	return_btn = Button.new()
