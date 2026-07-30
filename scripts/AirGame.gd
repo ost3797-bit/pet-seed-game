@@ -157,6 +157,7 @@ func _build_screen() -> void:
 	popup_layer = Control.new()
 	popup_layer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	popup_layer.z_index = 50
+	popup_layer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(popup_layer)
 
 
