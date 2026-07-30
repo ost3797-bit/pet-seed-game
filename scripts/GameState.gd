@@ -68,12 +68,48 @@ func new_game(new_name: String, new_seed_type: String, new_style_id: int) -> voi
 	save_game()
 
 
+func jump_to_temp_quest() -> void:
+	water_cleared = true
+	temp_cleared = false
+	air_cleared = false
+	temp_phase_id = 0
+	air_phase_id = 0
+	just_cleared_temp = false
+	just_cleared_air = false
+	update_current_quest()
+	save_game()
+
+
 func jump_to_air_quest() -> void:
 	water_cleared = true
 	temp_cleared = true
 	air_cleared = false
 	temp_phase_id = 0
 	air_phase_id = 1      # 마법사 NPC 옆에서 바로 미니게임을 진행할 수 있도록 1단계 설정
+	just_cleared_temp = false
+	just_cleared_air = false
+	update_current_quest()
+	save_game()
+
+
+func jump_to_ending() -> void:
+	water_cleared = true
+	temp_cleared = true
+	air_cleared = true
+	temp_phase_id = 0
+	air_phase_id = 0
+	just_cleared_temp = false
+	just_cleared_air = false
+	update_current_quest()
+	save_game()
+
+
+func reset_all_quests() -> void:
+	water_cleared = false
+	temp_cleared = false
+	air_cleared = false
+	temp_phase_id = 0
+	air_phase_id = 0
 	just_cleared_temp = false
 	just_cleared_air = false
 	update_current_quest()

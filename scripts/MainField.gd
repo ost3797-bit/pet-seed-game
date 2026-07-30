@@ -99,6 +99,7 @@ func _ready() -> void:
 	_build_carpenter()
 	_build_wizard()
 	_build_ui()
+	_build_debug_panel()
 	temp_phase = GameState.temp_phase_id as TempPhase
 	air_phase = GameState.air_phase_id as AirPhase
 	_update_quest_icons()
@@ -896,6 +897,90 @@ func _build_ui() -> void:
 	_build_dialogue_panel(layer)
 
 	_update_quest_text()
+
+
+func _build_debug_panel() -> void:
+	# 캔버스 레이어(최상단)에 디버그 UI 생성
+	var debug_layer := CanvasLayer.new()
+	debug_layer.layer = 100
+	add_child(debug_layer)
+	
+	# 숨겨진 디버그 진입 버튼 (우측 상단 톱니바퀴)
+	var toggle_btn := Button.new()
+	toggle_btn.text = "⚙️"
+	toggle_btn.position = Vector2(1200, 20)
+	toggle_btn.size = Vector2(50, 50)
+	toggle_btn.modulate = Color(1, 1, 1, 0.3) # 반투명하게 숨김
+	debug_layer.add_child(toggle_btn)
+	
+	# 디버그 패널 배경
+	var panel := ColorRect.new()
+	panel.color = Color(0, 0, 0, 0.8)
+	panel.position = Vector2(930, 80)
+	panel.size = Vector2(320, 320)
+	panel.hide()
+	debug_layer.add_child(panel)
+	
+	toggle_btn.pressed.connect(func(): panel.visible = !panel.visible)
+	
+	var title := _label("개발자 스킵 메뉴", Vector2(0, 10), Vector2(320, 30), 20)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	panel.add_child(title)
+	
+	# 버튼들
+	var btn_y := 50
+	var spacing := 50
+	
+	var btn_temp := Button.new()
+	btn_temp.text = "▶ 온도 퀘스트로"
+	btn_temp.position = Vector2(20, btn_y)
+	btn_temp.size = Vector2(280, 40)
+	btn_temp.pressed.connect(func():
+		GameState.jump_to_temp_quest()
+		get_tree().reload_current_scene()
+	)
+	panel.add_child(btn_temp)
+	btn_y += spacing
+	
+	var btn_air := Button.new()
+	btn_air.text = "▶ 공기 퀘스트로"
+	btn_air.position = Vector2(20, btn_y)
+	btn_air.size = Vector2(280, 40)
+	btn_air.pressed.connect(func():
+		GameState.jump_to_air_quest()
+		get_tree().reload_current_scene()
+	)
+	panel.add_child(btn_air)
+	btn_y += spacing
+	
+	var btn_end := Button.new()
+	btn_end.text = "▶ 엔딩으로"
+	btn_end.position = Vector2(20, btn_y)
+	btn_end.size = Vector2(280, 40)
+	btn_end.pressed.connect(func():
+		GameState.jump_to_ending()
+		get_tree().change_scene_to_file("res://scenes/Ending.tscn")
+	)
+	panel.add_child(btn_end)
+	btn_y += spacing
+	
+	var btn_reset := Button.new()
+	btn_reset.text = "↺ 퀘스트 초기화"
+	btn_reset.position = Vector2(20, btn_y)
+	btn_reset.size = Vector2(280, 40)
+	btn_reset.pressed.connect(func():
+		GameState.reset_all_quests()
+		get_tree().reload_current_scene()
+	)
+	panel.add_child(btn_reset)
+	btn_y += spacing
+	
+	var btn_close := Button.new()
+	btn_close.text = "닫기"
+	btn_close.position = Vector2(20, btn_y)
+	btn_close.size = Vector2(280, 40)
+	btn_close.pressed.connect(func(): panel.hide())
+	panel.add_child(btn_close)
 
 
 func _build_dialogue_panel(layer: CanvasLayer) -> void:
