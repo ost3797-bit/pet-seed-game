@@ -59,7 +59,7 @@ func _process(delta: float) -> void:
 			sunbeams.remove_at(i)
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if not has_started:
 		return
 		
