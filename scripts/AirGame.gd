@@ -172,7 +172,7 @@ func _show_round_popup() -> void:
 	rule_panel.size = Vector2(880, 360)
 	rule_panel.z_index = 51
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("FFFFFF")
+	sb.bg_color = Color("FDF6E3")
 	sb.border_width_left = 6
 	sb.border_width_right = 6
 	sb.border_width_top = 6
@@ -219,7 +219,7 @@ func _show_round_popup() -> void:
 	btn_panel.size = Vector2(600, 90)
 	btn_panel.z_index = 51
 	var btn_panel_sb := StyleBoxFlat.new()
-	btn_panel_sb.bg_color = Color("FFFFFF")
+	btn_panel_sb.bg_color = Color("FDF6E3")
 	btn_panel_sb.border_width_left = 6
 	btn_panel_sb.border_width_right = 6
 	btn_panel_sb.border_width_top = 6
@@ -538,7 +538,7 @@ func _show_result(message: String, button_text: String) -> void:
 	panel.size = Vector2(900, 360)
 	panel.z_index = 60
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("FFFFFF")
+	sb.bg_color = Color("FDF6E3")
 	sb.border_width_left = 6
 	sb.border_width_right = 6
 	sb.border_width_top = 6
