@@ -429,6 +429,11 @@ func _on_boss_clicked() -> void:
 	boss_hp -= 1
 	var viewport_size := get_viewport_rect().size
 	
+	# 화면 진동 (좌우로만 미세하게)
+	boss_btn.position = boss_base_pos + Vector2(randf_range(-3.0, 3.0), 0.0)
+	var shake_tween := create_tween()
+	shake_tween.tween_property(boss_btn, "position", boss_base_pos, 0.1).set_trans(Tween.TRANS_ELASTIC)
+	
 	# 색상 깜빡임 효과 (붉은색/흰색 점멸)
 	var flash_tween := create_tween()
 	boss_btn.modulate = Color("ff6666")
