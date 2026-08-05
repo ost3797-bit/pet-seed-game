@@ -353,6 +353,12 @@ func _spawn_smoke() -> void:
 	)
 	smoke_container.add_child(btn)
 
+	var timer := get_tree().create_timer(1.0)
+	timer.timeout.connect(func():
+		if is_instance_valid(btn) and not btn.is_queued_for_deletion():
+			btn.queue_free()
+	)
+
 
 func _on_smoke_clicked(smoke: BaseButton) -> void:
 	if finished or waiting_for_popup or not is_instance_valid(smoke) or smoke.is_queued_for_deletion():
