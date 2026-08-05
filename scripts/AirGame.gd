@@ -386,7 +386,7 @@ func _spawn_boss() -> void:
 	var viewport_size := get_viewport_rect().size
 
 	boss_btn = TextureButton.new()
-	boss_btn.position = Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 250)
+	boss_btn.position = Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 200)
 	boss_btn.size = Vector2(400, 400)
 	boss_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	boss_btn.texture_normal = preload("res://assets/monster/dragon1.png")
@@ -421,10 +421,10 @@ func _on_boss_clicked() -> void:
 		return
 	boss_hp -= 1
 	var viewport_size := get_viewport_rect().size
-	var base_pos := Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 250)
+	var base_pos := Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 200)
 	
-	# 화면 진동 (약한 흔들림)
-	boss_btn.position = base_pos + Vector2(randf_range(-5, 5), randf_range(-5, 5))
+	# 화면 진동 (좌우로 아주 살짝 흔들림)
+	boss_btn.position = base_pos + Vector2(randf_range(-2, 2), 0)
 	var shake_tween := create_tween()
 	shake_tween.tween_property(boss_btn, "position", base_pos, 0.1).set_trans(Tween.TRANS_ELASTIC)
 	
