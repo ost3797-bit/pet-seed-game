@@ -123,10 +123,10 @@ func _build_retro_ui() -> void:
 	sb.border_width_top = 6
 	sb.border_width_bottom = 6
 	sb.border_color = Color("8B4513")
-	sb.corner_radius_top_left = 0
-	sb.corner_radius_top_right = 0
-	sb.corner_radius_bottom_left = 0
-	sb.corner_radius_bottom_right = 0
+	sb.corner_radius_top_left = 16
+	sb.corner_radius_top_right = 16
+	sb.corner_radius_bottom_left = 16
+	sb.corner_radius_bottom_right = 16
 	card_panel.add_theme_stylebox_override("panel", sb)
 	add_child(card_panel)
 
@@ -164,6 +164,10 @@ func _build_retro_ui() -> void:
 	win_sb.border_width_top = 8
 	win_sb.border_width_bottom = 8
 	win_sb.border_color = Color("8B4513")
+	win_sb.corner_radius_top_left = 16
+	win_sb.corner_radius_top_right = 16
+	win_sb.corner_radius_bottom_left = 16
+	win_sb.corner_radius_bottom_right = 16
 	win_panel.add_theme_stylebox_override("panel", win_sb)
 	win_panel.hide()
 	add_child(win_panel)
@@ -197,10 +201,10 @@ func _create_retro_button(text: String, pos: Vector2, btn_size: Vector2, bg_colo
 	sb_normal.border_width_top = 4
 	sb_normal.border_width_bottom = 4
 	sb_normal.border_color = Color.WHITE
-	sb_normal.corner_radius_top_left = 0
-	sb_normal.corner_radius_top_right = 0
-	sb_normal.corner_radius_bottom_left = 0
-	sb_normal.corner_radius_bottom_right = 0
+	sb_normal.corner_radius_top_left = 16
+	sb_normal.corner_radius_top_right = 16
+	sb_normal.corner_radius_bottom_left = 16
+	sb_normal.corner_radius_bottom_right = 16
 	btn.add_theme_stylebox_override("normal", sb_normal)
 	
 	var sb_hover := sb_normal.duplicate() as StyleBoxFlat
