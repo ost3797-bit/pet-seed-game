@@ -62,20 +62,6 @@ func _build_retro_ui() -> void:
 	bg.color = Color("FFF3D4")
 	bg.size = Vector2(1280, 720)
 	add_child(bg)
-	
-	# 은은한 그리드 패턴 효과 (장식)
-	for i in range(0, 1280, 40):
-		var line := ColorRect.new()
-		line.color = Color(0, 0, 0, 0.05)
-		line.position = Vector2(i, 0)
-		line.size = Vector2(2, 720)
-		add_child(line)
-	for j in range(0, 720, 40):
-		var line := ColorRect.new()
-		line.color = Color(0, 0, 0, 0.05)
-		line.position = Vector2(0, j)
-		line.size = Vector2(1280, 2)
-		add_child(line)
 
 	# 상단 타이틀 바
 	var top_bar := ColorRect.new()
