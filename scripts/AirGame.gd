@@ -386,7 +386,7 @@ func _spawn_boss() -> void:
 	var viewport_size := get_viewport_rect().size
 
 	boss_btn = TextureButton.new()
-	boss_btn.position = Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 200)
+	boss_btn.position = Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 250)
 	boss_btn.size = Vector2(400, 400)
 	boss_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	boss_btn.texture_normal = preload("res://assets/monster/dragon1.png")
@@ -399,7 +399,7 @@ func _spawn_boss() -> void:
 
 	# 보스 HP 레이블
 	boss_hp_label = _label("💥 HP: " + str(boss_hp) + " / " + str(BOSS_MAX_HP), Vector2(0, 190), Vector2(240, 35), 22, Color("ff6666"))
-	boss_hp_label.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 + 160)
+	boss_hp_label.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 + 130)
 	boss_hp_label.size = Vector2(240, 35)
 	smoke_container.add_child(boss_hp_label)
 
@@ -421,10 +421,10 @@ func _on_boss_clicked() -> void:
 		return
 	boss_hp -= 1
 	var viewport_size := get_viewport_rect().size
-	var base_pos := Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 200)
+	var base_pos := Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 250)
 	
-	# 화면 진동 (강한 흔들림)
-	boss_btn.position = base_pos + Vector2(randf_range(-25, 25), randf_range(-25, 25))
+	# 화면 진동 (약한 흔들림)
+	boss_btn.position = base_pos + Vector2(randf_range(-5, 5), randf_range(-5, 5))
 	var shake_tween := create_tween()
 	shake_tween.tween_property(boss_btn, "position", base_pos, 0.1).set_trans(Tween.TRANS_ELASTIC)
 	
