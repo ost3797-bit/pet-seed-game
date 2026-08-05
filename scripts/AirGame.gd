@@ -302,17 +302,16 @@ func _spawn_smoke() -> void:
 	if smoke_container.get_child_count() >= MAX_SMOKE:
 		return
 
-	var btn := Button.new()
-	var pos := _random_smoke_position()
-	btn.position = pos - Vector2(60, 45)
-	btn.size = Vector2(120, 90)
-
-	# 라운드2: 착한 구름 10% 확률로 등장
 	var is_good := (has_good_cloud and randf() < 0.30)
-	btn.set_meta("is_good", is_good)
+	var btn: BaseButton
+	var pos := _random_smoke_position()
 
 	if is_good:
-		btn.text = "🌤️ 바람구름 🌤️\n[ ^_^ ]"
+		var cbtn := Button.new()
+		cbtn.position = pos - Vector2(60, 45)
+		cbtn.size = Vector2(120, 90)
+		cbtn.set_meta("is_good", true)
+		cbtn.text = "🌤️ 바람구름 🌤️\n[ ^_^ ]"
 		var sb := StyleBoxFlat.new()
 		sb.bg_color = Color("12304a")
 		sb.border_width_left = 4
@@ -324,44 +323,31 @@ func _spawn_smoke() -> void:
 		sb.corner_radius_top_right = 16
 		sb.corner_radius_bottom_left = 16
 		sb.corner_radius_bottom_right = 16
-		btn.add_theme_stylebox_override("normal", sb)
+		cbtn.add_theme_stylebox_override("normal", sb)
 		var sb_h := sb.duplicate() as StyleBoxFlat
 		sb_h.bg_color = Color("1a4a6a")
 		sb_h.border_color = Color("ffffff")
-		btn.add_theme_stylebox_override("hover", sb_h)
-		btn.add_theme_stylebox_override("pressed", sb_h)
-		btn.add_theme_color_override("font_color", Color("2ce8f5"))
+		cbtn.add_theme_stylebox_override("hover", sb_h)
+		cbtn.add_theme_stylebox_override("pressed", sb_h)
+		cbtn.add_theme_color_override("font_color", Color("2ce8f5"))
+		cbtn.add_theme_font_size_override("font_size", 16)
+		btn = cbtn
 	else:
-		var monster_names := [
-			"👾 매연몽 👾\n[ >_< ]",
-			"🔥 유해먼지 🔥\n[ +___+ ]",
-			"💀 매연괴수 💀\n[ O_o ]",
-			"🌫️ 오염덩어리\n[ X_X ]"
+		var tbtn := TextureButton.new()
+		tbtn.set_meta("is_good", false)
+		var monster_textures := [
+			preload("res://assets/monster/smog1.png"),
+			preload("res://assets/monster/smog2.png"),
+			preload("res://assets/monster/smog3.png")
 		]
-		var monster_colors := [Color("ff0044"), Color("ff5500"), Color("cc00cc"), Color("886600")]
-		var idx := randi() % monster_names.size()
-		btn.text = monster_names[idx]
-		var sb := StyleBoxFlat.new()
-		sb.bg_color = Color("2a2f4e")
-		sb.border_width_left = 4
-		sb.border_width_right = 4
-		sb.border_width_top = 4
-		sb.border_width_bottom = 4
-		sb.border_color = monster_colors[idx]
-		sb.corner_radius_top_left = 16
-		sb.corner_radius_top_right = 16
-		sb.corner_radius_bottom_left = 16
-		sb.corner_radius_bottom_right = 16
-		btn.add_theme_stylebox_override("normal", sb)
-		var sb_h := sb.duplicate() as StyleBoxFlat
-		sb_h.bg_color = Color("4d4268")
-		sb_h.border_color = Color("ffffff")
-		btn.add_theme_stylebox_override("hover", sb_h)
-		btn.add_theme_stylebox_override("pressed", sb_h)
-		btn.add_theme_color_override("font_color", Color("ffffff"))
+		tbtn.texture_normal = monster_textures[randi() % monster_textures.size()]
+		tbtn.ignore_texture_size = true
+		tbtn.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+		tbtn.size = Vector2(120, 120)
+		tbtn.position = pos - Vector2(60, 60)
+		btn = tbtn
 
 	btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	btn.add_theme_font_size_override("font_size", 16)
 	btn.pressed.connect(func():
 		_on_smoke_clicked(btn)
 	)
