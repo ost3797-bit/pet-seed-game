@@ -68,28 +68,14 @@ func _ready() -> void:
 func _build_screen() -> void:
 	# 배경
 	var bg := ColorRect.new()
-	bg.color = Color("181425")
+	bg.color = Color("FFF3D4")
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
-	# 도트 그리드 패턴
-	for i in range(0, 1280, 40):
-		var line := ColorRect.new()
-		line.color = Color(1, 1, 1, 0.03)
-		line.position = Vector2(i, 0)
-		line.size = Vector2(2, 720)
-		add_child(line)
-	for j in range(0, 720, 40):
-		var line := ColorRect.new()
-		line.color = Color(1, 1, 1, 0.03)
-		line.position = Vector2(0, j)
-		line.size = Vector2(1280, 2)
-		add_child(line)
-
 	# 상단 타이틀 바
 	var top_bar := ColorRect.new()
-	top_bar.color = Color("262b44")
+	top_bar.color = Color("DA863E")
 	top_bar.position = Vector2(40, 20)
 	top_bar.size = Vector2(1200, 65)
 	top_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -97,17 +83,17 @@ func _build_screen() -> void:
 	var top_border := ReferenceRect.new()
 	top_border.position = Vector2(40, 20)
 	top_border.size = Vector2(1200, 65)
-	top_border.border_color = Color("2ce8f5")
+	top_border.border_color = Color("8B4513")
 	top_border.border_width = 4.0
 	top_border.editor_only = false
 	top_border.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(top_border)
-	add_child(_label("✨ [8-BIT] 마법봉으로 공기 정화하기 - 매연 몬스터 소탕 작전! ✨", Vector2(40, 32), Vector2(1200, 40), 28, Color("2ce8f5")))
+	add_child(_label("✨ 마법봉으로 공기 정화하기 - 매연 몬스터 소탕 작전! ✨", Vector2(40, 32), Vector2(1200, 40), 28, Color("FFFFFF")))
 
 	# 라운드 / 피드백 레이블
-	round_label = _label("", Vector2(420, 100), Vector2(440, 35), 26, Color("ffffff"))
+	round_label = _label("", Vector2(420, 100), Vector2(440, 35), 26, Color("333333"))
 	add_child(round_label)
-	feedback = _label("", Vector2(210, 145), Vector2(860, 35), 22, Color("38b764"))
+	feedback = _label("", Vector2(210, 145), Vector2(860, 35), 22, Color("228B22"))
 	add_child(feedback)
 
 	# 매연 컨테이너
@@ -118,7 +104,7 @@ func _build_screen() -> void:
 
 	# 배터리 게이지
 	var frame := ColorRect.new()
-	frame.color = Color("12101a")
+	frame.color = Color("EFE8D8")
 	frame.position = Vector2(300, 620)
 	frame.size = Vector2(680, 75)
 	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -126,7 +112,7 @@ func _build_screen() -> void:
 	var frame_border := ReferenceRect.new()
 	frame_border.position = Vector2(300, 620)
 	frame_border.size = Vector2(680, 75)
-	frame_border.border_color = Color("ffffff")
+	frame_border.border_color = Color("8B4513")
 	frame_border.border_width = 4.0
 	frame_border.editor_only = false
 	frame_border.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -137,12 +123,12 @@ func _build_screen() -> void:
 	breath_gauge.size = Vector2(668, 63)
 	breath_gauge.max_value = 100.0
 	breath_gauge.value = 0.0
-	breath_gauge.texture_progress = _solid_texture(Color("38b764"), 32, 32)
+	breath_gauge.texture_progress = _solid_texture(Color("4CAF50"), 32, 32)
 	breath_gauge.nine_patch_stretch = true
 	breath_gauge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	frame.add_child(breath_gauge)
 
-	var gauge_text := _label("", Vector2(0, 20), Vector2(680, 40), 25, Color("ffffff"))
+	var gauge_text := _label("", Vector2(0, 20), Vector2(680, 40), 25, Color("333333"))
 	gauge_text.name = "GaugeText"
 	gauge_text.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	frame.add_child(gauge_text)
@@ -185,16 +171,16 @@ func _show_round_popup() -> void:
 	rule_panel.size = Vector2(880, 360)
 	rule_panel.z_index = 51
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("1a1a2e")
+	sb.bg_color = Color("FFFFFF")
 	sb.border_width_left = 6
 	sb.border_width_right = 6
 	sb.border_width_top = 6
 	sb.border_width_bottom = 6
 	sb.border_color = info["color"]
-	sb.corner_radius_top_left = 0
-	sb.corner_radius_top_right = 0
-	sb.corner_radius_bottom_left = 0
-	sb.corner_radius_bottom_right = 0
+	sb.corner_radius_top_left = 16
+	sb.corner_radius_top_right = 16
+	sb.corner_radius_bottom_left = 16
+	sb.corner_radius_bottom_right = 16
 	rule_panel.add_theme_stylebox_override("panel", sb)
 	popup_layer.add_child(rule_panel)
 
@@ -206,7 +192,7 @@ func _show_round_popup() -> void:
 	badge_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rule_panel.add_child(badge_bg)
 
-	var badge_label := _label("ROUND  " + str(current_round + 1) + "  /  " + str(TOTAL_ROUNDS), Vector2(0, 10), Vector2(880, 35), 26, Color("181425"))
+	var badge_label := _label("ROUND  " + str(current_round + 1) + "  /  " + str(TOTAL_ROUNDS), Vector2(0, 10), Vector2(880, 35), 26, Color("FFFFFF"))
 	rule_panel.add_child(badge_label)
 
 	# 제목
@@ -222,7 +208,7 @@ func _show_round_popup() -> void:
 	rule_panel.add_child(divider)
 
 	# 규칙 설명 (버튼이 하단 창으로 분리되었으므로 높이를 230px까지 넉넉하게 사용!)
-	var rule_lbl := _label(info["rule"], Vector2(30, 130), Vector2(820, 220), 22, Color("e0e0e0"))
+	var rule_lbl := _label(info["rule"], Vector2(30, 130), Vector2(820, 220), 22, Color("333333"))
 	rule_lbl.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	rule_panel.add_child(rule_lbl)
 
@@ -232,12 +218,16 @@ func _show_round_popup() -> void:
 	btn_panel.size = Vector2(600, 90)
 	btn_panel.z_index = 51
 	var btn_panel_sb := StyleBoxFlat.new()
-	btn_panel_sb.bg_color = Color("1a1a2e")
+	btn_panel_sb.bg_color = Color("FFFFFF")
 	btn_panel_sb.border_width_left = 6
 	btn_panel_sb.border_width_right = 6
 	btn_panel_sb.border_width_top = 6
 	btn_panel_sb.border_width_bottom = 6
 	btn_panel_sb.border_color = info["color"]
+	btn_panel_sb.corner_radius_top_left = 16
+	btn_panel_sb.corner_radius_top_right = 16
+	btn_panel_sb.corner_radius_bottom_left = 16
+	btn_panel_sb.corner_radius_bottom_right = 16
 	btn_panel.add_theme_stylebox_override("panel", btn_panel_sb)
 	popup_layer.add_child(btn_panel)
 
@@ -250,12 +240,16 @@ func _show_round_popup() -> void:
 	start_btn.add_theme_font_size_override("font_size", 26)
 	start_btn.add_theme_color_override("font_color", Color("ffffff"))
 	var btn_sb := StyleBoxFlat.new()
-	btn_sb.bg_color = Color("2a2f4e")
+	btn_sb.bg_color = info["color"].darkened(0.2)
 	btn_sb.border_width_left = 4
 	btn_sb.border_width_right = 4
 	btn_sb.border_width_top = 4
 	btn_sb.border_width_bottom = 4
 	btn_sb.border_color = info["color"]
+	btn_sb.corner_radius_top_left = 16
+	btn_sb.corner_radius_top_right = 16
+	btn_sb.corner_radius_bottom_left = 16
+	btn_sb.corner_radius_bottom_right = 16
 	start_btn.add_theme_stylebox_override("normal", btn_sb)
 	var btn_hover := btn_sb.duplicate() as StyleBoxFlat
 	btn_hover.bg_color = info["color"]
@@ -325,10 +319,10 @@ func _spawn_smoke() -> void:
 		sb.border_width_top = 4
 		sb.border_width_bottom = 4
 		sb.border_color = Color("2ce8f5")
-		sb.corner_radius_top_left = 0
-		sb.corner_radius_top_right = 0
-		sb.corner_radius_bottom_left = 0
-		sb.corner_radius_bottom_right = 0
+		sb.corner_radius_top_left = 16
+		sb.corner_radius_top_right = 16
+		sb.corner_radius_bottom_left = 16
+		sb.corner_radius_bottom_right = 16
 		btn.add_theme_stylebox_override("normal", sb)
 		var sb_h := sb.duplicate() as StyleBoxFlat
 		sb_h.bg_color = Color("1a4a6a")
@@ -353,10 +347,10 @@ func _spawn_smoke() -> void:
 		sb.border_width_top = 4
 		sb.border_width_bottom = 4
 		sb.border_color = monster_colors[idx]
-		sb.corner_radius_top_left = 0
-		sb.corner_radius_top_right = 0
-		sb.corner_radius_bottom_left = 0
-		sb.corner_radius_bottom_right = 0
+		sb.corner_radius_top_left = 16
+		sb.corner_radius_top_right = 16
+		sb.corner_radius_bottom_left = 16
+		sb.corner_radius_bottom_right = 16
 		btn.add_theme_stylebox_override("normal", sb)
 		var sb_h := sb.duplicate() as StyleBoxFlat
 		sb_h.bg_color = Color("4d4268")
@@ -444,10 +438,10 @@ func _update_boss_style() -> void:
 	sb.border_width_top = 6
 	sb.border_width_bottom = 6
 	sb.border_color = border_col
-	sb.corner_radius_top_left = 0
-	sb.corner_radius_top_right = 0
-	sb.corner_radius_bottom_left = 0
-	sb.corner_radius_bottom_right = 0
+	sb.corner_radius_top_left = 16
+	sb.corner_radius_top_right = 16
+	sb.corner_radius_bottom_left = 16
+	sb.corner_radius_bottom_right = 16
 	boss_btn.add_theme_stylebox_override("normal", sb)
 	var sb_h := sb.duplicate() as StyleBoxFlat
 	sb_h.bg_color = border_col
@@ -557,38 +551,38 @@ func _show_result(message: String, button_text: String) -> void:
 	panel.size = Vector2(900, 360)
 	panel.z_index = 60
 	var sb := StyleBoxFlat.new()
-	sb.bg_color = Color("181425")
+	sb.bg_color = Color("FFFFFF")
 	sb.border_width_left = 6
 	sb.border_width_right = 6
 	sb.border_width_top = 6
 	sb.border_width_bottom = 6
-	sb.border_color = Color("2ce8f5")
-	sb.corner_radius_top_left = 0
-	sb.corner_radius_top_right = 0
-	sb.corner_radius_bottom_left = 0
-	sb.corner_radius_bottom_right = 0
+	sb.border_color = Color("DA863E")
+	sb.corner_radius_top_left = 16
+	sb.corner_radius_top_right = 16
+	sb.corner_radius_bottom_left = 16
+	sb.corner_radius_bottom_right = 16
 	panel.add_theme_stylebox_override("panel", sb)
 	add_child(panel)
 
-	panel.add_child(_label(message, Vector2(40, 60), Vector2(820, 160), 30, Color("fee761")))
+	panel.add_child(_label(message, Vector2(40, 60), Vector2(820, 160), 30, Color("333333")))
 
 	var button := Button.new()
 	button.text = button_text
 	button.position = Vector2(250, 260)
 	button.size = Vector2(400, 70)
 	button.add_theme_font_size_override("font_size", 25)
-	button.add_theme_color_override("font_color", Color("ffffff"))
+	button.add_theme_color_override("font_color", Color("FFFFFF"))
 	var btn_sb := StyleBoxFlat.new()
-	btn_sb.bg_color = Color("2a2f4e")
+	btn_sb.bg_color = Color("4CAF50")
 	btn_sb.border_width_left = 4
 	btn_sb.border_width_right = 4
 	btn_sb.border_width_top = 4
 	btn_sb.border_width_bottom = 4
-	btn_sb.border_color = Color("38b764")
-	btn_sb.corner_radius_top_left = 0
-	btn_sb.corner_radius_top_right = 0
-	btn_sb.corner_radius_bottom_left = 0
-	btn_sb.corner_radius_bottom_right = 0
+	btn_sb.border_color = Color("4CAF50")
+	btn_sb.corner_radius_top_left = 16
+	btn_sb.corner_radius_top_right = 16
+	btn_sb.corner_radius_bottom_left = 16
+	btn_sb.corner_radius_bottom_right = 16
 	button.add_theme_stylebox_override("normal", btn_sb)
 	var btn_hover := btn_sb.duplicate() as StyleBoxFlat
 	btn_hover.bg_color = Color("38b764")
