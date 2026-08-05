@@ -354,7 +354,7 @@ func _spawn_smoke() -> void:
 	smoke_container.add_child(btn)
 
 
-func _on_smoke_clicked(smoke: Button) -> void:
+func _on_smoke_clicked(smoke: BaseButton) -> void:
 	if finished or waiting_for_popup or not is_instance_valid(smoke) or smoke.is_queued_for_deletion():
 		return
 	var is_good: bool = smoke.get_meta("is_good", false)
