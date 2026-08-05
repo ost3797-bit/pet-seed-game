@@ -57,9 +57,10 @@ func _init_deck() -> void:
 	card_deck.shuffle()
 
 func _build_retro_ui() -> void:
-	# 밝고 연한 베이지 배경
-	var bg := ColorRect.new()
-	bg.color = Color("FFF3D4")
+	# 밝고 연한 베이지 배경 (이미지로 대체)
+	var bg := TextureRect.new()
+	bg.texture = preload("res://assets/game2_2_bg.png")
+	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bg.size = Vector2(1280, 720)
 	add_child(bg)
 

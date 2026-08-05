@@ -67,8 +67,9 @@ func _ready() -> void:
 
 func _build_screen() -> void:
 	# 배경
-	var bg := ColorRect.new()
-	bg.color = Color("FFF3D4")
+	var bg := TextureRect.new()
+	bg.texture = preload("res://assets/game2_2_bg.png")
+	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
