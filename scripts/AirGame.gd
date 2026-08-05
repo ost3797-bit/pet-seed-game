@@ -9,6 +9,14 @@ const MAX_SMOKE := 4            # 화면 최대 매연 수
 # 라운드3 보스 상수
 const BOSS_MAX_HP := 60          # 보스 클릭 횟수
 
+# [수동 조절 설정] 보스 크기 및 위치, 진동 강도
+const BOSS_SIZE_X := 400.0       # 보스 가로 크기
+const BOSS_SIZE_Y := 400.0       # 보스 세로 크기
+const BOSS_OFFSET_X := 0.0       # 보스 가로 위치 (0=정중앙, 양수=오른쪽, 음수=왼쪽)
+const BOSS_OFFSET_Y := -50.0     # 보스 세로 위치 (0=정중앙, 양수=아래쪽, 음수=위쪽)
+const BOSS_SHAKE_X := 2.0        # 타격 시 좌우 흔들림 강도 (픽셀)
+const BOSS_SHAKE_Y := 0.0        # 타격 시 상하 흔들림 강도 (픽셀)
+
 # ─── 상태 변수 ───────────────────────────────────────
 var current_round := 0
 var finished := false
@@ -386,8 +394,8 @@ func _spawn_boss() -> void:
 	var viewport_size := get_viewport_rect().size
 
 	boss_btn = TextureButton.new()
-	boss_btn.position = Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 200)
-	boss_btn.size = Vector2(400, 400)
+	boss_btn.position = Vector2(viewport_size.x / 2.0 - (BOSS_SIZE_X / 2.0) + BOSS_OFFSET_X, viewport_size.y / 2.0 - (BOSS_SIZE_Y / 2.0) + BOSS_OFFSET_Y)
+	boss_btn.size = Vector2(BOSS_SIZE_X, BOSS_SIZE_Y)
 	boss_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 	boss_btn.texture_normal = preload("res://assets/monster/dragon1.png")
 	boss_btn.ignore_texture_size = true
@@ -421,10 +429,10 @@ func _on_boss_clicked() -> void:
 		return
 	boss_hp -= 1
 	var viewport_size := get_viewport_rect().size
-	var base_pos := Vector2(viewport_size.x / 2.0 - 200, viewport_size.y / 2.0 - 200)
+	var base_pos := Vector2(viewport_size.x / 2.0 - (BOSS_SIZE_X / 2.0) + BOSS_OFFSET_X, viewport_size.y / 2.0 - (BOSS_SIZE_Y / 2.0) + BOSS_OFFSET_Y)
 	
-	# 화면 진동 (좌우로 아주 살짝 흔들림)
-	boss_btn.position = base_pos + Vector2(randf_range(-2, 2), 0)
+	# 화면 진동 (설정된 강도만큼 흔들림)
+	boss_btn.position = base_pos + Vector2(randf_range(-BOSS_SHAKE_X, BOSS_SHAKE_X), randf_range(-BOSS_SHAKE_Y, BOSS_SHAKE_Y))
 	var shake_tween := create_tween()
 	shake_tween.tween_property(boss_btn, "position", base_pos, 0.1).set_trans(Tween.TRANS_ELASTIC)
 	
