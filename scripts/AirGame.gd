@@ -7,7 +7,7 @@ const LOSS_PER_SECOND := 3.0   # 초당 게이지 감소
 const MAX_SMOKE := 4            # 화면 최대 매연 수
 
 # 라운드3 보스 상수
-const BOSS_MAX_HP := 8          # 보스 클릭 횟수
+const BOSS_MAX_HP := 60          # 보스 클릭 횟수
 
 # ─── 상태 변수 ───────────────────────────────────────
 var current_round := 0
@@ -19,7 +19,7 @@ var has_good_cloud := false
 
 # Round3: 보스 관련
 var boss_hp := 0
-var boss_btn: Button = null
+var boss_btn: TextureButton = null
 var boss_hp_label: Label = null
 
 # UI 노드 참조
@@ -385,19 +385,21 @@ func _spawn_boss() -> void:
 	boss_hp = BOSS_MAX_HP
 	var viewport_size := get_viewport_rect().size
 
-	boss_btn = Button.new()
-	boss_btn.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 - 100)
-	boss_btn.size = Vector2(240, 180)
+	boss_btn = TextureButton.new()
+	boss_btn.position = Vector2(viewport_size.x / 2.0 - 150, viewport_size.y / 2.0 - 150)
+	boss_btn.size = Vector2(300, 300)
 	boss_btn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
-	boss_btn.add_theme_font_size_override("font_size", 36)
-	boss_btn.add_theme_color_override("font_color", Color("fee761"))
+	boss_btn.texture_normal = preload("res://assets/monster/dragon1.png")
+	boss_btn.ignore_texture_size = true
+	boss_btn.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+	
 	_update_boss_style()
 	boss_btn.pressed.connect(_on_boss_clicked)
 	smoke_container.add_child(boss_btn)
 
 	# 보스 HP 레이블
 	boss_hp_label = _label("💥 HP: " + str(boss_hp) + " / " + str(BOSS_MAX_HP), Vector2(0, 190), Vector2(240, 35), 22, Color("ff6666"))
-	boss_hp_label.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 + 80)
+	boss_hp_label.position = Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 + 160)
 	boss_hp_label.size = Vector2(240, 35)
 	smoke_container.add_child(boss_hp_label)
 
@@ -405,41 +407,11 @@ func _spawn_boss() -> void:
 func _update_boss_style() -> void:
 	if boss_btn == null or not is_instance_valid(boss_btn):
 		return
-	var ratio := float(boss_hp) / float(BOSS_MAX_HP)
-	# HP 비율에 따라 보스 색상 변화
-	var border_col: Color
-	var bg_col: Color
-	var boss_text: String
-	if ratio > 0.6:
-		border_col = Color("ff0044")
-		bg_col = Color("3a0a1e")
-		boss_text = "👹 대왕 매연보스\n[ >:( ]\n연타하세요!"
-	elif ratio > 0.3:
-		border_col = Color("ff6600")
-		bg_col = Color("3a1a00")
-		boss_text = "👹 대왕 매연보스\n[ x_X ]\n거의 다 됐어요!"
+	
+	if boss_hp <= 30:
+		boss_btn.texture_normal = preload("res://assets/monster/dragon2.png")
 	else:
-		border_col = Color("fee761")
-		bg_col = Color("2a2000")
-		boss_text = "👹 대왕 매연보스\n[ @_@ ]\n조금만 더!!"
-
-	boss_btn.text = boss_text
-	var sb := StyleBoxFlat.new()
-	sb.bg_color = bg_col
-	sb.border_width_left = 6
-	sb.border_width_right = 6
-	sb.border_width_top = 6
-	sb.border_width_bottom = 6
-	sb.border_color = border_col
-	sb.corner_radius_top_left = 16
-	sb.corner_radius_top_right = 16
-	sb.corner_radius_bottom_left = 16
-	sb.corner_radius_bottom_right = 16
-	boss_btn.add_theme_stylebox_override("normal", sb)
-	var sb_h := sb.duplicate() as StyleBoxFlat
-	sb_h.bg_color = border_col
-	boss_btn.add_theme_stylebox_override("hover", sb_h)
-	boss_btn.add_theme_stylebox_override("pressed", sb_h)
+		boss_btn.texture_normal = preload("res://assets/monster/dragon1.png")
 
 
 func _on_boss_clicked() -> void:
@@ -449,8 +421,36 @@ func _on_boss_clicked() -> void:
 		return
 	boss_hp -= 1
 	var viewport_size := get_viewport_rect().size
-	var base_pos := Vector2(viewport_size.x / 2.0 - 120, viewport_size.y / 2.0 - 100)
-	boss_btn.position = base_pos + Vector2(randf_range(-14, 14), randf_range(-14, 14))
+	var base_pos := Vector2(viewport_size.x / 2.0 - 150, viewport_size.y / 2.0 - 150)
+	
+	# 화면 진동 (강한 흔들림)
+	boss_btn.position = base_pos + Vector2(randf_range(-25, 25), randf_range(-25, 25))
+	var shake_tween := create_tween()
+	shake_tween.tween_property(boss_btn, "position", base_pos, 0.1).set_trans(Tween.TRANS_ELASTIC)
+	
+	# 색상 깜빡임 효과 (붉은색/흰색 점멸)
+	var flash_tween := create_tween()
+	boss_btn.modulate = Color("ff6666")
+	flash_tween.tween_property(boss_btn, "modulate", Color.WHITE, 0.15)
+	
+	# 플로팅 데미지 텍스트
+	var dmg_lbl := Label.new()
+	var dmg_texts = ["-1", "퍼펙트!", "Hit!", "아얏!"]
+	dmg_lbl.text = dmg_texts[randi() % dmg_texts.size()]
+	dmg_lbl.add_theme_font_size_override("font_size", 28)
+	dmg_lbl.add_theme_color_override("font_color", Color("ffcc00"))
+	var shadow_sb = StyleBoxFlat.new()
+	shadow_sb.bg_color = Color(0, 0, 0, 0)
+	shadow_sb.shadow_color = Color(0, 0, 0, 0.5)
+	shadow_sb.shadow_size = 4
+	dmg_lbl.add_theme_stylebox_override("normal", shadow_sb)
+	dmg_lbl.position = boss_btn.position + Vector2(randf_range(50, 250), randf_range(50, 150))
+	smoke_container.add_child(dmg_lbl)
+	
+	var float_tween := create_tween()
+	float_tween.tween_property(dmg_lbl, "position", dmg_lbl.position - Vector2(0, 80), 0.5)
+	float_tween.parallel().tween_property(dmg_lbl, "modulate:a", 0.0, 0.5)
+	float_tween.tween_callback(dmg_lbl.queue_free)
 
 	# 게이지 업데이트
 	breath_gauge.value = minf(100.0, float(BOSS_MAX_HP - boss_hp) / float(BOSS_MAX_HP) * 100.0)
@@ -464,6 +464,7 @@ func _on_boss_clicked() -> void:
 
 	if boss_hp <= 0:
 		boss_btn.position = base_pos
+		boss_btn.modulate = Color.WHITE
 		feedback.text = "🎉 보스 처치 완료! 하늘이 맑아졌어요! ✨"
 		if is_instance_valid(boss_btn):
 			boss_btn.disabled = true
