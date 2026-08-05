@@ -2,7 +2,7 @@ extends Control
 
 # ─── 게임 상수 ───────────────────────────────────────
 const TOTAL_ROUNDS := 3
-const GAIN_PER_SMOKE := 20.0   # 매연 클릭 시 게이지 증가
+const GAIN_PER_SMOKE := 50.0   # 매연 클릭 시 게이지 증가
 const LOSS_PER_SECOND := 3.0   # 초당 게이지 감소
 const MAX_SMOKE := 4            # 화면 최대 매연 수
 
@@ -13,8 +13,8 @@ const BOSS_MAX_HP := 60          # 보스 클릭 횟수
 const BOSS_SIZE_X := 400.0       # 보스 가로 크기
 const BOSS_SIZE_Y := 400.0       # 보스 세로 크기
 const BOSS_OFFSET_X := 0.0       # 보스 가로 위치 (0=정중앙, 양수=오른쪽, 음수=왼쪽)
-const BOSS_OFFSET_Y := -50.0     # 보스 세로 위치 (0=정중앙, 양수=아래쪽, 음수=위쪽)
-const BOSS_SHAKE_X := 2.0        # 타격 시 좌우 흔들림 강도 (픽셀)
+const BOSS_OFFSET_Y := -200.0     # 보스 세로 위치 (0=정중앙, 양수=아래쪽, 음수=위쪽)
+const BOSS_SHAKE_X := 0.5        # 타격 시 좌우 흔들림 강도 (픽셀)
 const BOSS_SHAKE_Y := 0.0        # 타격 시 상하 흔들림 강도 (픽셀)
 
 # ─── 상태 변수 ───────────────────────────────────────
@@ -29,6 +29,7 @@ var has_good_cloud := false
 var boss_hp := 0
 var boss_btn: TextureButton = null
 var boss_hp_label: Label = null
+var boss_base_pos := Vector2.ZERO
 
 # UI 노드 참조
 var smoke_container: Control
@@ -401,6 +402,8 @@ func _spawn_boss() -> void:
 	boss_btn.ignore_texture_size = true
 	boss_btn.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
 	
+	boss_base_pos = boss_btn.position
+	
 	_update_boss_style()
 	boss_btn.pressed.connect(_on_boss_clicked)
 	smoke_container.add_child(boss_btn)
@@ -429,12 +432,11 @@ func _on_boss_clicked() -> void:
 		return
 	boss_hp -= 1
 	var viewport_size := get_viewport_rect().size
-	var base_pos := Vector2(viewport_size.x / 2.0 - (BOSS_SIZE_X / 2.0) + BOSS_OFFSET_X, viewport_size.y / 2.0 - (BOSS_SIZE_Y / 2.0) + BOSS_OFFSET_Y)
 	
 	# 화면 진동 (설정된 강도만큼 흔들림)
-	boss_btn.position = base_pos + Vector2(randf_range(-BOSS_SHAKE_X, BOSS_SHAKE_X), randf_range(-BOSS_SHAKE_Y, BOSS_SHAKE_Y))
+	boss_btn.position = boss_base_pos + Vector2(randf_range(-BOSS_SHAKE_X, BOSS_SHAKE_X), randf_range(-BOSS_SHAKE_Y, BOSS_SHAKE_Y))
 	var shake_tween := create_tween()
-	shake_tween.tween_property(boss_btn, "position", base_pos, 0.1).set_trans(Tween.TRANS_ELASTIC)
+	shake_tween.tween_property(boss_btn, "position", boss_base_pos, 0.1).set_trans(Tween.TRANS_ELASTIC)
 	
 	# 색상 깜빡임 효과 (붉은색/흰색 점멸)
 	var flash_tween := create_tween()
@@ -471,7 +473,7 @@ func _on_boss_clicked() -> void:
 	_update_boss_style()
 
 	if boss_hp <= 0:
-		boss_btn.position = base_pos
+		boss_btn.position = boss_base_pos
 		boss_btn.modulate = Color.WHITE
 		feedback.text = "🎉 보스 처치 완료! 하늘이 맑아졌어요! ✨"
 		if is_instance_valid(boss_btn):
