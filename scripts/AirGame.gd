@@ -39,21 +39,21 @@ func _get_round_info(round_idx: int) -> Dictionary:
 				"title": "🌟 라운드 1: 매연 소탕 작전!",
 				"rule": "☁️ 화면에 나타나는 매연 몬스터를\n빠르게 터치해서 물리쳐요!\n\n매연을 없애면 맑은 공기 배터리가 충전됩니다.\n배터리를 100%로 채우면 성공!",
 				"icon": "👾",
-				"color": Color("2ce8f5")
+				"color": Color("64B5F6")
 			}
 		1:
 			return {
 				"title": "⚠️ 라운드 2: 착한 구름을 조심해요!",
 				"rule": "이번엔 매연 몬스터와 함께\n🌤️ 착한 바람구름도 나타나요!\n\n✅ 매연 몬스터(붉은색/노란색) → 터치!\n❌ 착한 바람구름(하늘색 🌤️) → 터치 금지!\n\n착한 구름을 건드리면 게이지가 -15% 감소해요!",
 				"icon": "🌤️",
-				"color": Color("fee761")
+				"color": Color("F5B041")
 			}
 		2:
 			return {
 				"title": "👹 라운드 3: 대왕 매연 보스 등장!",
 				"rule": "거대한 대왕 매연 보스가 나타났어요!\n\n💥 보스를 " + str(BOSS_MAX_HP) + "번 연타해서 물리치세요!\n클릭할수록 보스가 약해집니다!\n\n보스를 처치하면 하늘이 맑아져요!",
 				"icon": "👹",
-				"color": Color("ff0044")
+				"color": Color("E57373")
 			}
 	return {}
 
