@@ -312,30 +312,13 @@ func _spawn_smoke() -> void:
 	var pos := _random_smoke_position()
 
 	if is_good:
-		var cbtn := Button.new()
-		cbtn.position = pos - Vector2(60, 45)
-		cbtn.size = Vector2(120, 90)
+		var cbtn := TextureButton.new()
 		cbtn.set_meta("is_good", true)
-		cbtn.text = "🌤️ 바람구름 🌤️\n[ ^_^ ]"
-		var sb := StyleBoxFlat.new()
-		sb.bg_color = Color("12304a")
-		sb.border_width_left = 4
-		sb.border_width_right = 4
-		sb.border_width_top = 4
-		sb.border_width_bottom = 4
-		sb.border_color = Color("2ce8f5")
-		sb.corner_radius_top_left = 16
-		sb.corner_radius_top_right = 16
-		sb.corner_radius_bottom_left = 16
-		sb.corner_radius_bottom_right = 16
-		cbtn.add_theme_stylebox_override("normal", sb)
-		var sb_h := sb.duplicate() as StyleBoxFlat
-		sb_h.bg_color = Color("1a4a6a")
-		sb_h.border_color = Color("ffffff")
-		cbtn.add_theme_stylebox_override("hover", sb_h)
-		cbtn.add_theme_stylebox_override("pressed", sb_h)
-		cbtn.add_theme_color_override("font_color", Color("2ce8f5"))
-		cbtn.add_theme_font_size_override("font_size", 16)
+		cbtn.texture_normal = preload("res://assets/monster/white1.png")
+		cbtn.ignore_texture_size = true
+		cbtn.stretch_mode = TextureButton.STRETCH_KEEP_ASPECT_CENTERED
+		cbtn.size = Vector2(120, 120)
+		cbtn.position = pos - Vector2(60, 60)
 		btn = cbtn
 	else:
 		var tbtn := TextureButton.new()
