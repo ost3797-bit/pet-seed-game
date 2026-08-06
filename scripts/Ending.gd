@@ -86,7 +86,7 @@ func _play_html5_video() -> void:
 		var js_code = """
 		var video = document.createElement('video');
 		video.id = 'godot_ending_video';
-		video.src = './video1.ogv';
+		video.src = './video1-ortx30.ogv';
 		video.style.position = 'absolute';
 		video.style.top = '0';
 		video.style.left = '0';
@@ -125,7 +125,7 @@ func _on_js_video_finished(args) -> void:
 
 func _play_godot_video() -> void:
 	video_player = VideoStreamPlayer.new()
-	var stream = load("res://assets/video/video1.ogv")
+	var stream = load("res://assets/video/video1-ortx30.ogv")
 	if stream != null:
 		video_player.stream = stream
 	video_player.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
