@@ -34,7 +34,7 @@ func _ready() -> void:
 	add_child(dialogue_panel)
 	
 	dialogue_text = Label.new()
-	dialogue_text.text = "와아아~! 앗싸! 파릇파릇하고 예쁜 새싹이 돋아났어요!! 🌱✨\n당신이 깨끗한 물, 따뜻한 그늘, 그리고 맑은 공기를 선물해 준 덕분이에요!\n정말 정말 고마워요!! 우리 함께 축하하러 가요!"
+	dialogue_text.text = "와아아~! 앗싸! 파릇파릇하고 예쁜 새싹이 돋아났어요!! 🌱✨\n당신이 깨끗한 물, 따뜻한 그늘, 그리고 맑은 공기를 선물해 준 덕분이에요!\n정말 정말 고마워요!!"
 	dialogue_text.position = Vector2(40, 30)
 	dialogue_text.size = Vector2(920, 100)
 	dialogue_text.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -52,7 +52,7 @@ func _ready() -> void:
 	
 	# 종료 메뉴 컨테이너
 	button_container = VBoxContainer.new()
-	button_container.position = Vector2(300, 500)
+	button_container.position = Vector2(300, 440)
 	button_container.size = Vector2(680, 200)
 	button_container.alignment = BoxContainer.ALIGNMENT_CENTER
 	button_container.add_theme_constant_override("separation", 20)
@@ -161,7 +161,7 @@ func _on_video_finished() -> void:
 func _show_ending_menu() -> void:
 	dialogue_panel.hide()
 	var tween = create_tween()
-	tween.tween_property(char_rect, "position", Vector2(340, -50), 0.5).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(char_rect, "position", Vector2(340, -120), 0.5).set_trans(Tween.TRANS_QUAD)
 	button_container.show()
 
 func _button(value: String, size: int) -> Button:
