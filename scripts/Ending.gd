@@ -20,8 +20,8 @@ func _ready() -> void:
 	char_rect.texture = load("res://assets/seed/seed7.png")
 	char_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	char_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	char_rect.position = Vector2(340, 50)
-	char_rect.size = Vector2(600, 600)
+	char_rect.position = Vector2(280, 20)
+	char_rect.size = Vector2(720, 720)
 	char_rect.hide()
 	add_child(char_rect)
 	
@@ -161,7 +161,7 @@ func _on_video_finished() -> void:
 func _show_ending_menu() -> void:
 	dialogue_panel.hide()
 	var tween = create_tween()
-	tween.tween_property(char_rect, "position", Vector2(340, -120), 0.5).set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(char_rect, "position", Vector2(280, -50), 0.5).set_trans(Tween.TRANS_QUAD)
 	button_container.show()
 
 func _button(value: String, size: int) -> Button:
