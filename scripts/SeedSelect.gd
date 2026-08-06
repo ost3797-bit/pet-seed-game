@@ -17,9 +17,9 @@ func _ready() -> void:
 	choices.add_theme_constant_override("separation", 24)
 	add_child(choices)
 	
-	seed1_button = _choice_button("씨앗 1\n(초록 씨앗)", "res://assets/seed/seed1.png")
-	seed2_button = _choice_button("씨앗 2\n(노랑 씨앗)", "res://assets/seed/seed2.png")
-	seed3_button = _choice_button("씨앗 3\n(파랑 씨앗)", "res://assets/seed/seed3.png")
+	seed1_button = _choice_button("도토리 씨앗", "res://assets/seed/seed1.png")
+	seed2_button = _choice_button("단풍나무 씨앗", "res://assets/seed/seed2.png")
+	seed3_button = _choice_button("복숭아 씨앗", "res://assets/seed/seed3.png")
 	seed1_button.pressed.connect(func(): _select_seed("seed_1"))
 	seed2_button.pressed.connect(func(): _select_seed("seed_2"))
 	seed3_button.pressed.connect(func(): _select_seed("seed_3"))
@@ -49,17 +49,17 @@ func _select_seed(type: String) -> void:
 	selected_seed_type = type
 	match type:
 		"seed_1":
-			seed1_button.text = "씨앗 1\n선택됨 ✓"
-			seed2_button.text = "씨앗 2\n(노랑 씨앗)"
-			seed3_button.text = "씨앗 3\n(파랑 씨앗)"
+			seed1_button.text = "도토리 씨앗\n선택됨 ✓"
+			seed2_button.text = "단풍나무 씨앗"
+			seed3_button.text = "복숭아 씨앗"
 		"seed_2":
-			seed1_button.text = "씨앗 1\n(초록 씨앗)"
-			seed2_button.text = "씨앗 2\n선택됨 ✓"
-			seed3_button.text = "씨앗 3\n(파랑 씨앗)"
+			seed1_button.text = "도토리 씨앗"
+			seed2_button.text = "단풍나무 씨앗\n선택됨 ✓"
+			seed3_button.text = "복숭아 씨앗"
 		"seed_3":
-			seed1_button.text = "씨앗 1\n(초록 씨앗)"
-			seed2_button.text = "씨앗 2\n(노랑 씨앗)"
-			seed3_button.text = "씨앗 3\n선택됨 ✓"
+			seed1_button.text = "도토리 씨앗"
+			seed2_button.text = "단풍나무 씨앗"
+			seed3_button.text = "복숭아 씨앗\n선택됨 ✓"
 
 
 func _start_game() -> void:
