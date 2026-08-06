@@ -17,9 +17,9 @@ func _ready() -> void:
 	choices.add_theme_constant_override("separation", 24)
 	add_child(choices)
 	
-	seed1_button = _choice_button("씨앗 1\n(초록 씨앗)", Color("76D7C4"))
-	seed2_button = _choice_button("씨앗 2\n(노랑 씨앗)", Color("F9E79F"))
-	seed3_button = _choice_button("씨앗 3\n(파랑 씨앗)", Color("85C1E9"))
+	seed1_button = _choice_button("씨앗 1\n(초록 씨앗)", "res://assets/seed/seed1.png")
+	seed2_button = _choice_button("씨앗 2\n(노랑 씨앗)", "res://assets/seed/seed2.png")
+	seed3_button = _choice_button("씨앗 3\n(파랑 씨앗)", "res://assets/seed/seed3.png")
 	seed1_button.pressed.connect(func(): _select_seed("seed_1"))
 	seed2_button.pressed.connect(func(): _select_seed("seed_2"))
 	seed3_button.pressed.connect(func(): _select_seed("seed_3"))
@@ -77,11 +77,15 @@ func _make_background() -> void:
 	add_child(bg)
 
 
-func _choice_button(caption: String, color: Color) -> Button:
+func _choice_button(caption: String, icon_path: String) -> Button:
 	var button := Button.new()
 	button.text = caption
+	if ResourceLoader.exists(icon_path):
+		button.icon = load(icon_path)
+		button.icon_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		button.vertical_icon_alignment = VERTICAL_ALIGNMENT_TOP
+		button.expand_icon = true
 	button.custom_minimum_size = Vector2(280, 240)
-	button.modulate = color
 	button.add_theme_font_size_override("font_size", 25)
 	return button
 

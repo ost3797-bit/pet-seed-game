@@ -412,23 +412,39 @@ func _build_seed() -> void:
 		seed_npc.collision_layer = 0
 		seed_npc.collision_mask = 1
 		add_child(seed_npc)
-		var body := Polygon2D.new()
-		body.name = "Polygon2D"
-		body.polygon = PackedVector2Array([Vector2(0, -40), Vector2(32, -10), Vector2(22, 32), Vector2(0, 45), Vector2(-22, 32), Vector2(-32, -10)])
-		seed_npc.add_child(body)
+		
+		var spr := Sprite2D.new()
+		spr.name = "Sprite2D"
+		seed_npc.add_child(spr)
+		
 		var collision := CollisionShape2D.new()
 		var shape := CircleShape2D.new()
 		shape.radius = 115.0
 		collision.shape = shape
 		seed_npc.add_child(collision)
 
-	var poly := seed_npc.get_node_or_null("Polygon2D") as Polygon2D
+	# 기존에 Polygon2D가 있다면 숨기거나 제거
+	var poly := seed_npc.get_node_or_null("Polygon2D")
 	if poly != null:
-		match GameState.seed_type:
-			"seed_1": poly.color = Color("76D7C4")
-			"seed_2": poly.color = Color("FFE36B")
-			"seed_3": poly.color = Color("85C1E9")
-			_: poly.color = Color("FFE36B")
+		poly.queue_free()
+
+	var spr := seed_npc.get_node_or_null("Sprite2D") as Sprite2D
+	if spr == null:
+		spr = Sprite2D.new()
+		spr.name = "Sprite2D"
+		seed_npc.add_child(spr)
+		
+	match GameState.seed_type:
+		"seed_1": spr.texture = preload("res://assets/seed/seed1.png")
+		"seed_2": spr.texture = preload("res://assets/seed/seed2.png")
+		"seed_3": spr.texture = preload("res://assets/seed/seed3.png")
+		_: spr.texture = preload("res://assets/seed/seed1.png")
+		
+	# 텍스처 크기를 적당하게 조절 (대략 높이 90픽셀 기준)
+	var tex_size := spr.texture.get_size()
+	if tex_size.y > 0:
+		var s := 90.0 / tex_size.y
+		spr.scale = Vector2(s, s)
 
 	seed_quest_icon = seed_npc.get_node_or_null("SeedQuestIcon") as Label
 	if seed_quest_icon == null:
