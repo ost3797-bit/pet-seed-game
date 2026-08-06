@@ -16,7 +16,7 @@ func _ready() -> void:
 	
 	# 비디오 플레이어
 	video_player = VideoStreamPlayer.new()
-	var stream = load("res://assets/video/video1.mp4")
+	var stream = load("res://assets/video/video1.ogv")
 	if stream != null:
 		video_player.stream = stream
 	video_player.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
